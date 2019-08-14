@@ -41,6 +41,16 @@ public class OptionMenu : MonoBehaviour
         GameParameters.instance.minAnchorDis = 4;
     }
 
+	private void SetTokenColors()
+	{
+		GameParameters.instance.tokenColors = 3;
+	}
+
+	private void SetBlocksPerTurn()
+	{
+		GameParameters.instance.blocksPerTurn = 1;
+	}
+
     // Gets numbers from more options panel
     public InputField shuttleNumIF;
     public InputField gridSizeIF;
@@ -49,6 +59,8 @@ public class OptionMenu : MonoBehaviour
     public InputField counterNumIF;
     public InputField minDisIF;
     public InputField cusAnchorPosIF;
+    public InputField tokenColorIF;	//added PM
+    public InputField blocksPerTurnIF; //added PM
     public Text errorText;
     public Text successText;
 
@@ -66,6 +78,13 @@ public class OptionMenu : MonoBehaviour
             GameParameters.instance.anchorCount = StringToInt(anchorNumIF.text);
             GameParameters.instance.counterNumInGenerator = StringToInt(counterNumIF.text);
             GameParameters.instance.minAnchorDis = StringToInt(minDisIF.text);
+            GameParameters.instance.tokenColors = StringToInt(tokenColorIF.text);
+			//added PM to allow for just reds and blues in colorbag.
+			if (GameParameters.instance.tokenColors <3)
+			{
+				GameParameters.instance.SetColorProportion(50, 0, 50);
+			}
+            GameParameters.instance.blocksPerTurn = StringToInt(blocksPerTurnIF.text);
             if (cusAnchors.Count > 0)
             {
                 GameParameters.instance.randomAnchor = false;

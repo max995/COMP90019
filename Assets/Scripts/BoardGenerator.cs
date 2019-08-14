@@ -27,6 +27,7 @@ public class BoardGenerator : MonoBehaviour
         }
         LayoutAnchors();
         SetCounterGenerator();
+
     }
 
     private void InitialiseCamera()

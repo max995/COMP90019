@@ -27,6 +27,11 @@ public class GameParameters : MonoBehaviour
     public bool randomAnchor = true;
     // The time limit for AI
     public float timeLimitForAI = 180;
+
+	//added PM:
+	public int tokenColors = 3;
+	public int blocksPerTurn = 1;
+
     public List<Vector3> defaultAnchorPos;
 
     // Uses to control the proportion of each color of apples, default is equal proportion

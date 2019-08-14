@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class TileController : MonoBehaviour
 {
+	private static int blockCounter = 1;
     private void OnMouseDown()
     {
         if (!GameManager.instance.gameOver && GameManager.instance.playerTurn)
@@ -19,9 +20,16 @@ public class TileController : MonoBehaviour
                 Methods.instance.BlockTile(transform.position);
                 Debug.Log(transform.position + "clicked!");
                 GameManager.instance.gameLog += "Player blocks " + transform.position + "\n";
-                GameManager.instance.SetPlayerTurn(false);
-                StartCoroutine(GameManager.instance.TurnSwitch());
+				blockCounter++;
+                //GameManager.instance.SetPlayerTurn(false);
+                //StartCoroutine(GameManager.instance.TurnSwitch());
             }
+			if (blockCounter > GameParameters.instance.blocksPerTurn)
+			{	
+				blockCounter = 1;
+				GameManager.instance.SetPlayerTurn(false);
+				StartCoroutine(GameManager.instance.TurnSwitch());
+			}
         }
     }
 }
