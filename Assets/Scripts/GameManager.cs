@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool gameOver;
     // AI gonna rotation when it's true
     [HideInInspector] public bool AICelebrate;
+//    [HideInInspector] SpriteRenderer sr ;
 
     // Game sprites
     public GameObject gridTile;
@@ -53,6 +54,8 @@ public class GameManager : MonoBehaviour
     // AI Manager, controls AI moves
     private AIManager aiScript;
 
+    //private AutoHuma ah;
+
     private void Awake()
     {
         if (instance == null)
@@ -74,11 +77,31 @@ public class GameManager : MonoBehaviour
         SetPlayerTurn(false);
         boardScript = GetComponent<BoardGenerator>();
         boardScript.SetupScene();
+
         aiScript = GetComponent<AIManager>();
         aiScript.InitialiseAIs();
         InitialiseDeposited();
+        //sr = GetComponent<SpriteRenderer>();
+        //test();
+        //ah = GetComponent<AutoHuma>();
+        //ah.InitialiseAH();
         gameLog += "--- Game Start ---\n";
     }
+
+
+    //public void test()
+    //{
+        
+    //    GameObject tileBlock = boardScript.tilePos[11,11];
+    //    Debug.Log("tileBlock"+ tileBlock.transform.position);
+    //    Color color = new Color(43f, 54f, 58f);
+    //    color.a = 0.1f;
+    //    sr.color = color;
+    //    Debug.Log(sr.color);
+
+    //}
+
+
 
     // Start AI's turn
     public IEnumerator TurnSwitch()
@@ -98,6 +121,8 @@ public class GameManager : MonoBehaviour
             }
             yield return StartCoroutine(GetComponent<UIManager>().ShowAITurn());
             aiScript.AITurn();
+            
+         
         }
     }
 

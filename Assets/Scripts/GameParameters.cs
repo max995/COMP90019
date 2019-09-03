@@ -32,6 +32,10 @@ public class GameParameters : MonoBehaviour
 	public int tokenColors = 3;
 	public int blocksPerTurn = 1;
 
+    //MA
+    public float startDelay = 0;
+
+
     public List<Vector3> defaultAnchorPos;
 
     // Uses to control the proportion of each color of apples, default is equal proportion

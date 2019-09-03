@@ -24,7 +24,8 @@ public class AIManager : MonoBehaviour
     private List<GameObject> AIs = new List<GameObject>();
     private List<Vector3> bagPos = new List<Vector3>();
     private List<bool> AIMoving = new List<bool>();
-
+    //private AutoHuma ah;
+    //???
     private void Awake()
     {
         bagPos.Clear();
@@ -32,6 +33,10 @@ public class AIManager : MonoBehaviour
         bagPos.Add(new Vector3(-0.5f, 0.02f, 0f));
         bagPos.Add(new Vector3(0.55f, 0.02f, 0f));
         bagPos.Add(new Vector3(1.65f, 0.02f, 0f));
+        
+
+
+
     }
 
     public void InitialiseAIs()
@@ -39,6 +44,7 @@ public class AIManager : MonoBehaviour
         turnCount = 0;
         AIs.Clear();
         AIMoving.Clear();
+        //ah = GetComponent<AutoHuma>();
         for (int i = 0; i < GameParameters.instance.shuttleNum; i++)
         {
             AIs.Add(Methods.instance.LayoutObject(GameManager.instance.AI, 0f, 0f));
@@ -49,6 +55,8 @@ public class AIManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        
+
         for (int i = 0; i < GameParameters.instance.shuttleNum; i++)
         {
             if (AIMoving[i]) return;
@@ -56,11 +64,15 @@ public class AIManager : MonoBehaviour
         if (!GameManager.instance.gameOver)
         {
             GameManager.instance.SetPlayerTurn(true);
-            StartCoroutine(GetComponent<UIManager>().ShowPlayerTurn());
+
+            
             for (int i = 0; i < GameParameters.instance.shuttleNum; i++)
             {
                 AIMoving[i] = true;
             }
+//            Debug.Log("my turn");
+            //ah = GetComponent<AutoHuma>();
+            //ah.AutoHuman();
         }
         else
         {
@@ -79,17 +91,34 @@ public class AIManager : MonoBehaviour
     {
         AIactions.Clear();
         turnCount++;
+        //ais=shuttles
         for (int i = 0; i < AIs.Count; i++)
         {
             Debug.Log("Shuttle " + i + "Decisions: -------------------");
+            //Debug.Log("ai??" + AIs.Count);
             AIMoving[i] = true;
             AIactions.Add(AIs[i].GetComponent<AIAgent>().MakeDecision(AIactions));
+
             AIactions[AIactions.Count - 1].MoveTo(new Vector3(-3.5f, GameParameters.instance.gridSize / 2f + i * 1.5f, 0f));
+           
         }
         for (int i = 0; i < AIs.Count; i++)
         {
+            //???
+            //if (i == 0 && GameParameters.instance.startDelay > 0)
+            //{
+            //    Debug.Log("try to stop for" + GameParameters.instance.startDelay);
+            //    Loading(GameParameters.instance.startDelay);
+            //}
             StartCoroutine(ExecuteActions(AIs[i], AIactions[i], i));
+           
         }
+    }
+
+
+    IEnumerator Loading(float start_delay)
+    {
+        yield return new WaitForSeconds(start_delay);
     }
 
     IEnumerator ExecuteActions(GameObject AI, Actions actions, int AIindex)
@@ -110,6 +139,7 @@ public class AIManager : MonoBehaviour
                     break;
                 case "Move":
                     yield return StartCoroutine(MoveToPosition(moveDelay, AI, actions.paras[i]));
+           
                     GameManager.instance.gameLog += "Shuttle " + AIindex + " moves to " + "(" + actions.paras[i].x + ", " + actions.paras[i].y + ")" + "\n";
                     break;
                 case "Deposit":
@@ -154,6 +184,7 @@ public class AIManager : MonoBehaviour
     {
         while (AI.transform.position != newPos)
         {
+            
             AI.transform.position = Vector3.MoveTowards(AI.transform.position, newPos, moveSpeed * Time.deltaTime);
             yield return null;
         }

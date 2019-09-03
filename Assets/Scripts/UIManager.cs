@@ -12,6 +12,10 @@ public class UIManager : MonoBehaviour
     public float delayBeforeAITurn = 0.3f;
     public float AITimeLimit;
     public float startTime;
+    //private AutoHuma autoHuma;
+    //public BoardGenerator bg;
+    //private Vector3 pos;
+    //private TileController tl;
 
     // Set to true after show AI Turn panel 
     private bool AITurn;
@@ -61,7 +65,9 @@ public class UIManager : MonoBehaviour
         AITimeLimit -= Time.time - startTime;
         PlayerTurnPanel.SetActive(true);
         yield return new WaitForSeconds(showTurnDelay);
+       
         PlayerTurnPanel.SetActive(false);
+        Debug.Log("show the playe pannel");
     }
 
     public IEnumerator ShowAITurn()
@@ -95,5 +101,7 @@ public class UIManager : MonoBehaviour
                 timer.text = "Remaining Time For AI: " + min + ":" + sec;
             }
         }
+
+        
     }
 }

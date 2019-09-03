@@ -10,6 +10,7 @@ public class BoardGenerator : MonoBehaviour
     private Transform boardHolder;
 
     private List<Vector3> gridPositions = new List<Vector3>();
+    public GameObject[,] tilePos = new GameObject[GameParameters.instance.gridSize, GameParameters.instance.gridSize];
 
     public void SetupScene()
     {
@@ -46,6 +47,8 @@ public class BoardGenerator : MonoBehaviour
             for (int y = 0; y < GameParameters.instance.gridSize; y++)
             {
                 GameObject tile = Methods.instance.LayoutObject(GameManager.instance.gridTile, x, y);
+                tilePos[x, y] = tile;// save tile position
+                Debug.Log("tile pos" + x +","+ y);
                 tile.transform.SetParent(boardHolder);
             }
         }
@@ -153,4 +156,5 @@ public class BoardGenerator : MonoBehaviour
         GameManager.instance.generators.Add(Methods.instance.LayoutObject(GameManager.instance.GeneratorsImages[3], GameParameters.instance.gridSize + 0.5f, 2f));
         GameManager.instance.parkingPos.Add(new Vector3(GameParameters.instance.gridSize + 0.5f + 2.2f, 2f + 1.5f, 0f));
     }
+
 }

@@ -452,6 +452,7 @@ GameObject:
   - component: {fileID: 278966723}
   - component: {fileID: 278966724}
   - component: {fileID: 278966725}
+  - component: {fileID: 278966726}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -580,6 +581,19 @@ MonoBehaviour:
   AIWinPanel: {fileID: 217916278}
   PlayerWinPanel: {fileID: 1697032371}
   RestartButton: {fileID: 2072296793}
+--- !u!114 &278966726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278966719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c34eb324316d943549a8cb07792616ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bg: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

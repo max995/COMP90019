@@ -61,6 +61,7 @@ public class OptionMenu : MonoBehaviour
     public InputField cusAnchorPosIF;
     public InputField tokenColorIF;	//added PM
     public InputField blocksPerTurnIF; //added PM
+    public InputField startDelayIF;
     public Text errorText;
     public Text successText;
 
@@ -79,12 +80,17 @@ public class OptionMenu : MonoBehaviour
             GameParameters.instance.counterNumInGenerator = StringToInt(counterNumIF.text);
             GameParameters.instance.minAnchorDis = StringToInt(minDisIF.text);
             GameParameters.instance.tokenColors = StringToInt(tokenColorIF.text);
+            
+
 			//added PM to allow for just reds and blues in colorbag.
 			if (GameParameters.instance.tokenColors <3)
 			{
 				GameParameters.instance.SetColorProportion(50, 0, 50);
 			}
             GameParameters.instance.blocksPerTurn = StringToInt(blocksPerTurnIF.text);
+            //Debug.Log(blocksPerTurnIF.text);
+            GameParameters.instance.startDelay = StringToFloat(GameObject.Find("ShuttleStartTimeInputField").GetComponent<InputField>().text);
+            //Debug.Log(GameParameters.instance.startDelay);
             if (cusAnchors.Count > 0)
             {
                 GameParameters.instance.randomAnchor = false;
