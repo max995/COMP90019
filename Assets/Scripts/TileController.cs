@@ -50,12 +50,12 @@ public class TileController : MonoBehaviour
             Debug.Log("is true?" + GameManager.instance.playerTurn);
             uI = GetComponent<UIManager>();
             uI.ShowPlayerTurn();
-            pos = new Vector3(11.0f, 11.0f, 0f);
             bg = GetComponent<BoardGenerator>();
             tl = GetComponent<TileController>();
+            pos = Methods.instance.RandomPosition(bg.gridPositions);
             GameObject blockTile = bg.tilePos[(int)pos.x, (int)pos.y];
             blockTile.GetComponent<Transform>().position = pos;
-            if (Methods.instance.IsEmptyGrid(blockTile.transform.position))
+            while(Methods.instance.IsEmptyGrid(blockTile.transform.position))
             {
              
                 tl.AutoGrey(blockTile);

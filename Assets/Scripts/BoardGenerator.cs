@@ -8,8 +8,8 @@ using UnityEngine;
 public class BoardGenerator : MonoBehaviour
 {
     private Transform boardHolder;
-
-    private List<Vector3> gridPositions = new List<Vector3>();
+    //change 
+    public List<Vector3> gridPositions = new List<Vector3>();
     public GameObject[,] tilePos = new GameObject[GameParameters.instance.gridSize, GameParameters.instance.gridSize];
 
     public void SetupScene()
