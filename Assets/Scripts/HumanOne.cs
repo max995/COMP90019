@@ -27,7 +27,7 @@ public class HumanOne : MonoBehaviour
         //Debug.Log(x);
         int y = StringToInt(posTemp[1]);
         //Debug.Log(y);
-        pos = Methods.instance.FindAdj(x,y);
+        pos = Methods.instance.FindAdjForTile(x,y);
         return pos;
     }
 
@@ -84,8 +84,8 @@ public class HumanOne : MonoBehaviour
         Debug.Log(red_tokens[red_tokens.Length - 2]);
         string[] posTemp = lastRed.Split('-');
         //Debug.Log(posTemp);
-        int x = StringToInt(posTemp[0]);
-        int y = StringToInt(posTemp[1]);
+        float x = StringToFloat(posTemp[0]);
+        float y = StringToFloat(posTemp[1]);
         Vector3 lastRedToken = new Vector3(x, y, 0f);
         float dist= Mathf.Infinity;
         foreach (Vector3 position in GameManager.instance.anchorPositions)
@@ -96,9 +96,23 @@ public class HumanOne : MonoBehaviour
             }
         }
         //Debug.Log("shortdis" + shortDis);
-        shortDis = Methods.instance.FindAdj((int)shortDis.x,(int)shortDis.y);
+        shortDis = Methods.instance.FindAdjForAnchor(new Vector3(x,y,0f));
         Debug.Log("shortdis" + shortDis);
         return shortDis;
+    }
+
+    private float StringToFloat(string s)
+    {
+        float num = -1;
+        try
+        {
+            num = float.Parse(s);
+            return num;
+        }
+        catch (FormatException)
+        {
+            return -1;
+        }
     }
 
     private Vector3 DensestRed(String red_token)
@@ -145,7 +159,7 @@ public class HumanOne : MonoBehaviour
             string[] denestRed = red_tokens[p].Split('-');
             x = StringToInt(denestRed[0]);
             y = StringToInt(denestRed[1]);
-            pos = Methods.instance.FindAdj(x, y);
+            pos = Methods.instance.FindAdjForTile(x, y);
             Debug.Log("dendest position is"+pos.x+pos.y+" and conuter is "+ maxAdj);
          
             return pos;

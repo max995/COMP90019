@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 //using System;
+//using System;
 
 public class Methods : MonoBehaviour
 {
@@ -79,7 +80,7 @@ public class Methods : MonoBehaviour
         return false;
     }
 
-    public Vector3 FindAdj(int x, int y)
+    public Vector3 FindAdjForTile(int x, int y)
     {
         Vector3 pos = new Vector3(0, 0, 0);
         try
@@ -100,26 +101,60 @@ public class Methods : MonoBehaviour
             {
                 pos=new Vector3(x, y + 1, 0f);
             }
-            else if (IsEmptyGrid(new Vector3(x - 1, y - 1, 0f) )&& IsOnBoard(new Vector3(x - 1, y - 1, 0f)) == true)
-            {
-                pos=new Vector3(x - 1, y - 1, 0f);
-            }
-            else if (IsEmptyGrid(new Vector3(x - 1, y + 1, 0f))&& IsOnBoard(new Vector3(x - 1, y + 1, 0f)) == true)
-            {
-                pos=new Vector3(x - 1, y + 1, 0f);
-            }
-            else if(IsEmptyGrid(new Vector3(x + 1, y + 1, 0f)) && IsOnBoard(new Vector3(x +1, y + 1, 0f)) == true)
-            {
-                pos=new Vector3(x + 1, y + 1, 0f);
-            }
-            else if (IsEmptyGrid(new Vector3(x + 1, y -1, 0f)) && IsOnBoard(new Vector3(x + 1, y -1, 0f)) == true)
-            {
-                pos = new Vector3(x + 1, y - 1, 0f);
-            }
+            
         }
         catch (KeyNotFoundException)
         {
             pos= new Vector3(0, 0, 0);
+        }
+
+        return pos;
+    }
+
+    //anchor type
+    public Vector3 FindAdjForAnchor(Vector3 pos_temp)
+    {
+        Vector3 pos = new Vector3(0, 0, 0);
+        try
+        {
+            if (IsEmptyGrid(new Vector3(pos_temp.x-0.5f,pos_temp.y-1.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x - 0.5f, pos_temp.y - 1.5f, 0f)) == true)
+            {
+                pos = new Vector3(pos_temp.x - 0.5f, pos_temp.y - 1.5f, 0f);
+            }
+            else if (IsEmptyGrid(new Vector3(pos_temp.x + 0.5f, pos_temp.y - 1.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x + 0.5f, pos_temp.y - 1.5f, 0f)) == true)
+            {
+                pos = new Vector3(pos_temp.x + 0.5f, pos_temp.y - 1.5f, 0f);
+            }
+            else if (IsEmptyGrid(new Vector3(pos_temp.x + 1.5f, pos_temp.y - 0.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x + 1.5f, pos_temp.y - 0.5f, 0f)) == true)
+            {
+                pos = new Vector3(pos_temp.x + 1.5f, pos_temp.y - 0.5f, 0f);
+            }
+            else if (IsEmptyGrid(new Vector3(pos_temp.x + 1.5f, pos_temp.y + 0.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x + 1.5f, pos_temp.y + 0.5f, 0f)) == true)
+            {
+                pos = new Vector3(pos_temp.x + 1.5f, pos_temp.y + 0.5f, 0f);
+            }
+            else if (IsEmptyGrid(new Vector3(pos_temp.x + 0.5f, pos_temp.y + 1.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x + 0.5f, pos_temp.y + 1.5f, 0f)) == true)
+            {
+                pos = new Vector3(pos_temp.x + 0.5f, pos_temp.y + 1.5f, 0f);
+            }
+            else if (IsEmptyGrid(new Vector3(pos_temp.x - 0.5f, pos_temp.y + 1.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x - 0.5f, pos_temp.y + 1.5f, 0f)) == true)
+            {
+                pos = new Vector3(pos_temp.x - 0.5f, pos_temp.y + 1.5f, 0f);
+            }
+            else if (IsEmptyGrid(new Vector3(pos_temp.x - 1.5f, pos_temp.y + 0.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x - 1.5f, pos_temp.y + 0.5f, 0f)) == true)
+            {
+                pos = new Vector3(pos_temp.x - 1.5f, pos_temp.y + 0.5f, 0f);
+            }
+
+            else if (IsEmptyGrid(new Vector3(pos_temp.x - 1.5f, pos_temp.y - 0.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x - 1.5f, pos_temp.y - 0.5f, 0f)) == true)
+            {
+                pos = new Vector3(pos_temp.x - 1.5f, pos_temp.y - 0.5f, 0f);
+            }
+        }
+
+        catch (KeyNotFoundException)
+        {
+            pos = new Vector3(0, 0, 0);
         }
 
         return pos;
@@ -291,7 +326,7 @@ public class Methods : MonoBehaviour
                 bag.Add(i);
             }
         }
-        return bag[Random.Range(0, bag.Count)];
+        return bag[UnityEngine.Random.Range(0, bag.Count)];
     }
 
     // Removes all deposited grids and anchors in the given list
@@ -315,8 +350,8 @@ public class Methods : MonoBehaviour
         int randomCount = 0;
         while (num > 0)
         {
-            Vector3 pos = list[Random.Range(0, list.Count)];
-            Vector3 newNeighbor = new Vector3(pos.x + Random.Range(0, neighborRange), pos.y + Random.Range(0, neighborRange), 0f);
+            Vector3 pos = list[UnityEngine.Random.Range(0, list.Count)];
+            Vector3 newNeighbor = new Vector3(pos.x + UnityEngine.Random.Range(0, neighborRange), pos.y + UnityEngine.Random.Range(0, neighborRange), 0f);
             if (IsEmptyGrid(newNeighbor) && !addedToDeposit.Contains(newNeighbor) && !list.Contains(newNeighbor) && !neighbor.Contains(newNeighbor))
             {
                 neighbor.Add(newNeighbor);
@@ -387,7 +422,7 @@ public class Methods : MonoBehaviour
         int index = Random.Range(0, GameManager.instance.anchorPositions.Count);
         while (list.Contains(GameManager.instance.anchorPositions[index]))
         {
-            index = Random.Range(0, GameManager.instance.anchorPositions.Count);
+            index =Random.Range(0, GameManager.instance.anchorPositions.Count);
         }
         return GameManager.instance.anchorPositions[index];
     }
@@ -535,7 +570,7 @@ public class Methods : MonoBehaviour
     
   
    
-
+    //dignose of the anchor
     public bool Contains(Vector3 p, Vector3[] m_aptVertices)
     {
         bool bContains = true; //obviously wrong at the moment :)
@@ -547,16 +582,16 @@ public class Methods : MonoBehaviour
         foreach (Vector3 pt in m_aptVertices)
         {
             if (Xmin > pt.x)
-                Xmin = pt.x;
+                Xmin = Mathf.Floor(pt.x);
 
             if (Xmax < pt.x)
-                Xmax = pt.x;
+                Xmax = Mathf.Ceil(pt.x);
 
             if (Ymin > pt.y)
-                Ymin = pt.y;
+                Ymin = Mathf.Floor(pt.y);
 
             if (Ymax < pt.y)
-                Ymax = pt.y;
+                Ymax = Mathf.Ceil(pt.y);
         }
         if (p.x < Xmin || p.x > Xmax || p.y < Ymin || p.y > Ymax)
             bContains = false;
@@ -572,4 +607,5 @@ public class Methods : MonoBehaviour
     {
         return (float)x/y ;
     }
+
 }
