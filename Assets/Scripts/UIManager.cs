@@ -67,7 +67,7 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(showTurnDelay);
        
         PlayerTurnPanel.SetActive(false);
-        Debug.Log("show the playe pannel");
+//        Debug.Log("show the playe pannel");
     }
 
     public IEnumerator ShowAITurn()

@@ -50,6 +50,16 @@ public class OptionMenu : MonoBehaviour
 	{
 		GameParameters.instance.blocksPerTurn = 1;
 	}
+    private void SetAIType()
+    {
+        GameParameters.instance.aiType = 0;
+
+    }
+
+    private void SetHumanType()
+    {
+        GameParameters.instance.humanType = 0;
+    }
 
     // Gets numbers from more options panel
     public InputField shuttleNumIF;
@@ -64,6 +74,8 @@ public class OptionMenu : MonoBehaviour
     public InputField startDelayIF;
     public Text errorText;
     public Text successText;
+    public InputField aiTypeIF;
+    public InputField humanTypeIF;
 
     private List<Vector3> cusAnchors = new List<Vector3>();
 
@@ -80,6 +92,8 @@ public class OptionMenu : MonoBehaviour
             GameParameters.instance.counterNumInGenerator = StringToInt(counterNumIF.text);
             GameParameters.instance.minAnchorDis = StringToInt(minDisIF.text);
             GameParameters.instance.tokenColors = StringToInt(tokenColorIF.text);
+
+            //startime
             
 
 			//added PM to allow for just reds and blues in colorbag.
@@ -89,8 +103,10 @@ public class OptionMenu : MonoBehaviour
 			}
             GameParameters.instance.blocksPerTurn = StringToInt(blocksPerTurnIF.text);
             //Debug.Log(blocksPerTurnIF.text);
-            GameParameters.instance.startDelay = StringToFloat(GameObject.Find("ShuttleStartTimeInputField").GetComponent<InputField>().text);
+            GameParameters.instance.startDelay = StringToFloat(GameObject.Find("ShuttleStartDelayInputField").GetComponent<InputField>().text);
             //Debug.Log(GameParameters.instance.startDelay);
+            GameParameters.instance.aiType = StringToInt(aiTypeIF.text);
+            GameParameters.instance.humanType = StringToInt(humanTypeIF.text);
             if (cusAnchors.Count > 0)
             {
                 GameParameters.instance.randomAnchor = false;

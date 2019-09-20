@@ -34,6 +34,8 @@ public class GameParameters : MonoBehaviour
 
     //MA
     public float startDelay = 0;
+    public int aiType = 0;
+    public int humanType = 0;
 
 
     public List<Vector3> defaultAnchorPos;

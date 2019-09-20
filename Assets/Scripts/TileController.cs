@@ -8,10 +8,7 @@ public class TileController : MonoBehaviour
 {
     private static int blockCounter = 1;
     //private AutoHuma autoHuma;
-    public BoardGenerator bg;
-    private Vector3 pos;
-    private TileController tl;
-    private UIManager uI;
+    
 
     public void AutoGrey(GameObject bt)
     //private void OnMouseDown()
@@ -23,8 +20,8 @@ public class TileController : MonoBehaviour
         Color color = new Color(43f, 54f, 58f);
         color.a = 0.1f;
         sr.color = color;
-        //Debug.Log(pos + "clicked!");
-        GameManager.instance.gameLog += "Player blocks " + transform.position + "\n";
+        Debug.Log(bt.transform.position + "clicked!");
+        GameManager.instance.gameLog += "Player blocks " + bt.transform.position + "\n";
         blockCounter++;
         //GameManager.instance.SetPlayerTurn(false);
         //StartCoroutine(GameManager.instance.TurnSwitch());
@@ -42,29 +39,7 @@ public class TileController : MonoBehaviour
 
     }
 
-    private void FixedUpdate()
-    {
-        //Debug.Log("try to cheack the");
-        if (!GameManager.instance.gameOver && GameManager.instance.playerTurn)
-        {
-            Debug.Log("is true?" + GameManager.instance.playerTurn);
-            uI = GetComponent<UIManager>();
-            uI.ShowPlayerTurn();
-            bg = GetComponent<BoardGenerator>();
-            tl = GetComponent<TileController>();
-            pos = Methods.instance.RandomPosition(bg.gridPositions);
-            GameObject blockTile = bg.tilePos[(int)pos.x, (int)pos.y];
-            blockTile.GetComponent<Transform>().position = pos;
-            while(Methods.instance.IsEmptyGrid(blockTile.transform.position))
-            {
-             
-                tl.AutoGrey(blockTile);
-            }
-        }
-
-
-        // autoHuma.AutoHuman();
-    }
+   
 }
 
 

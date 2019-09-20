@@ -8,12 +8,12 @@ using UnityEngine;
 public class BoardGenerator : MonoBehaviour
 {
     private Transform boardHolder;
-    //change 
     public List<Vector3> gridPositions = new List<Vector3>();
-    public GameObject[,] tilePos = new GameObject[GameParameters.instance.gridSize, GameParameters.instance.gridSize];
+    public GameObject[,] tilePos;
 
     public void SetupScene()
     {
+        tilePos = new GameObject[GameParameters.instance.gridSize, GameParameters.instance.gridSize];
         InitialiseCamera();
         BoardSetup();
         InitialiseList();
@@ -41,14 +41,15 @@ public class BoardGenerator : MonoBehaviour
     {
         boardHolder = new GameObject("Board").transform;
         boardHolder.tag = "Board";
-
+        
         for (int x = 0; x < GameParameters.instance.gridSize; x++)
         {
             for (int y = 0; y < GameParameters.instance.gridSize; y++)
             {
+                
                 GameObject tile = Methods.instance.LayoutObject(GameManager.instance.gridTile, x, y);
                 tilePos[x, y] = tile;// save tile position
-                Debug.Log("tile pos" + x +","+ y);
+                //Debug.Log("tile pos" + x +","+ y);
                 tile.transform.SetParent(boardHolder);
             }
         }

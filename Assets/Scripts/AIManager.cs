@@ -110,6 +110,7 @@ public class AIManager : MonoBehaviour
             //    Debug.Log("try to stop for" + GameParameters.instance.startDelay);
             //    Loading(GameParameters.instance.startDelay);
             //}
+            
             StartCoroutine(ExecuteActions(AIs[i], AIactions[i], i));
            
         }
@@ -118,11 +119,18 @@ public class AIManager : MonoBehaviour
 
     IEnumerator Loading(float start_delay)
     {
+        //?????
+        Debug.Log("stop for" + start_delay);
         yield return new WaitForSeconds(start_delay);
     }
 
     IEnumerator ExecuteActions(GameObject AI, Actions actions, int AIindex)
     {
+        //yield return Loading(10f);
+        if (turnCount == 1 && AIindex != 0)
+        {
+            yield return Loading(GameParameters.instance.startDelay);
+        }
         for (int i = 0; i < actions.commands.Count; i++)
         {
             if (GameManager.instance.gameOver) break;
@@ -143,14 +151,19 @@ public class AIManager : MonoBehaviour
                     GameManager.instance.gameLog += "Shuttle " + AIindex + " moves to " + "(" + actions.paras[i].x + ", " + actions.paras[i].y + ")" + "\n";
                     break;
                 case "Deposit":
+//                    Debug.Log("commands if deposit");
                     Vector3 pos = new Vector3(actions.paras[i].x, actions.paras[i].y, 0f);
                     int num = Int32.Parse(commands[2]);
+                    
                     if (commands[1].Equals("Color"))
                     {
                         if (AI.transform.position == pos)
                         {
                             yield return StartCoroutine(DepositCounter(AI, pos, num, actions.paras[i].z));
                             GameManager.instance.gameLog += "Shuttle " + AIindex + " deposits at " + "(" + pos.x + ", " + pos.y + ")" + ", color: " + num + "\n";
+                            GameManager.instance.Total_Blocks++;
+                            //record red token
+                            //Debug.Log("Shuttle " + AIindex + " deposits at " + "(" + pos.x + ", " + pos.y + ")" + ", color: " + num + "\n");
                         }
                     }
                     else
@@ -159,8 +172,11 @@ public class AIManager : MonoBehaviour
                         {
                             yield return StartCoroutine(DepositCounterByIndex(AI, pos, num, actions.paras[i].z));
                             GameManager.instance.gameLog += "Shuttle " + AIindex + " deposits at " + "(" + pos.x + ", " + pos.y + ")" + ", index: " + num + "\n";
+                            GameManager.instance.Total_Blocks++;
+                            //Debug.Log("Shuttle " + AIindex + " deposits at " + "(" + pos.x + ", " + pos.y + ")" + ", index: " + num + "\n");
                         }
                     }
+             
                     break;
                 case "TurnOver":
                     int index = Int32.Parse(commands[1]);
@@ -196,6 +212,11 @@ public class AIManager : MonoBehaviour
         if (AI.GetComponent<AIBehavior>().carry[color] > 0 && Methods.instance.IsEmptyGrid(pos))
         {
             yield return StartCoroutine(MoveToBagPosition(AI, GetBagPosByColor(AI, color)));
+            if (color == 0)
+            {
+                GameManager.instance.redToken += pos.x + "-" + pos.y + "#";
+                //Debug.Log("deposits the red");
+            }
             if (Mathf.Approximately(delay, 0f))
             {
                 yield return new WaitForSeconds(defaultDepositDelay);
@@ -207,6 +228,7 @@ public class AIManager : MonoBehaviour
             GameManager.instance.countersOnBoard[(int)pos.x][(int)pos.y] = Methods.instance.LayoutObject(GameManager.instance.counterTiles[3], pos.x, pos.y);
             AI.GetComponent<AIBehavior>().carry[color]--;
             GameManager.instance.deposited[(int)pos.x][(int)pos.y] = color;
+            
             DelFromBag(AI, color);
         }
     }
@@ -215,6 +237,11 @@ public class AIManager : MonoBehaviour
     {
         if (AI.GetComponent<AIBehavior>().bagCounterColor[index] != -1 && Methods.instance.IsEmptyGrid(pos))
         {
+            if (AI.GetComponent<AIBehavior>().bagCounterColor[index] == 0)
+            {
+                GameManager.instance.redToken += pos.x + "-" + pos.y + "#";
+                //Debug.Log("deposits the red");
+            }
             yield return StartCoroutine(MoveToBagPosition(AI, index));
             if (Mathf.Approximately(delay, 0f))
             {
@@ -225,6 +252,7 @@ public class AIManager : MonoBehaviour
                 yield return new WaitForSeconds(delay);
             }
             GameManager.instance.countersOnBoard[(int)pos.x][(int)pos.y] = Methods.instance.LayoutObject(GameManager.instance.counterTiles[3], pos.x, pos.y);
+            
             AI.GetComponent<AIBehavior>().carry[AI.GetComponent<AIBehavior>().bagCounterColor[index]]--;
             GameManager.instance.deposited[(int)pos.x][(int)pos.y] = AI.GetComponent<AIBehavior>().bagCounterColor[index];
             DelFromBagByIndex(AI, index);

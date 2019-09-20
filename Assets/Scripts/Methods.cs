@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+//using System;
 
 public class Methods : MonoBehaviour
 {
@@ -71,13 +72,58 @@ public class Methods : MonoBehaviour
     // Checks if two positions are adjacent
     public bool IsAdjGrid(Vector3 pos1, Vector3 pos2)
     {
-        if (Mathf.Approximately(Mathf.Abs(pos1.x - pos2.x) + Mathf.Abs(pos1.y - pos2.y), 1f))
+        if (Mathf.Approximately(Mathf.Abs(pos1.x - pos2.x) + Mathf.Abs(pos1.y - pos2.y),1f))
         {
             return true;
         }
         return false;
     }
 
+    public Vector3 FindAdj(int x, int y)
+    {
+        Vector3 pos = new Vector3(0, 0, 0);
+        try
+        {
+            if (IsEmptyGrid(new Vector3(x + 1, y, 0f))&& IsOnBoard(new Vector3(x + 1, y, 0f)) == true)
+            {
+                pos= new Vector3(x + 1, y, 0f);
+            }
+            else if (IsEmptyGrid(new Vector3(x - 1, y, 0f))&& IsOnBoard(new Vector3(x - 1, y, 0f)) == true)
+            {
+                pos=new Vector3(x - 1, y, 0f);
+            }
+            else if (IsEmptyGrid(new Vector3(x, y - 1, 0f))&&IsOnBoard(new Vector3(x, y - 1, 0f)) == true)
+            {
+               pos=new Vector3(x, y - 1, 0f);
+            }
+            else if (IsEmptyGrid(new Vector3(x, y + 1, 0f))&&IsOnBoard(new Vector3(x, y + 1, 0f)) == true)
+            {
+                pos=new Vector3(x, y + 1, 0f);
+            }
+            else if (IsEmptyGrid(new Vector3(x - 1, y - 1, 0f) )&& IsOnBoard(new Vector3(x - 1, y - 1, 0f)) == true)
+            {
+                pos=new Vector3(x - 1, y - 1, 0f);
+            }
+            else if (IsEmptyGrid(new Vector3(x - 1, y + 1, 0f))&& IsOnBoard(new Vector3(x - 1, y + 1, 0f)) == true)
+            {
+                pos=new Vector3(x - 1, y + 1, 0f);
+            }
+            else if(IsEmptyGrid(new Vector3(x + 1, y + 1, 0f)) && IsOnBoard(new Vector3(x +1, y + 1, 0f)) == true)
+            {
+                pos=new Vector3(x + 1, y + 1, 0f);
+            }
+            else if (IsEmptyGrid(new Vector3(x + 1, y -1, 0f)) && IsOnBoard(new Vector3(x + 1, y -1, 0f)) == true)
+            {
+                pos = new Vector3(x + 1, y - 1, 0f);
+            }
+        }
+        catch (KeyNotFoundException)
+        {
+            pos= new Vector3(0, 0, 0);
+        }
+
+        return pos;
+    }
     // Returns the generator ID the parking position belongs
     public int FindGenerator(Vector3 pos)
     {
@@ -483,5 +529,47 @@ public class Methods : MonoBehaviour
     {
         Vector3 position = new Vector3(x, y, 0f);
         return Instantiate(prefab, position, Quaternion.identity);
+    }
+
+    //measure deceptive under ai wins statement
+    
+  
+   
+
+    public bool Contains(Vector3 p, Vector3[] m_aptVertices)
+    {
+        bool bContains = true; //obviously wrong at the moment :)
+        float Xmin = m_aptVertices[0].x;
+        float Xmax = m_aptVertices[0].x;
+        float Ymin = m_aptVertices[0].y;
+        float Ymax = m_aptVertices[0].y;
+
+        foreach (Vector3 pt in m_aptVertices)
+        {
+            if (Xmin > pt.x)
+                Xmin = pt.x;
+
+            if (Xmax < pt.x)
+                Xmax = pt.x;
+
+            if (Ymin > pt.y)
+                Ymin = pt.y;
+
+            if (Ymax < pt.y)
+                Ymax = pt.y;
+        }
+        if (p.x < Xmin || p.x > Xmax || p.y < Ymin || p.y > Ymax)
+            bContains = false;
+        else
+        {
+            //figure out if the point is in the polygon
+        }
+
+        return bContains;
+    }
+
+    public float Ratio(int x, int y)
+    {
+        return (float)x/y ;
     }
 }

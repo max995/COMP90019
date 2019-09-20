@@ -19,9 +19,15 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool gameOver;
     // AI gonna rotation when it's true
     [HideInInspector] public bool AICelebrate;
-//    [HideInInspector] SpriteRenderer sr ;
+    //    [HideInInspector] SpriteRenderer sr ;
+    [HideInInspector] public Vector3[] trueAnchorPos;
+    [HideInInspector] public bool firstBlock;
+    [HideInInspector] public int Unblocked_Reds;
+    [HideInInspector] public int Total_RealPath_Blocks;
+    [HideInInspector] public int Total_FalsePath_Blocks;
+    [HideInInspector] public int Total_Blocks;
 
-    // Game sprites
+
     public GameObject gridTile;
     public GameObject Anchor;
     public GameObject OnAnchor;
@@ -33,6 +39,7 @@ public class GameManager : MonoBehaviour
 
     // Stores what happened in the game
     [HideInInspector] public string gameLog;
+    [HideInInspector] public string redToken;
 
     // Red, White, Blue, Yellow Generators
     [HideInInspector] public List<GameObject> generators = new List<GameObject>();
@@ -72,8 +79,14 @@ public class GameManager : MonoBehaviour
     private void Initialize()
     {
         gameLog = "";
+        redToken = "";
         gameOver = false;
         AICelebrate = false;
+        firstBlock = false;
+        Unblocked_Reds = 0;
+        Total_RealPath_Blocks=0;
+        Total_FalsePath_Blocks=0;
+        Total_Blocks=0;
         SetPlayerTurn(false);
         boardScript = GetComponent<BoardGenerator>();
         boardScript.SetupScene();
@@ -85,7 +98,9 @@ public class GameManager : MonoBehaviour
         //test();
         //ah = GetComponent<AutoHuma>();
         //ah.InitialiseAH();
+        trueAnchorPos = new Vector3[2];
         gameLog += "--- Game Start ---\n";
+        gameLog += "--- Color: 0-RED , 1- Yellow, 2- Blue";
     }
 
 
@@ -149,6 +164,9 @@ public class GameManager : MonoBehaviour
         gameOver = true;
         AICelebrate = true;
         GetComponent<UIManager>().ShowAIWinText();
+        //calculate
+        Methods.instance.Ratio(GameManager.instance.Total_RealPath_Blocks,GameManager.instance.Total_Blocks);
+        Debug.Log("the ratio is:"+ Methods.instance.Ratio(GameManager.instance.Total_RealPath_Blocks, GameManager.instance.Total_Blocks));
         Methods.instance.TurnAllWhiteCounterOver();
         SendToServer();
     }
