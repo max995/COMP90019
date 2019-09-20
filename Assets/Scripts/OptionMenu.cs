@@ -38,7 +38,7 @@ public class OptionMenu : MonoBehaviour
 
     private void SetAnchorDisSmall()
     {
-        GameParameters.instance.minAnchorDis = 4;
+        GameParameters.instance.minAnchorDis = 3;
     }
 
 	private void SetTokenColors()

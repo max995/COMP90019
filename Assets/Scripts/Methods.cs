@@ -40,12 +40,15 @@ public class Methods : MonoBehaviour
     //If the pos is on one anchor, return the position of the anchor's center, else return Vector3.zero
     public Vector3 IsOnAnAnchor(Vector3 pos)
     {
+       
         foreach (Vector3 position in GameManager.instance.anchorPositions)
         {
-            if (Vector3.Distance(position, pos) < 1f)
+    //not real judge the position need consider the transfer method
+            if (Vector3.Distance(position, pos)< 1f)
             {
                 return position;
             }
+            
         }
         return Vector3.zero;
     }
@@ -606,6 +609,58 @@ public class Methods : MonoBehaviour
     public float Ratio(int x, int y)
     {
         return (float)x/y ;
+    }
+
+    //Find shortest path in the grid betweent two anchor
+    public int FindChainCost(Vector3 start, Vector3 end, bool onlyRed)
+    {
+        start = TransAnchorPositionInGrid(start);
+        end = TransAnchorPositionInGrid(end);
+        List<Vector3> emptyPos = RemoveDepositedAndAnchor(FindPathInGrid(start, end, onlyRed));
+        Debug.Log("start in :"+ start +" end:"+ end);
+        foreach (Vector3 pos in emptyPos)
+        {
+            Debug.Log(pos);
+        }
+        return emptyPos.Count;
+    }
+    
+    public void Task1Anchor(List<Vector3> anchor_list, out int cost_a, out int cost_b)
+    {
+        Vector3 a1 = anchor_list[0];
+        Vector3 a2= new Vector3();
+        Vector3 a3= new Vector3();
+        Vector3 a4 = new Vector3();
+        cost_a = int.MaxValue;
+        cost_b = int.MaxValue;
+        foreach (Vector3 position in anchor_list)
+        {
+            if((position != a1)&&(FindChainCost(a1, position,true)<cost_a) )
+            {
+                cost_a = FindChainCost(a1, position, true);
+                a2 = position;
+            }
+        }
+        foreach (Vector3 position in anchor_list)
+        {
+            if ((position!=a1)&&(position!= a2))
+            {
+                a3 = position;
+                break;
+            }
+        }
+        foreach (Vector3 position in anchor_list)
+        {
+            if ((position != a3) && (FindChainCost(a3, position, true) < cost_b))
+            {
+                cost_b = FindChainCost(a3, position, true);
+                a4 = position;
+            }
+        }
+        Debug.Log("a1" + a1);
+        Debug.Log("a2" + a2);
+        Debug.Log("a3" + a3);
+        Debug.Log("a4" + a4);
     }
 
 }

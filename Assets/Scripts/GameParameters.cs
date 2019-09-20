@@ -14,22 +14,22 @@ public class GameParameters : MonoBehaviour
     // The number of the shuttles
     public int shuttleNum = 1;
     // The default size of the board
-    public int gridSize = 25;
+    public int gridSize = 20;
     // The minimal distance between two anchors
-    public float minAnchorDis = 7;
+    public float minAnchorDis = 3;
     // The number of counters in each generator
-    public int counterNumInGenerator = 6;
+    public int counterNumInGenerator = 1;
     // The number of counters each shuttle can carry
-    public int carryLimit = 4;
+    public int carryLimit = 1;
     // The number of anchors
-    public int anchorCount = 8;
+    public int anchorCount = 4;
     // The positions of the anchors are random or default
     public bool randomAnchor = true;
     // The time limit for AI
     public float timeLimitForAI = 180;
 
 	//added PM:
-	public int tokenColors = 3;
+	public int tokenColors = 2;
 	public int blocksPerTurn = 1;
 
     //MA

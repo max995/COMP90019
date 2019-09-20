@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public int Total_RealPath_Blocks;
     [HideInInspector] public int Total_FalsePath_Blocks;
     [HideInInspector] public int Total_Blocks;
+    [HideInInspector] public int Task1_a;
+    [HideInInspector] public int Task1_b;
 
 
     public GameObject gridTile;
@@ -87,13 +89,20 @@ public class GameManager : MonoBehaviour
         Total_RealPath_Blocks=0;
         Total_FalsePath_Blocks=0;
         Total_Blocks=0;
+        Task1_a = 0;
+        Task1_b = 0;
         SetPlayerTurn(false);
         boardScript = GetComponent<BoardGenerator>();
         boardScript.SetupScene();
-
+        //Methods.instance.Task1Anchor(anchorPositions, out Task1_a, out Task1_b);
+        //Debug.Log("a cost is:" + Task1_a);
+        //Debug.Log("b cost is:" + Task1_b);
         aiScript = GetComponent<AIManager>();
         aiScript.InitialiseAIs();
         InitialiseDeposited();
+        Methods.instance.Task1Anchor(anchorPositions, out Task1_a, out Task1_b);
+        Debug.Log("a cost is:" + Task1_a);
+        Debug.Log("b cost is:" + Task1_b);
         //sr = GetComponent<SpriteRenderer>();
         //test();
         //ah = GetComponent<AutoHuma>();
@@ -101,6 +110,8 @@ public class GameManager : MonoBehaviour
         trueAnchorPos = new Vector3[2];
         gameLog += "--- Game Start ---\n";
         gameLog += "--- Color: 0-RED , 1- Yellow, 2- Blue";
+
+        
     }
 
 
@@ -135,6 +146,7 @@ public class GameManager : MonoBehaviour
                 generators[i].GetComponent<GeneratorManager>().visitThisTurn = false;
             }
             yield return StartCoroutine(GetComponent<UIManager>().ShowAITurn());
+
             aiScript.AITurn();
             
          
