@@ -173,6 +173,7 @@ public class AIAgent : MonoBehaviour
                 }
                 ++i;
             }
+            
             return actions;
         }
 
@@ -190,7 +191,7 @@ public class AIAgent : MonoBehaviour
         // Choose fake path
         Vector3[] fakeAnchors = FindCheapestChain(trueAnchors, false);
         Debug.Log("True anchors: " + trueAnchors[0] + "  " + trueAnchors[1]);
-        //??
+     
         GameManager.instance.trueAnchorPos[0] = trueAnchors[0];
         GameManager.instance.trueAnchorPos[1] = trueAnchors[1];
         Debug.Log("Fake anchors: " + fakeAnchors[0] + "  " + fakeAnchors[1]);
@@ -229,96 +230,97 @@ public class AIAgent : MonoBehaviour
         int[] bag = actions.GetPickupColorBagPos();
 
         // Randomly deposit
-        Vector3 pos;
+        //Vector3 pos;
         List<int> randomOrder = RandomOrder(actions.GetPickupColor().Sum());
         foreach (int i in randomOrder)
         {
-            //Debug.Log("index: " + i + "   " + "color: " + bag[i]);
+            Debug.Log("index: " + i + "   " + "color: " + bag[i]);
             //Start by randomly distributing some counters around the board. Added PM.
             //Vector3 pos;
-            if (randomDistrib > 0)
-			{
-                //Vector3 pos;
-                pos = GetRandomEmptyGrid(AIactions, actions);
-                Debug.Log("Random Distrib: " + pos);
-                GameManager.instance.Total_FalsePath_Blocks++;
-                //Debug.Log("??????");
-                actions.MoveTo(pos);
-                actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
-				randomDistrib -= 1;
+   //         if (randomDistrib > 0)
+			//{
+   //             //Vector3 pos;
+   //             pos = GetRandomEmptyGrid(AIactions, actions);
+   //             Debug.Log("Random Distrib: " + pos);
+   //             GameManager.instance.Total_FalsePath_Blocks++;
+
+   //             //Debug.Log("??????");
+   //             actions.MoveTo(pos);
+   //             actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
+			//	randomDistrib -= 1;
                 
-            }
-			else
-			{
-				tryNum = Random.Range(0, 3);
-				if (bag[i] == 0 && tryNum <= 1)
-				{
-					List <Vector3> positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(trueAnchors[0], trueAnchors[1], true));
-					positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
-					//Vector3 pos;
-					if (positions.Count == 0)
-					{
-						pos = GetRandomEmptyGrid(AIactions, actions);
-					}
-					else
-					{
-						pos = Methods.instance.RandomPosition(positions);
-					}
+   //         }
+			//else
+			//{
+			//	tryNum = Random.Range(0, 3);
+			//	if (bag[i] == 0 && tryNum <= 1)
+			//	{
+			//		List <Vector3> positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(trueAnchors[0], trueAnchors[1], true));
+			//		positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
+			//		//Vector3 pos;
+			//		if (positions.Count == 0)
+			//		{
+			//			pos = GetRandomEmptyGrid(AIactions, actions);
+			//		}
+			//		else
+			//		{
+			//			pos = Methods.instance.RandomPosition(positions);
+			//		}
                     
-					Debug.Log("Deposit At True Path: " + pos);
-                    GameManager.instance.Total_RealPath_Blocks++;
-                    if (GameManager.instance.firstBlock == false) {
-                        GameManager.instance.Unblocked_Reds++;
-                        Debug.Log("Deposit red At True Path:" + GameManager.instance.Unblocked_Reds);
-                    }
-					actions.MoveTo(pos);
-					actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
+			//		Debug.Log("Deposit At True Path: " + pos);
+   //                 GameManager.instance.Total_RealPath_Blocks++;
+   //                 if (GameManager.instance.firstBlock == false) {
+   //                     GameManager.instance.Unblocked_Reds++;
+   //                     Debug.Log("Deposit red At True Path:" + GameManager.instance.Unblocked_Reds);
+   //                 }
+			//		actions.MoveTo(pos);
+			//		actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
                     
 
 
-                }
-				else if (tryNum > 1)
-				{
-					//Vector3 pos;
-					pos = GetRandomEmptyGrid(AIactions, actions);
+   //             }
+			//	else if (tryNum > 1)
+			//	{
+			//		//Vector3 pos;
+			//		pos = GetRandomEmptyGrid(AIactions, actions);
 
-                    Debug.Log("Deposit Elsewhere: " + pos);
-                    GameManager.instance.Total_FalsePath_Blocks++;
-                    actions.MoveTo(pos);
-					actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
+   //                 Debug.Log("Deposit Elsewhere: " + pos);
+   //                 GameManager.instance.Total_FalsePath_Blocks++;
+   //                 actions.MoveTo(pos);
+			//		actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
                     
-                }
-				else 
-				{
-					List<Vector3> positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(fakeAnchors[0], fakeAnchors[1], false));
-					positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
-					//Vector3 pos;
-					if (positions.Count == 0)
-					{
-						pos = GetRandomEmptyGrid(AIactions, actions);
-					}
-					else
-					{
-						pos = Methods.instance.RandomPosition(positions);
-					}
+   //             }
+			//	else 
+			//	{
+			//		List<Vector3> positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(fakeAnchors[0], fakeAnchors[1], false));
+			//		positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
+			//		//Vector3 pos;
+			//		if (positions.Count == 0)
+			//		{
+			//			pos = GetRandomEmptyGrid(AIactions, actions);
+			//		}
+			//		else
+			//		{
+			//			pos = Methods.instance.RandomPosition(positions);
+			//		}
               
-                    Debug.Log("Deposit At Fake Path: " + pos);
-                    GameManager.instance.Total_FalsePath_Blocks++;
-                    actions.MoveTo(pos);
-					actions.DepositIndexAt(pos, i, Random.Range(0.1f, 3f));
+   //                 Debug.Log("Deposit At Fake Path: " + pos);
+   //                 GameManager.instance.Total_FalsePath_Blocks++;
+   //                 actions.MoveTo(pos);
+			//		actions.DepositIndexAt(pos, i, Random.Range(0.1f, 3f));
                     
-                }
-			}
+   //             }
+			//}
             
             bag[i] = -1;
 
-            // Randomly turn over another counter when deposit
-            // int k = Random.Range(0, actions.GetPickupColor().Sum());
-            // if (bag[k] != -1)
-            // {
-            // actions.TurnOverCounterInBagByIndex(k);
-            // }
-            
+            //Randomly turn over another counter when deposit
+             int k = Random.Range(0, actions.GetPickupColor().Sum());
+            if (bag[k] != -1)
+            {
+                actions.TurnOverCounterInBagByIndex(k);
+            }
+
         }
         return actions;
     }

@@ -43,7 +43,7 @@ public class OptionMenu : MonoBehaviour
 
 	private void SetTokenColors()
 	{
-		GameParameters.instance.tokenColors = 3;
+		GameParameters.instance.tokenColors = 2;
 	}
 
 	private void SetBlocksPerTurn()
