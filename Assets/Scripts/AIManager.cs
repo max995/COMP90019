@@ -104,6 +104,12 @@ public class AIManager : MonoBehaviour
         }
         for (int i = 0; i < AIs.Count; i++)
         {
+            //???
+            //if (i == 0 && GameParameters.instance.startDelay > 0)
+            //{
+            //    Debug.Log("try to stop for" + GameParameters.instance.startDelay);
+            //    Loading(GameParameters.instance.startDelay);
+            //}
             
             StartCoroutine(ExecuteActions(AIs[i], AIactions[i], i));
            

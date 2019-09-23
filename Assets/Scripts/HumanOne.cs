@@ -16,19 +16,26 @@ public class HumanOne : MonoBehaviour
 
     public Vector3 LastestRed(string red_token)
     {
+        Vector3 pos = new Vector3();
+        string[] red_tokens = red_token.Split('#');
         // Debug.Log(red_token);
-        Vector3 pos=new Vector3();
-        string[] red_tokens = red_token.Split('#'); 
-        string lastRed = red_tokens[red_tokens.Length-2];
-        Debug.Log(red_tokens[red_tokens.Length - 2]);
-        string[] posTemp = lastRed.Split('-');
-        //Debug.Log(posTemp);
-        int x = StringToInt(posTemp[0]);
-        //Debug.Log(x);
-        int y = StringToInt(posTemp[1]);
-        //Debug.Log(y);
-        pos = Methods.instance.FindAdjForTile(x,y);
-        return pos;
+        if (red_tokens.Length>1) {
+            
+            string lastRed = red_tokens[red_tokens.Length - 2];
+            Debug.Log(red_tokens[red_tokens.Length - 2]);
+            string[] posTemp = lastRed.Split('-');
+            //Debug.Log(posTemp);
+            int x = StringToInt(posTemp[0]);
+            //Debug.Log(x);
+            int y = StringToInt(posTemp[1]);
+            //Debug.Log(y);
+            pos = Methods.instance.FindAdjForTile(x, y);
+            return pos;
+        }
+        else
+        {
+            return Methods.instance.RandomPosition(bg.gridPositions);
+        }
     }
 
     private int StringToInt(string s)
@@ -48,11 +55,11 @@ public class HumanOne : MonoBehaviour
     private Vector3 HumanDecision(int humanHint,string reds)
     {
         Vector3 pos_human = new Vector3();
-        if (humanHint == 0)
+        if (humanHint == 1)
         {
             pos_human= Methods.instance.RandomPosition(bg.gridPositions);
         }
-        if (humanHint==1)
+        if (humanHint==0)
         {
             pos_human = LastestRed(reds);
             //make red log clear each turn?

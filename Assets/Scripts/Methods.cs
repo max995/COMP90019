@@ -40,15 +40,29 @@ public class Methods : MonoBehaviour
     //If the pos is on one anchor, return the position of the anchor's center, else return Vector3.zero
     public Vector3 IsOnAnAnchor(Vector3 pos)
     {
-       
+        //float Xmin;
+        //float Xmax;
+        //float Ymin;
+        //float Ymax;
         foreach (Vector3 position in GameManager.instance.anchorPositions)
         {
-    //not real judge the position need consider the transfer method
+            //wrong !!!!!!!!!!
             if (Vector3.Distance(position, pos)< 1f)
             {
                 return position;
             }
-            
+            //Xmin = Mathf.Floor(position.x);
+            //Ymin = Mathf.Floor(position.y);
+            //Xmax = Mathf.Ceil(position.x);
+            //Ymax = Mathf.Ceil(position.y);
+            //if (pos.x < Xmin || pos.x > Xmax || pos.y < Ymin || pos.y > Ymax)
+            //{
+            //    return Vector3.zero;
+            //}
+            //else
+            //{
+            //    return posit
+            //}
         }
         return Vector3.zero;
     }
@@ -617,11 +631,11 @@ public class Methods : MonoBehaviour
         start = TransAnchorPositionInGrid(start);
         end = TransAnchorPositionInGrid(end);
         List<Vector3> emptyPos = RemoveDepositedAndAnchor(FindPathInGrid(start, end, onlyRed));
-        Debug.Log("start in :"+ start +" end:"+ end);
-        foreach (Vector3 pos in emptyPos)
-        {
-            Debug.Log(pos);
-        }
+        //Debug.Log("start in :"+ start +" end:"+ end);
+        //foreach (Vector3 pos in emptyPos)
+        //{
+        //    Debug.Log(pos);
+        //}
         return emptyPos.Count;
     }
     

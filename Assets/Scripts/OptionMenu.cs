@@ -43,8 +43,9 @@ public class OptionMenu : MonoBehaviour
 
 	private void SetTokenColors()
 	{
-		GameParameters.instance.tokenColors = 2;
-	}
+		GameParameters.instance.tokenColors = 1;
+        
+    }
 
 	private void SetBlocksPerTurn()
 	{
@@ -94,8 +95,8 @@ public class OptionMenu : MonoBehaviour
             GameParameters.instance.tokenColors = StringToInt(tokenColorIF.text);
 
             //startime
-            
 
+            Debug.Log("the token color is:"+ GameParameters.instance.tokenColors);
 			//added PM to allow for just reds and blues in colorbag.
 			if (GameParameters.instance.tokenColors <3)
 			{

@@ -178,8 +178,6 @@ public class GameManager : MonoBehaviour
         GetComponent<UIManager>().ShowAIWinText();
         //calculate
         Methods.instance.Ratio(GameManager.instance.Total_RealPath_Blocks,GameManager.instance.Total_Blocks);
-        Debug.Log("Total_RealPath_Blocks is :"+ GameManager.instance.Total_RealPath_Blocks);
-        Debug.Log("Total_Blocks is :" + GameManager.instance.Total_Blocks);
         Debug.Log("the ratio is:"+ Methods.instance.Ratio(GameManager.instance.Total_RealPath_Blocks, GameManager.instance.Total_Blocks));
         Methods.instance.TurnAllWhiteCounterOver();
         SendToServer();

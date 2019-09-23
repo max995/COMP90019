@@ -4496,7 +4496,7 @@ MonoBehaviour:
   anchorCount: 4
   randomAnchor: 1
   timeLimitForAI: 180
-  tokenColors: 2
+  tokenColors: 1
   blocksPerTurn: 1
   startDelay: 0
   aiType: 0
