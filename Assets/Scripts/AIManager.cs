@@ -90,14 +90,15 @@ public class AIManager : MonoBehaviour
     public void AITurn()
     {
         AIactions.Clear();
-        turnCount++;
+        
         //ais=shuttles
         for (int i = 0; i < AIs.Count; i++)
         {
             Debug.Log("Shuttle " + i + "Decisions: -------------------");
             //Debug.Log("ai??" + AIs.Count);
             AIMoving[i] = true;
-            AIactions.Add(AIs[i].GetComponent<AIAgent>().MakeDecision(AIactions));
+            //Debug.Log(">>>>>>>"+)
+            AIactions.Add(AIs[i].GetComponent<AIAgent>().MakeDecision(AIactions, turnCount));
 
             AIactions[AIactions.Count - 1].MoveTo(new Vector3(-3.5f, GameParameters.instance.gridSize / 2f + i * 1.5f, 0f));
            
@@ -114,6 +115,7 @@ public class AIManager : MonoBehaviour
             StartCoroutine(ExecuteActions(AIs[i], AIactions[i], i));
            
         }
+        turnCount++;
     }
 
 

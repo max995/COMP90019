@@ -100,7 +100,13 @@ public class UIManager : MonoBehaviour
             {
                 timer.text = "Remaining Time For AI: " + min + ":" + sec;
             }
+            if (GameManager.instance.pathChange == 2)
+            {
+                GameManager.instance.GameOverPlayerWin();
+                Debug.Log("change path to win!!!!!"+ GameManager.instance.pathChange);
+            }
         }
+        
 
         
     }

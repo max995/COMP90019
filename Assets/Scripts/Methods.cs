@@ -36,6 +36,17 @@ public class Methods : MonoBehaviour
         int randomIndex = Random.Range(0, list.Count);
         return list[randomIndex];
     }
+    public Vector3 InorderPosition(List<Vector3> list)
+    {
+
+        
+  
+            int randomIndex = 0;
+            return list[randomIndex];
+        
+        
+    }
+
 
     //If the pos is on one anchor, return the position of the anchor's center, else return Vector3.zero
     public Vector3 IsOnAnAnchor(Vector3 pos)
@@ -638,7 +649,19 @@ public class Methods : MonoBehaviour
         //}
         return emptyPos.Count;
     }
-    
+    public List<Vector3> FindChainPosition(Vector3 start, Vector3 end, bool onlyRed)
+    {
+        start = TransAnchorPositionInGrid(start);
+        end = TransAnchorPositionInGrid(end);
+        List<Vector3> emptyPos = RemoveDepositedAndAnchor(FindPathInGrid(start, end, onlyRed));
+        //Debug.Log("start in :"+ start +" end:"+ end);
+        //foreach (Vector3 pos in emptyPos)
+        //{
+        //    Debug.Log(pos);
+        //}
+        return emptyPos;
+    }
+
     public void Task1Anchor(List<Vector3> anchor_list, out int cost_a, out int cost_b)
     {
         Vector3 a1 = anchor_list[0];
@@ -671,10 +694,41 @@ public class Methods : MonoBehaviour
                 a4 = position;
             }
         }
+        GameManager.instance.anchor_a1 = a1;
+        GameManager.instance.anchor_a2 = a2;
+        GameManager.instance.anchor_a3 = a3;
+        GameManager.instance.anchor_a4 = a4;
+        GameManager.instance.path_current = FindChainPosition(a1, a2, true);
+        GameManager.instance.path_b = FindChainPosition(a3, a4, true);
         Debug.Log("a1" + a1);
         Debug.Log("a2" + a2);
         Debug.Log("a3" + a3);
         Debug.Log("a4" + a4);
     }
 
+    public bool IsPathAvailable(List<Vector3> path_positions, List<Vector3> block_pos,int changeTimes)
+    {
+        bool j= false;
+        if (changeTimes!=1) {
+            foreach (Vector3 blocks in block_pos)
+            {
+                if (path_positions.Contains(blocks) == true)
+                {
+                    j = true;
+                    break;
+
+                }
+            }
+        }
+        return j;
+    }
+    public bool IsPathBloked(List<Vector3> path_positions, Vector3 pos)
+    {
+        bool flag = false;
+        if (path_positions.Contains(pos))
+        {
+            flag = true;
+        }
+        return flag;
+    }
 }

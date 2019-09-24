@@ -53,10 +53,19 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public List<List<int>> deposited = new List<List<int>>();
     // blocked[x][y] == true: (x, y) has been blocked
     [HideInInspector] public List<List<bool>> blocked = new List<List<bool>>();
+    [HideInInspector] public List<Vector3> blockedTile = new List<Vector3>();
     // Use to prevent counter turned over immediately after deposit
     [HideInInspector] public List<List<bool>> readyToTurnOver = new List<List<bool>>();
     // Store GameObjects of counters deposited on the board
     [HideInInspector] public List<List<GameObject>> countersOnBoard = new List<List<GameObject>>();
+    [HideInInspector] public Vector3 anchor_a1;
+    [HideInInspector] public Vector3 anchor_a2;
+    [HideInInspector] public Vector3 anchor_a3;
+    [HideInInspector] public Vector3 anchor_a4;
+    [HideInInspector] public List<Vector3> path_current;
+    [HideInInspector] public List<Vector3> path_a;
+    [HideInInspector] public List<Vector3> path_b;
+    [HideInInspector] public int pathChange;
 
     // Board Generator, creates the board and generators
     private BoardGenerator boardScript;
@@ -91,18 +100,23 @@ public class GameManager : MonoBehaviour
         Total_Blocks=0;
         Task1_a = 0;
         Task1_b = 0;
+        pathChange = 0;
         SetPlayerTurn(false);
         boardScript = GetComponent<BoardGenerator>();
         boardScript.SetupScene();
+        anchor_a1 = new Vector3();
+        anchor_a2 = new Vector3();
+        anchor_a3 = new Vector3();
+        anchor_a4 = new Vector3();
         //Methods.instance.Task1Anchor(anchorPositions, out Task1_a, out Task1_b);
         //Debug.Log("a cost is:" + Task1_a);
         //Debug.Log("b cost is:" + Task1_b);
         aiScript = GetComponent<AIManager>();
         aiScript.InitialiseAIs();
         InitialiseDeposited();
-        Methods.instance.Task1Anchor(anchorPositions, out Task1_a, out Task1_b);
-        Debug.Log("a cost is:" + Task1_a);
-        Debug.Log("b cost is:" + Task1_b);
+        //Methods.instance.Task1Anchor(anchorPositions, out Task1_a, out Task1_b);
+        //Debug.Log("a cost is:" + Task1_a);
+        //Debug.Log("b cost is:" + Task1_b);
         //sr = GetComponent<SpriteRenderer>();
         //test();
         //ah = GetComponent<AutoHuma>();

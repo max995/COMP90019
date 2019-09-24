@@ -148,6 +148,7 @@ public class BoardGenerator : MonoBehaviour
     {
         GameManager.instance.generators.Clear();
         GameManager.instance.parkingPos.Clear();
+        GameManager.instance.blockedTile.Clear();
         GameManager.instance.generators.Add(Methods.instance.LayoutObject(GameManager.instance.GeneratorsImages[0], -1.5f, GameParameters.instance.gridSize - 2f));
         GameManager.instance.parkingPos.Add(new Vector3(-1.5f - 2.2f, GameParameters.instance.gridSize - 2f - 2f, 0f));
         GameManager.instance.generators.Add(Methods.instance.LayoutObject(GameManager.instance.GeneratorsImages[1], -1.5f, 2f));
