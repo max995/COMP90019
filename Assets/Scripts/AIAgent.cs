@@ -151,10 +151,10 @@ public class AIAgent : MonoBehaviour
         // Check if can win the game this turn
         //List<Vector3> uselessRedCounters = GetUselessRedCounters(closestAnchorsRed);
         List<Vector3> redPickups = GetAllRedPickups();
-        int minCost1 = GameManager.instance.Task1_a;
-        int minCost2 = GameManager.instance.Task1_b;
-        List<Vector3> pathA = GameManager.instance.path_current;
-        List<Vector3> pathB = GameManager.instance.path_b;
+        int minCost1 = FindChainCost(GameManager.instance.anchor_a1, GameManager.instance.anchor_a2, true);
+        int minCost2 = FindChainCost(GameManager.instance.anchor_a3, GameManager.instance.anchor_a4, true);
+        List<Vector3> pathA = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(GameManager.instance.anchor_a1, GameManager.instance.anchor_a2, true));
+        List<Vector3> pathB = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(GameManager.instance.anchor_a3, GameManager.instance.anchor_a4, true));
         Debug.Log("minCost1: " + minCost1 + "  " + "minCost2 :" + minCost2 + "  ");
         //"useless: " + uselessRedCounters.Count);
         if (minCost1 <= GameParameters.instance.carryLimit * GameParameters.instance.shuttleNum && redPickups.Count >= minCost1 && GameManager.instance.pathChange == 0)
@@ -267,29 +267,35 @@ public class AIAgent : MonoBehaviour
 
         // Randomly deposit
         Vector3 pos;
-        //List<int> randomOrder = RandomOrder(actions.GetPickupColor().Sum());
+        List<int> randomOrder = RandomOrder(actions.GetPickupColor().Sum());
         List<int> inOrder = InOrder(actions.GetPickupColor().Sum());
         foreach (int i in inOrder)
+        //foreach (int i in randomOrder)
         {
             Debug.Log("index: " + i + "   " + "color: " + bag[i]);
             //tryNum = Random.Range(0, 3);
-            List<Vector3> positions = GameManager.instance.path_current;
-            if (turn == 0)
-            {
+            List<Vector3> positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2), true)); 
+            
                 if (bag[i] == 0)
                 {
                     //List<Vector3> positions = GameManager.instance.path_a;
                     positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
                     //Vector3 pos;
+                    //path a no plan
                     if (positions.Count == 0)
                     {
-                        pos = GetRandomEmptyGrid(AIactions, actions);
-                        Debug.Log("Deposit Elsewhere: " + pos);
-                        GameManager.instance.Total_FalsePath_Blocks++;
+                          positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4), true));
+                    //GameManager.instance.path_current = GameManager.instance.path_b;
+                            pos = Methods.instance.InorderPosition(positions);
+
+                            Debug.Log("Deposit change path : "+pos);
+                            GameManager.instance.pathChange++;
+                        
                     }
                     else
                     {
                         pos = Methods.instance.InorderPosition(positions);
+                    
                         //pos = positions.First();
                         //Methods.instance.RandomPosition(positions);
                         GameManager.instance.Total_RealPath_Blocks++;
@@ -317,60 +323,41 @@ public class AIAgent : MonoBehaviour
 
 
                 }
-                //try to find if be blocked
-                //else if (bag[i] == 0 && turn != 0)
-                //{
-                //    foreach (Vector3 blocks in GameManager.instance.blockedTile)
-                //    {
-                //        if (positions.Contains(blocks) == true)
-                //        {
-                //            positions = GameManager.instance.path_b;
-                //        }
-                //    }
-                //}
-            }
-            else if (turn != 0)
-            {
-                //if block the path a change to b
-                if (GameManager.instance.firstBlock==true)
-                {
-                    positions = GameManager.instance.path_b;
-                    GameManager.instance.path_current = GameManager.instance.path_b;
-                    Debug.Log("Deposit change path : ");
-                    GameManager.instance.pathChange++;
-                }
-                if (bag[i] == 0)
-                {
-                    //List<Vector3> positions = GameManager.instance.path_a;
-                    positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
-                    //Vector3 pos;
-                    //foreach (Vector3 ooo in positions)
-                    //{
-                    //    Debug.Log("??????" + ooo);
-                    //}
-                    //pos = positions.First();
-                    pos = Methods.instance.InorderPosition(positions);
-                    //Debug.Log("Deposit At First Path: " + pos);
-                    GameManager.instance.Total_RealPath_Blocks++;
-                    if (GameManager.instance.firstBlock == false)
-                    {
-                        GameManager.instance.Unblocked_Reds++;
-                        Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
-                    }
-                    actions.MoveTo(pos);
-                    actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
-                }
-                else if (bag[i] != 0)
-                {
-                    //Vector3 pos;
-                    pos = GetRandomEmptyGrid(AIactions, actions);
-                    Debug.Log("Deposit Elsewhere: " + pos);
-                    GameManager.instance.Total_FalsePath_Blocks++;
-                    actions.MoveTo(pos);
-                    actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
+                
+            //}
+            //else if (turn != 0)
+            //{
+            //    //if block the path a change to b
+            //    //if (GameManager.instance.firstBlock==true)
+                
+            //    if (bag[i] == 0)
+            //    {
+            //        //List<Vector3> positions = GameManager.instance.path_a;
+            //        positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
 
-                }
-            }
+            //        //pos = Methods.instance.RandomPosition(positions);
+            //        pos = Methods.instance.InorderPosition(positions);
+            //        //Debug.Log("Deposit At First Path: " + pos);
+            //        GameManager.instance.Total_RealPath_Blocks++;
+            //        if (GameManager.instance.firstBlock == false)
+            //        {
+            //            GameManager.instance.Unblocked_Reds++;
+            //            Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
+            //        }
+            //        actions.MoveTo(pos);
+            //        actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
+            //    }
+            //    else if (bag[i] != 0)
+            //    {
+            //        //Vector3 pos;
+            //        pos = GetRandomEmptyGrid(AIactions, actions);
+            //        Debug.Log("Deposit Elsewhere: " + pos);
+            //        GameManager.instance.Total_FalsePath_Blocks++;
+            //        actions.MoveTo(pos);
+            //        actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
+
+            //    }
+            //}
 
 
 

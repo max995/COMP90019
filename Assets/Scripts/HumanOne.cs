@@ -206,10 +206,14 @@ public class HumanOne : MonoBehaviour
                 bg.gridPositions.Remove(pos);
                 tl.AutoGrey(blockTile);
             }
-            if(Methods.instance.IsPathBloked(GameManager.instance.path_current,blockTile.transform.position) && GameManager.instance.firstBlock==false)
+            if (Methods.instance.Contains(blockTile.transform.position, GameManager.instance.trueAnchorPos)&& GameManager.instance.firstBlock == false)
             {
                 GameManager.instance.firstBlock = true;
             }
+            //if(Methods.instance.IsPathBloked(GameManager.instance.path_current,blockTile.transform.position) && GameManager.instance.firstBlock==false)
+            //{
+            //    GameManager.instance.firstBlock = true;
+            //}
            
         }
 

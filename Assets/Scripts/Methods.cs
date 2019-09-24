@@ -698,8 +698,8 @@ public class Methods : MonoBehaviour
         GameManager.instance.anchor_a2 = a2;
         GameManager.instance.anchor_a3 = a3;
         GameManager.instance.anchor_a4 = a4;
-        GameManager.instance.path_current = FindChainPosition(a1, a2, true);
-        GameManager.instance.path_b = FindChainPosition(a3, a4, true);
+        //GameManager.instance.path_current = FindChainPosition(a1, a2, true);
+        //GameManager.instance.path_b = FindChainPosition(a3, a4, true);
         Debug.Log("a1" + a1);
         Debug.Log("a2" + a2);
         Debug.Log("a3" + a3);
