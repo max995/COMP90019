@@ -55,11 +55,11 @@ public class HumanOne : MonoBehaviour
     private Vector3 HumanDecision(int humanHint,string reds)
     {
         Vector3 pos_human = new Vector3();
-        if (humanHint == 1)
+        if (humanHint == 0)
         {
             pos_human= Methods.instance.RandomPosition(bg.gridPositions);
         }
-        if (humanHint==0)
+        if (humanHint==1)
         {
             pos_human = LastestRed(reds);
             //make red log clear each turn?

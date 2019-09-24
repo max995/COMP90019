@@ -62,18 +62,7 @@ public class Methods : MonoBehaviour
             {
                 return position;
             }
-            //Xmin = Mathf.Floor(position.x);
-            //Ymin = Mathf.Floor(position.y);
-            //Xmax = Mathf.Ceil(position.x);
-            //Ymax = Mathf.Ceil(position.y);
-            //if (pos.x < Xmin || pos.x > Xmax || pos.y < Ymin || pos.y > Ymax)
-            //{
-            //    return Vector3.zero;
-            //}
-            //else
-            //{
-            //    return posit
-            //}
+            
         }
         return Vector3.zero;
     }
@@ -595,9 +584,14 @@ public class Methods : MonoBehaviour
     }
 
     //measure deceptive under ai wins statement
-    
-  
-   
+
+
+    //public Vector3 RondomPosition_Narrive()
+
+    //{
+
+    //    return new Vector3(0, 0, 0);
+    //}
     //dignose of the anchor
     public bool Contains(Vector3 p, Vector3[] m_aptVertices)
     {
