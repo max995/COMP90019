@@ -98,7 +98,7 @@ public class AIManager : MonoBehaviour
             //Debug.Log("ai??" + AIs.Count);
             AIMoving[i] = true;
             //Debug.Log(">>>>>>>"+)
-            AIactions.Add(AIs[i].GetComponent<AIAgent>().MakeDecision(AIactions, turnCount));
+            AIactions.Add(AIs[i].GetComponent<AIAgent>().MakeDecisionOne(AIactions, turnCount));
 
             AIactions[AIactions.Count - 1].MoveTo(new Vector3(-3.5f, GameParameters.instance.gridSize / 2f + i * 1.5f, 0f));
            
@@ -129,7 +129,8 @@ public class AIManager : MonoBehaviour
     IEnumerator ExecuteActions(GameObject AI, Actions actions, int AIindex)
     {
         //yield return Loading(10f);
-        if (turnCount == 1 && AIindex != 0)
+        //int aiturn = turnCount + 1;
+        if (AIindex != 0)
         {
             yield return Loading(GameParameters.instance.startDelay);
         }

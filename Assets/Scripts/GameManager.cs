@@ -62,9 +62,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public Vector3 anchor_a2;
     [HideInInspector] public Vector3 anchor_a3;
     [HideInInspector] public Vector3 anchor_a4;
-    //[HideInInspector] public List<Vector3> path_current;
-    //[HideInInspector] public List<Vector3> path_a;
-    //[HideInInspector] public List<Vector3> path_b;
+    [HideInInspector] public List<Vector3> path_current;
+    [HideInInspector] public List<Vector3> path_a;
+    [HideInInspector] public List<Vector3> path_b;
     [HideInInspector] public int pathChange;
 
     // Board Generator, creates the board and generators
@@ -114,6 +114,9 @@ public class GameManager : MonoBehaviour
         aiScript = GetComponent<AIManager>();
         aiScript.InitialiseAIs();
         InitialiseDeposited();
+        //intillise before using
+        Methods.instance.Task1Anchor(GameManager.instance.anchorPositions, out GameManager.instance.Task1_a, out GameManager.instance.Task1_b);
+        
         //Methods.instance.Task1Anchor(anchorPositions, out Task1_a, out Task1_b);
         //Debug.Log("a cost is:" + Task1_a);
         //Debug.Log("b cost is:" + Task1_b);

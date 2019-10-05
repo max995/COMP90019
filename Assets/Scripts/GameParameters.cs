@@ -29,7 +29,7 @@ public class GameParameters : MonoBehaviour
     public float timeLimitForAI = 180;
 
 	//added PM:
-	public int tokenColors = 2;
+	public int tokenColors = 3;
 	public int blocksPerTurn = 1;
 
     //MA
@@ -88,7 +88,7 @@ public class GameParameters : MonoBehaviour
         */
         // Your code BEGINS HERE
 
-
+        SetColorProportion(100, 0, 0);
         // Your code ENDS HERE
     }
 

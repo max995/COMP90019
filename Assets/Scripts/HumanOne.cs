@@ -68,6 +68,7 @@ public class HumanOne : MonoBehaviour
         if (humanHint == 2)
         {
             pos_human = RedNearAnchor(reds);
+            //keep it in the path
             Debug.Log("I am the red near anchor");
         }
         if (humanHint==3)
@@ -186,7 +187,7 @@ public class HumanOne : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Debug.Log("try to cheack the");
+        //Debug.Log("try to check the");
         if (!GameManager.instance.gameOver && GameManager.instance.playerTurn && GameManager.instance.pathChange!=2)
         {
             Debug.Log("is true?" + GameManager.instance.playerTurn);
@@ -204,16 +205,14 @@ public class HumanOne : MonoBehaviour
             {
                 GameManager.instance.blockedTile.Add(blockTile.transform.position);
                 bg.gridPositions.Remove(pos);
-                tl.AutoGrey(blockTile);
+                Debug.Log("test the region");
+                //tl.AutoGrey(blockTile);
             }
             if (Methods.instance.Contains(blockTile.transform.position, GameManager.instance.trueAnchorPos)&& GameManager.instance.firstBlock == false)
             {
                 GameManager.instance.firstBlock = true;
             }
-            //if(Methods.instance.IsPathBloked(GameManager.instance.path_current,blockTile.transform.position) && GameManager.instance.firstBlock==false)
-            //{
-            //    GameManager.instance.firstBlock = true;
-            //}
+          
            
         }
 

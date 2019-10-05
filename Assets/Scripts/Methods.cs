@@ -97,6 +97,70 @@ public class Methods : MonoBehaviour
         return false;
     }
 
+    
+    
+
+    //record all the tile in the region list，use the central pos in anchor
+
+    public List<Vector3> TilesNarrativeRegion(Vector3 anchor1,Vector3 anchor2)
+    {
+        List<Vector3> narrative_region = new List<Vector3>();
+        //BoardGenerator bg = GetComponent<BoardGenerator>();
+        //TileController tl = GetComponent<TileController>();
+        float Xmin = anchor1.x;
+        float Xmax = anchor1.x;
+        float Ymin = anchor1.y;
+        float Ymax = anchor1.y;
+        Vector3[] m_aptVertices={anchor1, anchor2};
+        Debug.Log("the narrative region from to"+ anchor1+anchor2);
+        foreach (Vector3 pt in m_aptVertices)
+        {
+            if (Xmin > pt.x)
+                Xmin = pt.x;
+
+            if (Xmax < pt.x)
+                Xmax = pt.x;
+
+            if (Ymin > pt.y)
+                Ymin = pt.y;
+
+            if (Ymax < pt.y)
+                Ymax = pt.y;
+        }
+        Xmin = Mathf.Floor(Xmin);
+        Xmax = Mathf.Ceil(Xmax);
+        Ymin = Mathf.Floor(Ymin);
+        Ymax = Mathf.Ceil(Ymax);
+
+        Debug.Log("check if all the region in the list"+Xmin+Xmax+Ymin+Ymax);
+        for (int x= (int)Xmin; x<=Xmax;x++)
+        {
+            for (int y=(int)Ymin;y<=Ymax;y++)
+            {
+                if(IsOnAnAnchor(new Vector3(x, y, 0f))==Vector3.zero)
+                {
+                    narrative_region.Add(new Vector3(x, y, 0f));
+                    Debug.Log("the narrative region includes:"+ new Vector3(x, y, 0f));
+                    //auto grey
+                    //GameObject blockTile = bg.tilePos[x, y];
+                    //blockTile.GetComponent<Transform>().position = new Vector3(x, y, 0f);
+                    
+                    //    //GameManager.instance.blockedTile.Add(blockTile.transform.position);
+                    //    //bg.gridPositions.Remove(pos);
+                    //    tl.AutoGrey(blockTile);
+                    
+                }
+            }
+            
+        }
+            
+            return narrative_region;
+    }
+
+
+
+
+
     public Vector3 FindAdjForTile(int x, int y)
     {
         Vector3 pos = new Vector3(0, 0, 0);
@@ -128,7 +192,7 @@ public class Methods : MonoBehaviour
         return pos;
     }
 
-    //anchor type
+    //anchor type and need to change it in the path
     public Vector3 FindAdjForAnchor(Vector3 pos_temp)
     {
         Vector3 pos = new Vector3(0, 0, 0);
@@ -167,6 +231,7 @@ public class Methods : MonoBehaviour
             {
                 pos = new Vector3(pos_temp.x - 1.5f, pos_temp.y - 0.5f, 0f);
             }
+            
         }
 
         catch (KeyNotFoundException)
@@ -447,6 +512,7 @@ public class Methods : MonoBehaviour
     // Transfer anchor's center position to a valid grid
     public Vector3 TransAnchorPositionInGrid(Vector3 position)
     {
+
         return new Vector3(position.x - 0.5f, position.y - 0.5f, 0f);
     }
 
@@ -585,12 +651,25 @@ public class Methods : MonoBehaviour
 
     //measure deceptive under ai wins statement
 
-
-    //public Vector3 RondomPosition_Narrive()
+//not finish
+    //public List<Vector3> RondomPosition_Narrive(GameObject[,] all_tile)
 
     //{
+    //    List<Vector3> narrative_region = new List<Vector3>();
+    //    Vector3 pos;
+    //    for (int x = 0; x < all_tile.GetLength(0); x++)
+    //    {
+    //        for (int y = 0; y < all_tile.GetLength(1); y++)
+    //        {
+    //            pos = new Vector3(x, y, 0f);
+    //           if (narrative_region.Contains(pos)==false && )
+    //            {
 
-    //    return new Vector3(0, 0, 0);
+    //            }
+    //        }
+    //    }
+
+    //    return narrative_region;
     //}
     //dignose of the anchor
     public bool Contains(Vector3 p, Vector3[] m_aptVertices)
@@ -604,17 +683,23 @@ public class Methods : MonoBehaviour
         foreach (Vector3 pt in m_aptVertices)
         {
             if (Xmin > pt.x)
-                Xmin = Mathf.Floor(pt.x);
+                Xmin = pt.x;
 
             if (Xmax < pt.x)
-                Xmax = Mathf.Ceil(pt.x);
+                Xmax = pt.x;
 
             if (Ymin > pt.y)
-                Ymin = Mathf.Floor(pt.y);
+                Ymin = pt.y;
 
             if (Ymax < pt.y)
-                Ymax = Mathf.Ceil(pt.y);
+                Ymax = pt.y;
         }
+        Xmin = Mathf.Floor(Xmin);
+        Xmax = Mathf.Ceil(Xmax);
+        Ymin = Mathf.Floor(Ymin);
+        Ymax = Mathf.Ceil(Ymax) ;
+
+       // Debug.Log("check if all the region in the list:" + Xmin+"," + Xmax + "," + Ymin + "," + Ymax);
         if (p.x < Xmin || p.x > Xmax || p.y < Ymin || p.y > Ymax)
             bContains = false;
         else
@@ -656,6 +741,7 @@ public class Methods : MonoBehaviour
         return emptyPos;
     }
 
+    //task 1 set up
     public void Task1Anchor(List<Vector3> anchor_list, out int cost_a, out int cost_b)
     {
         Vector3 a1 = anchor_list[0];
@@ -689,6 +775,8 @@ public class Methods : MonoBehaviour
             }
         }
         GameManager.instance.anchor_a1 = a1;
+        Debug.Log("the anchor position is"+a1);
+        Debug.Log("after tanrsfer to the anchor is"+TransAnchorPositionInGrid(a1));
         GameManager.instance.anchor_a2 = a2;
         GameManager.instance.anchor_a3 = a3;
         GameManager.instance.anchor_a4 = a4;
