@@ -98,7 +98,7 @@ public class AIManager : MonoBehaviour
             //Debug.Log("ai??" + AIs.Count);
             AIMoving[i] = true;
             //Debug.Log(">>>>>>>"+)
-            AIactions.Add(AIs[i].GetComponent<AIAgent>().MakeDecisionOne(AIactions, turnCount));
+            AIactions.Add(AIs[i].GetComponent<AIAgent>().MakeDecisionsTwo(AIactions, turnCount));
 
             AIactions[AIactions.Count - 1].MoveTo(new Vector3(-3.5f, GameParameters.instance.gridSize / 2f + i * 1.5f, 0f));
            
@@ -217,6 +217,7 @@ public class AIManager : MonoBehaviour
             yield return StartCoroutine(MoveToBagPosition(AI, GetBagPosByColor(AI, color)));
             if (color == 0)
             {
+                GameManager.instance.depositRed.Add(new Vector3(pos.x, pos.y, 0f));
                 GameManager.instance.redToken += pos.x + "-" + pos.y + "#";
                 //Debug.Log("deposits the red");
             }
@@ -243,6 +244,7 @@ public class AIManager : MonoBehaviour
             if (AI.GetComponent<AIBehavior>().bagCounterColor[index] == 0)
             {
                 GameManager.instance.redToken += pos.x + "-" + pos.y + "#";
+                GameManager.instance.depositRed.Add(new Vector3(pos.x, pos.y, 0f));
                 //Debug.Log("deposits the red");
             }
             yield return StartCoroutine(MoveToBagPosition(AI, index));

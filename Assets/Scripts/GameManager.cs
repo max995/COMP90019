@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public List<Vector3> anchorPositions = new List<Vector3>();
     // The colors of deposited counters, deposited[x][y] == -1 means empty grid
     [HideInInspector] public List<List<int>> deposited = new List<List<int>>();
+    //recof all the deposited red token
+    [HideInInspector] public List<Vector3> depositRed = new List<Vector3>();
     // blocked[x][y] == true: (x, y) has been blocked
     [HideInInspector] public List<List<bool>> blocked = new List<List<bool>>();
     [HideInInspector] public List<Vector3> blockedTile = new List<Vector3>();
@@ -216,6 +218,7 @@ public class GameManager : MonoBehaviour
     private void InitialiseDeposited()
     {
         deposited.Clear();
+        depositRed.Clear();
         readyToTurnOver.Clear();
         blocked.Clear();
         countersOnBoard.Clear();

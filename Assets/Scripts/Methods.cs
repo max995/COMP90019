@@ -37,15 +37,34 @@ public class Methods : MonoBehaviour
         return list[randomIndex];
     }
     public Vector3 InorderPosition(List<Vector3> list)
-    {
-
-        
-  
-            int randomIndex = 0;
-            return list[randomIndex];
-        
-        
+    {     int randomIndex = 0;
+            return list[randomIndex]; 
     }
+
+    public Vector3 Random_InoderPossition(List<Vector3> list,int turn_times, List<Vector3> list2)
+    {
+        int randomIndex=0;
+        if (turn_times == 0)
+        {
+            randomIndex = Random.Range(0, list.Count);
+            //return list[randomIndex];
+           // Debug.Log("the relevant random is"+randomIndex);
+        }
+        else
+        {
+            
+            foreach (Vector3 pos in list)
+            {
+                if (list2.Contains(pos))
+                {
+                    randomIndex = list2.IndexOf(pos) + 1;
+                    break;
+                }
+            }
+        }
+        return list[randomIndex];
+    }
+
 
 
     //If the pos is on one anchor, return the position of the anchor's center, else return Vector3.zero
