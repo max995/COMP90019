@@ -55,11 +55,11 @@ public class HumanOne : MonoBehaviour
     private Vector3 HumanDecision(int humanHint,string reds)
     {
         Vector3 pos_human = new Vector3();
-        if (humanHint == 0)
+        if (humanHint == 1)
         {
             pos_human= Methods.instance.RandomPosition(bg.gridPositions);
         }
-        if (humanHint==1)
+        if (humanHint==0)
         {
             pos_human = LastestRed(reds);
             //make red log clear each turn?
@@ -205,14 +205,16 @@ public class HumanOne : MonoBehaviour
             {
                 GameManager.instance.blockedTile.Add(blockTile.transform.position);
                 bg.gridPositions.Remove(pos);
-                Debug.Log("test the region");
-                //tl.AutoGrey(blockTile);
+                tl.AutoGrey(blockTile);
             }
             if (Methods.instance.Contains(blockTile.transform.position, GameManager.instance.trueAnchorPos)&& GameManager.instance.firstBlock == false)
             {
                 GameManager.instance.firstBlock = true;
             }
-          
+            //if(Methods.instance.IsPathBloked(GameManager.instance.path_current,blockTile.transform.position) && GameManager.instance.firstBlock==false)
+            //{
+            //    GameManager.instance.firstBlock = true;
+            //}
            
         }
 

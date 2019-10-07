@@ -34,7 +34,6 @@ public class AIAgent : MonoBehaviour
                 if (anchorCenter1 == anchorCenter2) continue;
                 Vector3 anchor1 = Methods.instance.TransAnchorPositionInGrid(anchorCenter1);
                 Vector3 anchor2 = Methods.instance.TransAnchorPositionInGrid(anchorCenter2);
-                //Methods.instance.TilesNarrativeRegion(anchorCenter1,anchorCenter2);
                 int cost = FindChainCost(anchor1, anchor2, onlyRed);
                 if (cost != 0 && cost < cheapestCost && !(except[0] == anchor1 && except[1] == anchor2) && !(except[0] == anchor2 && except[1] == anchor1))
                 {
@@ -135,7 +134,7 @@ public class AIAgent : MonoBehaviour
 
     private void Start()
     {
-        Methods.instance.Task1Anchor(GameManager.instance.anchorPositions, out GameManager.instance.Task1_a, out GameManager.instance.Task1_b);
+        //Methods.instance.Task1Anchor(GameManager.instance.anchorPositions, out GameManager.instance.Task1_a, out GameManager.instance.Task1_b);
 
     }
 
@@ -152,8 +151,6 @@ public class AIAgent : MonoBehaviour
         //List<Vector3> uselessRedCounters = GetUselessRedCounters(closestAnchorsRed);
         List<Vector3> redPickups = GetAllRedPickups();
         int minCost1 = FindChainCost(GameManager.instance.anchor_a1, GameManager.instance.anchor_a2, true);
-        
-        //Methods.instance.TilesNarrativeRegion(GameManager.instance.anchor_a1, GameManager.instance.anchor_a2);
         int minCost2 = FindChainCost(GameManager.instance.anchor_a3, GameManager.instance.anchor_a4, true);
         List<Vector3> pathA = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(GameManager.instance.anchor_a1, GameManager.instance.anchor_a2, true));
         List<Vector3> pathB = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(GameManager.instance.anchor_a3, GameManager.instance.anchor_a4, true));
@@ -275,6 +272,7 @@ public class AIAgent : MonoBehaviour
         foreach (int i in randomOrder)
         {
             Debug.Log("index: " + i + "   " + "color: " + bag[i]);
+            //imete as coin
             tryNum = Random.Range(0, 3);
             List<Vector3> positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2), true));
             //even
@@ -346,59 +344,72 @@ public class AIAgent : MonoBehaviour
 
 
     public Actions MakeDecisionOne(List<Actions> AIactions, int turn)
-
     {
-        Actions actions = new Actions();
-        Debug.Log("now is turn :" + turn);
-        Methods.instance.Task1Anchor(GameManager.instance.anchorPositions, out GameManager.instance.Task1_a, out GameManager.instance.Task1_b);
+        
+            Actions actions = new Actions();
+            Debug.Log("now is turn :" + turn);
+            Methods.instance.Task1Anchor(GameManager.instance.anchorPositions, out GameManager.instance.Task1_a, out GameManager.instance.Task1_b);
 
-        //Vector3[] trueAnchors;
-        Vector3[] closestAnchorsRed = FindCheapestChain(new Vector3[2], true);
+            //Vector3[] trueAnchors;
+            Vector3[] closestAnchorsRed = FindCheapestChain(new Vector3[2], true);
 
-        // Check if can win the game this turn
-        //List<Vector3> uselessRedCounters = GetUselessRedCounters(closestAnchorsRed);
-        List<Vector3> redPickups = GetAllRedPickups();
-        int minCost1 = GameManager.instance.Task1_a;
-        int minCost2 = GameManager.instance.Task1_b;
-        List<Vector3> pathA = GameManager.instance.path_current;
+            // Check if can win the game this turn
+            //List<Vector3> uselessRedCounters = GetUselessRedCounters(closestAnchorsRed);
+            List<Vector3> redPickups = GetAllRedPickups();
+            int minCost1 = GameManager.instance.Task1_a;
+            int minCost2 = GameManager.instance.Task1_b;
+        List<Vector3> pathA = GameManager.instance.path_a;
+        //List<Vector3> pathA= Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(GameManager.instance.anchor_a1, GameManager.instance.anchor_a2, true));
+        //List<Vector3> pathB= Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(GameManager.instance.anchor_a3, GameManager.instance.anchor_a4, true));
         List<Vector3> pathB = GameManager.instance.path_b;
+        Debug.Log(" the path a is " + pathA.Count);
+        Debug.Log(" the path a is " + pathB.Count);
+        //List<Vector3> pathB = GameManager.instance.path_b;
         Debug.Log("minCost1: " + minCost1 + "  " + "minCost2 :" + minCost2 + "  ");
         //"useless: " + uselessRedCounters.Count);
-        if (minCost1 <= GameParameters.instance.carryLimit * GameParameters.instance.shuttleNum && redPickups.Count >= minCost1 && GameManager.instance.pathChange == 0)
-        //+uselessRedCounters.Count >= minCost)
+        if(GameManager.instance.pathChange == 0)
         {
-            //pathA = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(closestAnchorsRed[0], closestAnchorsRed[1], true));
-            // Collect all red pickups from generators
-            int i = 0;
-            while (i < redPickups.Count)
+
+            if (minCost1 <= GameParameters.instance.carryLimit * GameParameters.instance.shuttleNum && redPickups.Count >= minCost1 && GameManager.instance.pathChange == 0)
+            //+uselessRedCounters.Count >= minCost)
             {
-                if (!actions.GetCollectPos(AIactions).Contains(redPickups[i]) && actions.GetPickupColor().Sum() < GameParameters.instance.carryLimit && actions.GetCollectPos(AIactions).Count < minCost1)
+                //pathA = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(closestAnchorsRed[0], closestAnchorsRed[1], true));
+                // Collect all red pickups from generators
+                GameManager.instance.path_current = pathA;
+
+                int i = 0;
+                while (i < redPickups.Count)
                 {
-                    actions.MoveTo(GameManager.instance.parkingPos[Methods.instance.OnPickup(redPickups[i])]);
-                    actions.CollectAt(redPickups[i]);
+                    if (!actions.GetCollectPos(AIactions).Contains(redPickups[i]) && actions.GetPickupColor().Sum() < GameParameters.instance.carryLimit && actions.GetCollectPos(AIactions).Count < minCost1)
+                    {
+                        actions.MoveTo(GameManager.instance.parkingPos[Methods.instance.OnPickup(redPickups[i])]);
+                        actions.CollectAt(redPickups[i]);
+                    }
+                    ++i;
                 }
-                ++i;
-            }
-            // Must cache here, actions.GetPickupColor().Sum() gonna change after add deposit command
-            int carryNum = actions.GetPickupColor().Sum();
-            i = 0;
-            while (i < pathA.Count)
-            {
-                if (!actions.GetDepositPos(AIactions).Contains(pathA[i]) && actions.GetDepositPosFromActions(actions).Count < carryNum)
+                // Must cache here, actions.GetPickupColor().Sum() gonna change after add deposit command
+                int carryNum = actions.GetPickupColor().Sum();
+                i = 0;
+                while (i < pathA.Count)
                 {
-                    actions.MoveTo(pathA[i]);
-                    actions.DepositAt(pathA[i], 0);
+                    if (!actions.GetDepositPos(AIactions).Contains(pathA[i]) && actions.GetDepositPosFromActions(actions).Count < carryNum)
+                    {
+                        actions.MoveTo(pathA[i]);
+                        actions.DepositAt(pathA[i], 0);
+                    }
+                    ++i;
                 }
-                ++i;
+                return actions;
             }
-            return actions;
         }
+        //ALL path a not avaliable, change to path B
         else if (GameManager.instance.pathChange == 1)
         {
             if (minCost2 <= GameParameters.instance.carryLimit * GameParameters.instance.shuttleNum && redPickups.Count >= minCost2)
             //+uselessRedCounters.Count >= minCost)
             {
                 //pathA = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(closestAnchorsRed[0], closestAnchorsRed[1], true));
+                GameManager.instance.path_current = pathB;
                 // Collect all red pickups from generators
                 int i = 0;
                 while (i < redPickups.Count)
@@ -426,73 +437,97 @@ public class AIAgent : MonoBehaviour
             }
         }
 
-        // Randomly choose true path
-        //Vector3[] closestAnchorsRed2 = FindCheapestChain(closestAnchorsRed, true);
-        int tryNum = Random.Range(0, 3);
-        // Choose fake path
-        Vector3[] firstAnchors = { GameManager.instance.anchor_a1, GameManager.instance.anchor_a2 };
-        Vector3[] SecondAnchors = { GameManager.instance.anchor_a3, GameManager.instance.anchor_a4 };
-        //Vector3[] fakeAnchors = FindCheapestChain(trueAnchors, false);
-        Debug.Log("first anchors: " + firstAnchors[0] + "  " + firstAnchors[1]);
+            // in order choose true path
+            //Vector3[] closestAnchorsRed2 = FindCheapestChain(closestAnchorsRed, true);
+            int tryNum = Random.Range(0, 3);
+            // Choose fake path
+            Vector3[] firstAnchors = { GameManager.instance.anchor_a1, GameManager.instance.anchor_a2 };
+            Vector3[] secondAnchors = { GameManager.instance.anchor_a3, GameManager.instance.anchor_a4 };
+            //Vector3[] fakeAnchors = FindCheapestChain(trueAnchors, false);
+            Debug.Log("first anchors: " + firstAnchors[0] + "  " + firstAnchors[1]);
 
-        GameManager.instance.trueAnchorPos[0] = firstAnchors[0];
-        GameManager.instance.trueAnchorPos[1] = firstAnchors[1];
-        Debug.Log("second anchors: " + SecondAnchors[0] + "  " + SecondAnchors[1]);
+            GameManager.instance.trueAnchorPos[0] = firstAnchors[0];
+            GameManager.instance.trueAnchorPos[1] = firstAnchors[1];
+            Debug.Log("second anchors: " + secondAnchors[0] + "  " + secondAnchors[1]);
 
-        // Randomly choose generator
-        int tryCount = 0;
-        while (GameParameters.instance.carryLimit - GetComponent<AIBehavior>().carry.Sum() - actions.GetPickupColor().Sum() > 0)
-        {
-            tryCount++;
-            int generatorId = Random.Range(0, 4);
-            tryNum = Random.Range(0, 3);
-            if (tryNum <= 1)
+            // Randomly choose generator
+            int tryCount = 0;
+            while (GameParameters.instance.carryLimit - GetComponent<AIBehavior>().carry.Sum() - actions.GetPickupColor().Sum() > 0)
             {
-                generatorId = Methods.instance.MostRedGenerator();
+                tryCount++;
+                int generatorId = Random.Range(0, 4);
+                tryNum = Random.Range(0, 3);
+                if (tryNum <= 1)
+                {
+                    generatorId = Methods.instance.MostRedGenerator();
+                }
+                List<Vector3> collectList = Methods.instance.PickupsPosInGn(generatorId, GameParameters.instance.carryLimit - GetComponent<AIBehavior>().carry.Sum() - actions.GetPickupColor().Sum());
+                collectList = RemovePositionsFromList(collectList, actions.GetCollectPos(AIactions));
+                if (collectList.Count > 0)
+                {
+                    actions.MoveTo(GameManager.instance.parkingPos[generatorId]);
+                    actions.CollectAt(collectList);
+                }
+                // There is no enough pickup
+                if (tryCount > 100) break;
             }
-            List<Vector3> collectList = Methods.instance.PickupsPosInGn(generatorId, GameParameters.instance.carryLimit - GetComponent<AIBehavior>().carry.Sum() - actions.GetPickupColor().Sum());
-            collectList = RemovePositionsFromList(collectList, actions.GetCollectPos(AIactions));
-            if (collectList.Count > 0)
+
+            // Calculate current carry and bag
+            int[] LastCarry = new int[3];
+            LastCarry = GetComponent<AIBehavior>().GetCarryColor();
+            int[] carry = new int[3];
+            carry = Methods.instance.PickupColorInPos(actions.paras, GameParameters.instance.carryLimit - GetComponent<AIBehavior>().carry.Sum());
+            for (int k = 0; k < 3; k++)
             {
-                actions.MoveTo(GameManager.instance.parkingPos[generatorId]);
-                actions.CollectAt(collectList);
+                carry[k] += LastCarry[k];
             }
-            // There is no enough pickup
-            if (tryCount > 100) break;
-        }
+            int[] bag = actions.GetPickupColorBagPos();
 
-        // Calculate current carry and bag
-        int[] LastCarry = new int[3];
-        LastCarry = GetComponent<AIBehavior>().GetCarryColor();
-        int[] carry = new int[3];
-        carry = Methods.instance.PickupColorInPos(actions.paras, GameParameters.instance.carryLimit - GetComponent<AIBehavior>().carry.Sum());
-        for (int k = 0; k < 3; k++)
-        {
-            carry[k] += LastCarry[k];
-        }
-        int[] bag = actions.GetPickupColorBagPos();
+            // in order deposit
+            Vector3 pos;
+            //List<int> randomOrder = RandomOrder(actions.GetPickupColor().Sum());
+            List<int> inOrder = InOrder(actions.GetPickupColor().Sum());
+            foreach (int i in inOrder)
+            {
+                Debug.Log("index: " + i + "   " + "color: " + bag[i]);
+                //tryNum = Random.Range(0, 3);
+                List<Vector3> positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2), true));
+            //foreach(Vector3 ooo in positions)
+            //{
+            //    Debug.Log("the position  list current is" +ooo);
+            //}
 
-        // Randomly deposit
-        Vector3 pos;
-        //List<int> randomOrder = RandomOrder(actions.GetPickupColor().Sum());
-        List<int> inOrder = InOrder(actions.GetPickupColor().Sum());
-        foreach (int i in inOrder)
-        {
-            Debug.Log("index: " + i + "   " + "color: " + bag[i]);
-            //tryNum = Random.Range(0, 3);
-            List<Vector3> positions = GameManager.instance.path_current;
-            if (turn == 0)
+
+
+
+            //change according to the pathChange para
+            if (GameManager.instance.pathChange==0)
             {
                 if (bag[i] == 0)
                 {
                     //List<Vector3> positions = GameManager.instance.path_a;
                     positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
+                    //positions = GameManager.instance.path_current;
+
+
                     //Vector3 pos;
-                    if (positions.Count == 0)
+                    //if no path a(out of the narrative region),change to path b
+
+                    //pos = Methods.instance.InorderPosition(positions);
+                    Debug.Log(" the posistion is " +positions.Count);
+                    //!!!!! current nothing
+
+
+
+                    if (Methods.instance.Contains(Methods.instance.InorderPosition(positions), firstAnchors) == false)
                     {
                         pos = GetRandomEmptyGrid(AIactions, actions);
-                        Debug.Log("Deposit Elsewhere: " + pos);
+                        Debug.Log("Deposit Elsewhere cause no path: " + pos);
                         GameManager.instance.Total_FalsePath_Blocks++;
+                        GameManager.instance.pathChange++;
+                        positions = GameManager.instance.path_b;
+                        GameManager.instance.path_current = GameManager.instance.path_b;
+
                     }
                     else
                     {
@@ -502,9 +537,6 @@ public class AIAgent : MonoBehaviour
                         GameManager.instance.Total_RealPath_Blocks++;
                         Debug.Log("Deposit real: " + pos);
                     }
-
-                    //Debug.Log("Deposit At First Path: " + pos);
-
                     if (GameManager.instance.firstBlock == false)
                     {
                         GameManager.instance.Unblocked_Reds++;
@@ -512,7 +544,9 @@ public class AIAgent : MonoBehaviour
                     }
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
+
                 }
+
                 else if (bag[i] != 0)
                 {
                     //Vector3 pos;
@@ -524,67 +558,74 @@ public class AIAgent : MonoBehaviour
 
 
                 }
-                //try to find if be blocked
-                //else if (bag[i] == 0 && turn != 0)
-                //{
-                //    foreach (Vector3 blocks in GameManager.instance.blockedTile)
-                //    {
-                //        if (positions.Contains(blocks) == true)
-                //        {
-                //            positions = GameManager.instance.path_b;
-                //        }
-                //    }
-                //}
+                
             }
-            else if (turn != 0)
+            else if (GameManager.instance.pathChange==1)
             {
-                //if block the path a change to b
-                if (GameManager.instance.firstBlock == true)
-                {
-                    positions = GameManager.instance.path_b;
-                    GameManager.instance.path_current = GameManager.instance.path_b;
-                    Debug.Log("Deposit change path : ");
-                    GameManager.instance.pathChange++;
-                }
+                positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4), true));
+
                 if (bag[i] == 0)
                 {
                     //List<Vector3> positions = GameManager.instance.path_a;
                     positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
                     //Vector3 pos;
-                    //foreach (Vector3 ooo in positions)
-                    //{
-                    //    Debug.Log("??????" + ooo);
-                    //}
-                    //pos = positions.First();
-                    pos = Methods.instance.InorderPosition(positions);
-                    //Debug.Log("Deposit At First Path: " + pos);
-                    GameManager.instance.Total_RealPath_Blocks++;
-                    if (GameManager.instance.firstBlock == false)
+                    //if no path a(out of the narrative region), stop change
+                    if (Methods.instance.Contains(Methods.instance.InorderPosition(positions), secondAnchors) == false)
                     {
-                        GameManager.instance.Unblocked_Reds++;
-                        Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
+                        pos = GetRandomEmptyGrid(AIactions, actions);
+                        Debug.Log("Deposit Elsewhere cause no path: " + pos);
+                        GameManager.instance.Total_FalsePath_Blocks++;
+                        GameManager.instance.pathChange++;
+
                     }
+                    else
+                    {
+                        pos = Methods.instance.InorderPosition(positions);
+                     
+                        GameManager.instance.Total_RealPath_Blocks++;
+                        Debug.Log("Deposit real: " + pos);
+                    }
+                   
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
+
                 }
+
                 else if (bag[i] != 0)
                 {
                     //Vector3 pos;
                     pos = GetRandomEmptyGrid(AIactions, actions);
-                    Debug.Log("Deposit Elsewhere: " + pos);
+                    Debug.Log("Deposit Elsewhere cause no red token: " + pos);
                     GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
 
+
                 }
+
             }
 
 
 
-            bag[i] = -1;
 
+
+
+
+
+
+        
+
+
+
+                bag[i] = -1;
+
+            }
+
+            return actions;
         }
 
-        return actions;
-    }
+
+
+
+    
 }
