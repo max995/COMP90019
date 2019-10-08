@@ -41,7 +41,9 @@ public class Methods : MonoBehaviour
             return list[randomIndex]; 
     }
 
-    public Vector3 Random_InoderPossition(List<Vector3> list,int turn_times, List<Vector3> list2)
+    // pos = Methods.instance.Random_InoderPosition(positions, turn, GameManager.instance.depositRed);
+    //?????
+    public Vector3 Random_InoderPosition(List<Vector3> list,int turn_times, List<Vector3> list2)
     {
         int randomIndex=0;
         if (turn_times == 0)
@@ -57,7 +59,7 @@ public class Methods : MonoBehaviour
             {
                 if (list2.Contains(pos))
                 {
-                    randomIndex = list2.IndexOf(pos) + 1;
+                    randomIndex = list.IndexOf(pos) + 1;
                     break;
                 }
             }
@@ -65,6 +67,38 @@ public class Methods : MonoBehaviour
         return list[randomIndex];
     }
 
+    // pos = Methods.instance.Random_InoderPosition(positions, turn, GameManager.instance.depositRed);
+    public Vector3 non_contiguous(List<Vector3> list, int turn_times, List<Vector3> list2)
+    {
+        int randomIndex = 0;
+        int index = 1;
+        if (turn_times == 0)
+        {
+            randomIndex = Random.Range(0, list.Count);
+            //return list[randomIndex];
+            // Debug.Log("the relevant random is"+randomIndex);
+        }
+        else
+        {
+
+            for (index = 1; index < list.Count - 1; index++)
+                
+            {
+                Vector3 pos = list[index];
+                if (list2.Contains(list[list.IndexOf(pos)-1])==false && list2.Contains(list[list.IndexOf(pos) +1])==false && index<(list.Count/2))
+                {
+                    randomIndex = list.IndexOf(pos);
+                    
+                    break;
+                }
+                else {
+                    randomIndex = Random.Range(0, list.Count);
+                    break;
+                }
+            }
+        }
+        return list[randomIndex];
+    }
 
 
     //If the pos is on one anchor, return the position of the anchor's center, else return Vector3.zero
