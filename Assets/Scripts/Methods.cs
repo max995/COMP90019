@@ -71,7 +71,8 @@ public class Methods : MonoBehaviour
     public Vector3 non_contiguous(List<Vector3> list, int turn_times, List<Vector3> list2)
     {
         int randomIndex = 0;
-        int index = 1;
+        //int index = 1;
+        int index1 = 0;
         if (turn_times == 0)
         {
             randomIndex = Random.Range(0, list.Count);
@@ -81,11 +82,12 @@ public class Methods : MonoBehaviour
         else
         {
 
-            for (index = 1; index < list.Count - 1; index++)
+            for (int index = 1; index < list.Count - 1; index += 1)
                 
             {
                 Vector3 pos = list[index];
-                if (list2.Contains(list[list.IndexOf(pos)-1])==false && list2.Contains(list[list.IndexOf(pos) +1])==false && index<(list.Count/2))
+                index1 = index;
+                if (list2.Contains(list[list.IndexOf(pos)-1])==false && list2.Contains(list[list.IndexOf(pos) +1])==false && index1<(list.Count/2))
                 {
                     randomIndex = list.IndexOf(pos);
                     
@@ -234,52 +236,83 @@ public class Methods : MonoBehaviour
         return pos;
     }
 
-    //anchor type and need to change it in the path
-    public Vector3 FindAdjForAnchor(Vector3 pos_temp)
+    public Vector3 FindAdjTileForAnchor()
     {
         Vector3 pos = new Vector3(0, 0, 0);
-        try
-        {
-            if (IsEmptyGrid(new Vector3(pos_temp.x-0.5f,pos_temp.y-1.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x - 0.5f, pos_temp.y - 1.5f, 0f)) == true)
-            {
-                pos = new Vector3(pos_temp.x - 0.5f, pos_temp.y - 1.5f, 0f);
-            }
-            else if (IsEmptyGrid(new Vector3(pos_temp.x + 0.5f, pos_temp.y - 1.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x + 0.5f, pos_temp.y - 1.5f, 0f)) == true)
-            {
-                pos = new Vector3(pos_temp.x + 0.5f, pos_temp.y - 1.5f, 0f);
-            }
-            else if (IsEmptyGrid(new Vector3(pos_temp.x + 1.5f, pos_temp.y - 0.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x + 1.5f, pos_temp.y - 0.5f, 0f)) == true)
-            {
-                pos = new Vector3(pos_temp.x + 1.5f, pos_temp.y - 0.5f, 0f);
-            }
-            else if (IsEmptyGrid(new Vector3(pos_temp.x + 1.5f, pos_temp.y + 0.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x + 1.5f, pos_temp.y + 0.5f, 0f)) == true)
-            {
-                pos = new Vector3(pos_temp.x + 1.5f, pos_temp.y + 0.5f, 0f);
-            }
-            else if (IsEmptyGrid(new Vector3(pos_temp.x + 0.5f, pos_temp.y + 1.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x + 0.5f, pos_temp.y + 1.5f, 0f)) == true)
-            {
-                pos = new Vector3(pos_temp.x + 0.5f, pos_temp.y + 1.5f, 0f);
-            }
-            else if (IsEmptyGrid(new Vector3(pos_temp.x - 0.5f, pos_temp.y + 1.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x - 0.5f, pos_temp.y + 1.5f, 0f)) == true)
-            {
-                pos = new Vector3(pos_temp.x - 0.5f, pos_temp.y + 1.5f, 0f);
-            }
-            else if (IsEmptyGrid(new Vector3(pos_temp.x - 1.5f, pos_temp.y + 0.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x - 1.5f, pos_temp.y + 0.5f, 0f)) == true)
-            {
-                pos = new Vector3(pos_temp.x - 1.5f, pos_temp.y + 0.5f, 0f);
-            }
+        return pos;
+    }
 
-            else if (IsEmptyGrid(new Vector3(pos_temp.x - 1.5f, pos_temp.y - 0.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x - 1.5f, pos_temp.y - 0.5f, 0f)) == true)
+
+
+    // and  change it in the narrtive region
+    public Vector3 FindAdjForAnchor(Vector3 pos_temp, List<Vector3> anchors_list)
+    {
+
+        Vector3 pos = Vector3.zero;
+        float distance = Mathf.Infinity;
+        Vector3 anotherAnchor = new Vector3(0, 0, 0);
+        foreach (Vector3 anchor_pos in anchors_list)
+        {
+            if (anchor_pos != pos_temp && distance> Vector3.Distance(anchor_pos, pos_temp))
             {
-                pos = new Vector3(pos_temp.x - 1.5f, pos_temp.y - 0.5f, 0f);
+                distance = Vector3.Distance(anchor_pos,pos_temp);
+                anotherAnchor = anchor_pos;
             }
+        }
+        List<Vector3> narrative_region = TilesNarrativeRegion(pos_temp,anotherAnchor);
+        distance = Mathf.Infinity;
+        //find the near block position in narrative region
+        foreach (Vector3 tile in narrative_region)
+        {
+            if (IsEmptyGrid(tile) && distance>Vector3.Distance(tile,pos_temp))
+            {
+                pos = tile;
+                distance = Vector3.Distance(tile, pos_temp);
+            }
+           
+        }
+        //try
+        //{
+        //    if (IsEmptyGrid(new Vector3(pos_temp.x-0.5f,pos_temp.y-1.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x - 0.5f, pos_temp.y - 1.5f, 0f)) == true )
+        //    {
+        //        pos = new Vector3(pos_temp.x - 0.5f, pos_temp.y - 1.5f, 0f);
+        //    }
+        //    else if (IsEmptyGrid(new Vector3(pos_temp.x + 0.5f, pos_temp.y - 1.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x + 0.5f, pos_temp.y - 1.5f, 0f)) == true)
+        //    {
+        //        pos = new Vector3(pos_temp.x + 0.5f, pos_temp.y - 1.5f, 0f);
+        //    }
+        //    else if (IsEmptyGrid(new Vector3(pos_temp.x + 1.5f, pos_temp.y - 0.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x + 1.5f, pos_temp.y - 0.5f, 0f)) == true)
+        //    {
+        //        pos = new Vector3(pos_temp.x + 1.5f, pos_temp.y - 0.5f, 0f);
+        //    }
+        //    else if (IsEmptyGrid(new Vector3(pos_temp.x + 1.5f, pos_temp.y + 0.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x + 1.5f, pos_temp.y + 0.5f, 0f)) == true)
+        //    {
+        //        pos = new Vector3(pos_temp.x + 1.5f, pos_temp.y + 0.5f, 0f);
+        //    }
+        //    else if (IsEmptyGrid(new Vector3(pos_temp.x + 0.5f, pos_temp.y + 1.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x + 0.5f, pos_temp.y + 1.5f, 0f)) == true)
+        //    {
+        //        pos = new Vector3(pos_temp.x + 0.5f, pos_temp.y + 1.5f, 0f);
+        //    }
+        //    else if (IsEmptyGrid(new Vector3(pos_temp.x - 0.5f, pos_temp.y + 1.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x - 0.5f, pos_temp.y + 1.5f, 0f)) == true)
+        //    {
+        //        pos = new Vector3(pos_temp.x - 0.5f, pos_temp.y + 1.5f, 0f);
+        //    }
+        //    else if (IsEmptyGrid(new Vector3(pos_temp.x - 1.5f, pos_temp.y + 0.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x - 1.5f, pos_temp.y + 0.5f, 0f)) == true)
+        //    {
+        //        pos = new Vector3(pos_temp.x - 1.5f, pos_temp.y + 0.5f, 0f);
+        //    }
+
+        //    else if (IsEmptyGrid(new Vector3(pos_temp.x - 1.5f, pos_temp.y - 0.5f, 0f)) && IsOnBoard(new Vector3(pos_temp.x - 1.5f, pos_temp.y - 0.5f, 0f)) == true)
+        //    {
+        //        pos = new Vector3(pos_temp.x - 1.5f, pos_temp.y - 0.5f, 0f);
+        //    }
             
-        }
+        //}
 
-        catch (KeyNotFoundException)
-        {
-            pos = new Vector3(0, 0, 0);
-        }
+        //catch (KeyNotFoundException)
+        //{
+        //    pos = new Vector3(0, 0, 0);
+        //}
 
         return pos;
     }

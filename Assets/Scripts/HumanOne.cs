@@ -55,21 +55,21 @@ public class HumanOne : MonoBehaviour
     private Vector3 HumanDecision(int humanHint,string reds)
     {
         Vector3 pos_human = new Vector3();
-        if (humanHint == 1)
+        if (humanHint == 2)
         {
             pos_human= Methods.instance.RandomPosition(bg.gridPositions);
         }
-        if (humanHint==0)
+        if (humanHint==1)
         {
             pos_human = LastestRed(reds);
             //make red log clear each turn?
            // GameManager.instance.redToken = "";
         }
-        if (humanHint == 2)
+        if (humanHint == 0)
         {
             pos_human = RedNearAnchor(reds);
             //keep it in the path
-            Debug.Log("I am the red near anchor");
+            Debug.Log("I am the red near anchor"+pos_human);
         }
         if (humanHint==3)
         {
@@ -103,11 +103,40 @@ public class HumanOne : MonoBehaviour
                 shortDis = position;
             }
         }
-        //Debug.Log("shortdis" + shortDis);
-        shortDis = Methods.instance.FindAdjForAnchor(new Vector3(x,y,0f));
+        Debug.Log("shortdis" + shortDis);
+        shortDis = Methods.instance.FindAdjForAnchor(shortDis, GameManager.instance.anchorPositions);
         Debug.Log("shortdis" + shortDis);
         return shortDis;
     }
+
+    //the more useful function
+    private Vector3 RedNearAnchor(List<Vector3> redList)
+    {
+        Vector3 shortDis = new Vector3();
+        float dist = Mathf.Infinity;
+        if (redList.Count > 1)
+        {
+            Vector3 lastRed = redList[-1];
+            foreach (Vector3 position in GameManager.instance.anchorPositions)
+            {
+                if (dist > Vector3.Distance(position, lastRed))
+                {
+                    dist = Vector3.Distance(position, lastRed);
+                    shortDis = position;
+                }
+            }
+            shortDis = Methods.instance.FindAdjForAnchor(shortDis, GameManager.instance.anchorPositions);
+            return shortDis;
+        }
+        else
+        {
+            return Methods.instance.RandomPosition(bg.gridPositions);
+        }
+        
+       
+    }
+
+
 
     private float StringToFloat(string s)
     {
