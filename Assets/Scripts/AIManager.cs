@@ -148,7 +148,7 @@ public class AIManager : MonoBehaviour
 
             }
         }
-        if (GameParameters.instance.aiType == 5)
+        if (GameParameters.instance.aiType == 0)
         {
             for (int i = 0; i < AIs.Count; i++)
             {
@@ -162,7 +162,7 @@ public class AIManager : MonoBehaviour
 
             }
         }
-        if (GameParameters.instance.aiType == 0)
+        if (GameParameters.instance.aiType == 1)
         {
             for (int i = 0; i < AIs.Count; i++)
             {

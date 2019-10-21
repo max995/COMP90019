@@ -13,7 +13,7 @@ public class Methods : MonoBehaviour
 {
     public static Methods instance;
 
-    private List<List<Vector3>> path = new List<List<Vector3>>();
+    private List<List<Vector3>> brokenLine = new List<List<Vector3>>();
     private List<List<bool>> visited = new List<List<bool>>();
     private int[] dx = { -1, 1, 0, 0 };
     private int[] dy = { 0, 0, -1, 1 };
@@ -46,7 +46,7 @@ public class Methods : MonoBehaviour
     public Vector3 Random_InoderPosition(List<Vector3> list,int turn_times, List<Vector3> list2)
     {
         int randomIndex=0;
-        if (turn_times == 0)
+        if (turn_times == 0|list2.Count==0)
         {
             randomIndex = Random.Range(0, list.Count);
             //return list[randomIndex];
@@ -54,7 +54,6 @@ public class Methods : MonoBehaviour
         }
         else
         {
-            
             foreach (Vector3 pos in list)
             {
                 if (list2.Contains(pos))
@@ -73,20 +72,20 @@ public class Methods : MonoBehaviour
         int randomIndex = 0;
         //int index = 1;
         int index1 = 0;
-        if (turn_times == 0)
+        if (turn_times == 0|list2.Count==0)
         {
             randomIndex = Random.Range(0, list.Count);
-            //return list[randomIndex];
-            // Debug.Log("the relevant random is"+randomIndex);
         }
         else
         {
-
-            for (int index = 1; index < list.Count - 1; index += 1)
+            for (int index = 1; index < list.Count - 1;)
                 
             {
-                Vector3 pos = list[index];
+                
+                
                 index1 = index;
+                index++;
+                Vector3 pos = list[index1];
                 if (list2.Contains(list[list.IndexOf(pos)-1])==false && list2.Contains(list[list.IndexOf(pos) +1])==false && index1<(list.Count/2))
                 {
                     randomIndex = list.IndexOf(pos);
@@ -97,7 +96,40 @@ public class Methods : MonoBehaviour
                     randomIndex = Random.Range(0, list.Count);
                     break;
                 }
+               
             }
+        }
+        return list[randomIndex];
+    }
+
+    public Vector3 non_contiguous_nonRed(List<Vector3> list)
+    {
+        int randomIndex = 0;
+        //int index = 1;
+        int index1 = 0;
+        
+       
+        
+        
+            for (int index = 1; index < list.Count - 1;)
+
+            {
+                index1 = index;
+                index++;
+                Vector3 pos = list[index1];
+                if (IsEmptyGrid(list[list.IndexOf(pos) - 1]) && IsEmptyGrid(list[list.IndexOf(pos) + 1])&& index1 < (list.Count / 2))
+                {
+                    randomIndex = list.IndexOf(pos);
+
+                    break;
+                }
+                else
+                {
+                    randomIndex = Random.Range(0, list.Count);
+                    break;
+                }
+
+            
         }
         return list[randomIndex];
     }
@@ -207,30 +239,31 @@ public class Methods : MonoBehaviour
 
     public Vector3 FindAdjForTile(int x, int y)
     {
-        Vector3 pos = new Vector3(0, 0, 0);
-        try
+        Vector3 pos = Vector3.zero;
+        List<Vector3> pos_adj= new List<Vector3>();
+        pos_adj.Add(new Vector3(x + 1, y, 0f));
+        pos_adj.Add(new Vector3(x - 1, y, 0f));
+        pos_adj.Add(new Vector3(x, y - 1, 0f));
+        pos_adj.Add(new Vector3(x, y + 1, 0f));
+        while (pos==Vector3.zero)
         {
-            if (IsEmptyGrid(new Vector3(x + 1, y, 0f))&& IsOnBoard(new Vector3(x + 1, y, 0f)) == true)
+            int index = Random.Range(0, pos_adj.Count);
+            if (IsEmptyGrid(pos_adj[index]) && IsOnBoard(pos_adj[index]) == true)
             {
-                pos= new Vector3(x + 1, y, 0f);
+                pos = pos_adj[index];
+                break;
             }
-            else if (IsEmptyGrid(new Vector3(x - 1, y, 0f))&& IsOnBoard(new Vector3(x - 1, y, 0f)) == true)
+            else
             {
-                pos=new Vector3(x - 1, y, 0f);
+                if (pos_adj.Count > 1) { 
+                pos_adj.Remove(pos_adj[index]);
+                 }
+                else
+                {
+                    break;
+                }
             }
-            else if (IsEmptyGrid(new Vector3(x, y - 1, 0f))&&IsOnBoard(new Vector3(x, y - 1, 0f)) == true)
-            {
-               pos=new Vector3(x, y - 1, 0f);
-            }
-            else if (IsEmptyGrid(new Vector3(x, y + 1, 0f))&&IsOnBoard(new Vector3(x, y + 1, 0f)) == true)
-            {
-                pos=new Vector3(x, y + 1, 0f);
-            }
-            
-        }
-        catch (KeyNotFoundException)
-        {
-            pos= new Vector3(0, 0, 0);
+
         }
 
         return pos;
@@ -623,7 +656,7 @@ public class Methods : MonoBehaviour
     public List<Vector3> FindPathInGrid(Vector3 start, Vector3 end, bool onlyRedCounter)
     {
         InitialisePath();
-        path[(int)start.x][(int)start.y] = new Vector3(-1, -1, 0f);   //Unvisited positions are -2
+        brokenLine[(int)start.x][(int)start.y] = new Vector3(-1, -1, 0f);   //Unvisited positions are -2
         Queue queue = new Queue();
         queue.Enqueue(start);
         while (queue.Count > 0)
@@ -632,12 +665,12 @@ public class Methods : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 Vector3 pos = new Vector3(now.x + dx[i], now.y + dy[i], 0f);
-                if (IsOnBoard(pos) && TileExist(pos) && path[(int)pos.x][(int)pos.y].x < -1)
+                if (IsOnBoard(pos) && TileExist(pos) && brokenLine[(int)pos.x][(int)pos.y].x < -1)
                 {
                     if (!onlyRedCounter || IsOnAnAnchor(pos) != Vector3.zero || GameManager.instance.deposited[(int)pos.x][(int)pos.y] == -1 || GameManager.instance.deposited[(int)pos.x][(int)pos.y] == 0)
                     {
                         queue.Enqueue(pos);
-                        path[(int)pos.x][(int)pos.y] = now;
+                        brokenLine[(int)pos.x][(int)pos.y] = now;
                         if (Mathf.Abs(pos.x - end.x) < 1f && Mathf.Abs(pos.y - end.y) < 1f)
                         {
                             return FindPath(pos);
@@ -681,13 +714,13 @@ public class Methods : MonoBehaviour
 
     private void InitialisePath()
     {
-        path.Clear();
+        brokenLine.Clear();
         for (int x = 0; x < GameParameters.instance.gridSize; x++)
         {
-            path.Add(new List<Vector3>());
+            brokenLine.Add(new List<Vector3>());
             for (int y = 0; y < GameParameters.instance.gridSize; y++)
             {
-                path[x].Add(new Vector3(-2, -2, 0f));
+                brokenLine[x].Add(new Vector3(-2, -2, 0f));
             }
         }
     }
@@ -709,10 +742,10 @@ public class Methods : MonoBehaviour
     {
         List<Vector3> pathList = new List<Vector3>();
         pathList.Clear();
-        while (path[(int)pos.x][(int)pos.y].x >= 0)
+        while (brokenLine[(int)pos.x][(int)pos.y].x >= 0)
         {
             pathList.Add(pos);
-            pos = path[(int)pos.x][(int)pos.y];
+            pos = brokenLine[(int)pos.x][(int)pos.y];
         }
         pathList.Reverse();
         return pathList;
@@ -869,4 +902,54 @@ public class Methods : MonoBehaviour
         }
         return flag;
     }
+
+
+    public bool IsBrokenLine(List<Vector3> path)
+    {
+        bool flag = false;
+        Vector3 start = path[0];
+        Vector3 end = path[path.Count-1];
+        float slope=(end.y-start.y)/(end.x-start.x);
+        float slope_temp;
+        for (int j=0;j<path.Count-1;j++)
+        {
+            slope_temp = (path[j+1].y-path[j].y) / (path[j + 1].x - path[j].x);
+            if (slope_temp.Equals(slope)!=true)
+            {
+                flag = true;
+            }
+        }
+        
+       
+        return flag;
+    }
+
+    public float PointAndLine(Vector3 point, Vector3 lineStart, Vector3 lineEnd)
+    {
+        float result= Mathf.Abs((lineEnd.x - lineStart.x) * (lineStart.y - point.y) - (lineStart.x - point.x) * (lineEnd.y - lineStart.y)) /
+                Mathf.Sqrt(Mathf.Pow(lineEnd.x - lineStart.x, 2) + Mathf.Pow(lineEnd.y - lineStart.y, 2));
+        return result;
+    }
+    public float PointAndBrokenLine(Vector3 point, List<Vector3> brokenLine)
+    {
+        List<float> results=new List<float>();
+        Vector3 brokenPoint=brokenLine[0];
+        Vector3 start = brokenLine[0];
+        Vector3 end = brokenLine[1];
+        float slope = (end.y - start.y) / (end.x - start.x);
+        float slope_temp;
+        for (int j = 0; j < brokenLine.Count - 1; j++)
+        {
+            slope_temp = (brokenLine[j + 1].y - brokenLine[j].y) / (brokenLine[j + 1].x - brokenLine[j].x);
+          
+            if (slope_temp.Equals(slope) != true)
+            {
+                slope = slope_temp;
+                results.Add(PointAndLine(point, brokenPoint, brokenLine[j]));
+                brokenPoint = brokenLine[j];
+            }
+        }
+        return results.Min();
+    }
+
 }

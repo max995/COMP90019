@@ -291,6 +291,7 @@ public class AIAgent : MonoBehaviour
                     pos = Methods.instance.RandomPosition(positions);
                     Debug.Log("Deposit change path : "+pos);
                             GameManager.instance.pathChange++;
+                            GameManager.instance.gameLog += "the replaned time"+ turn+1 +"\n";
                     }
                     else
                     {
@@ -298,7 +299,7 @@ public class AIAgent : MonoBehaviour
 
                     //pos = positions.First();
                     pos = Methods.instance.RandomPosition(positions);
-                    GameManager.instance.Total_RealPath_Blocks++;
+                    
                         Debug.Log("Deposit real: " + pos);
                     }
 
@@ -317,7 +318,6 @@ public class AIAgent : MonoBehaviour
                     //Vector3 pos;
                     pos = GetRandomEmptyGrid(AIactions, actions);
                     Debug.Log("Deposit Elsewhere: " + pos);
-                    GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
 
@@ -328,7 +328,6 @@ public class AIAgent : MonoBehaviour
                 {
                 pos = GetRandomEmptyGrid(AIactions, actions);
                 Debug.Log("Deposit red Elsewhere: " + pos);
-                GameManager.instance.Total_FalsePath_Blocks++;
                 actions.MoveTo(pos);
                 actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
             }
@@ -348,10 +347,10 @@ public class AIAgent : MonoBehaviour
         
             Actions actions = new Actions();
             Debug.Log("now is turn :" + turn);
-            Methods.instance.Task1Anchor(GameManager.instance.anchorPositions, out GameManager.instance.Task1_a, out GameManager.instance.Task1_b);
+            //Methods.instance.Task1Anchor(GameManager.instance.anchorPositions, out GameManager.instance.Task1_a, out GameManager.instance.Task1_b);
 
             //Vector3[] trueAnchors;
-            Vector3[] closestAnchorsRed = FindCheapestChain(new Vector3[2], true);
+            //Vector3[] closestAnchorsRed = FindCheapestChain(new Vector3[2], true);
 
             // Check if can win the game this turn
             //List<Vector3> uselessRedCounters = GetUselessRedCounters(closestAnchorsRed);
@@ -375,7 +374,7 @@ public class AIAgent : MonoBehaviour
             {
                 //pathA = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(closestAnchorsRed[0], closestAnchorsRed[1], true));
                 // Collect all red pickups from generators
-                GameManager.instance.path_current = pathA;
+                //GameManager.instance.path_current = pathA;
 
                 int i = 0;
                 while (i < redPickups.Count)
@@ -409,7 +408,7 @@ public class AIAgent : MonoBehaviour
             //+uselessRedCounters.Count >= minCost)
             {
                 //pathA = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(closestAnchorsRed[0], closestAnchorsRed[1], true));
-                GameManager.instance.path_current = pathB;
+                //GameManager.instance.path_current = pathB;
                 // Collect all red pickups from generators
                 int i = 0;
                 while (i < redPickups.Count)
@@ -490,14 +489,11 @@ public class AIAgent : MonoBehaviour
             foreach (int i in inOrder)
             {
                 Debug.Log("index: " + i + "   " + "color: " + bag[i]);
-                //tryNum = Random.Range(0, 3);
-                List<Vector3> positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2), true));
-            //foreach(Vector3 ooo in positions)
-            //{
-            //    Debug.Log("the position  list current is" +ooo);
-            //}
-
-
+            //tryNum = Random.Range(0, 3);
+            List<Vector3> positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2), true));
+            //List<Vector3> positions = GameManager.instance.path_current;
+            GameManager.instance.path_current = positions;
+            
 
 
             //change according to the pathChange para
@@ -508,6 +504,7 @@ public class AIAgent : MonoBehaviour
                     //List<Vector3> positions = GameManager.instance.path_a;
                     positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
                     //positions = GameManager.instance.path_current;
+
 
 
                     //Vector3 pos;
@@ -523,10 +520,13 @@ public class AIAgent : MonoBehaviour
                     {
                         pos = GetRandomEmptyGrid(AIactions, actions);
                         Debug.Log("Deposit Elsewhere cause no path: " + pos);
-                        GameManager.instance.Total_FalsePath_Blocks++;
+                        //GameManager.instance.Total_FalsePath_Blocks++;
                         GameManager.instance.pathChange++;
                         positions = GameManager.instance.path_b;
                         GameManager.instance.path_current = GameManager.instance.path_b;
+                        GameManager.instance.Real_Path_Replan = turn + 1;
+                        GameManager.instance.gameLog += "the replaned time" + GameManager.instance.Real_Path_Replan +"\n";
+                       
 
                     }
                     else
@@ -534,13 +534,13 @@ public class AIAgent : MonoBehaviour
                         pos = Methods.instance.InorderPosition(positions);
                         //pos = positions.First();
                         //Methods.instance.RandomPosition(positions);
-                        GameManager.instance.Total_RealPath_Blocks++;
                         Debug.Log("Deposit real: " + pos);
                     }
                     if (GameManager.instance.firstBlock == false)
                     {
                         GameManager.instance.Unblocked_Reds++;
                         Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
+                        
                     }
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
@@ -552,7 +552,7 @@ public class AIAgent : MonoBehaviour
                     //Vector3 pos;
                     pos = GetRandomEmptyGrid(AIactions, actions);
                     Debug.Log("Deposit Elsewhere: " + pos);
-                    GameManager.instance.Total_FalsePath_Blocks++;
+                    //GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
 
@@ -563,7 +563,7 @@ public class AIAgent : MonoBehaviour
             else if (GameManager.instance.pathChange==1)
             {
                 positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4), true));
-
+                GameManager.instance.path_current = positions;
                 if (bag[i] == 0)
                 {
                     //List<Vector3> positions = GameManager.instance.path_a;
@@ -574,15 +574,17 @@ public class AIAgent : MonoBehaviour
                     {
                         pos = GetRandomEmptyGrid(AIactions, actions);
                         Debug.Log("Deposit Elsewhere cause no path: " + pos);
-                        GameManager.instance.Total_FalsePath_Blocks++;
+                        //GameManager.instance.Total_FalsePath_Blocks++;
                         GameManager.instance.pathChange++;
-
+                        GameManager.instance.Real_Path_Replan = turn + 1 - GameManager.instance.Real_Path_Replan;
+                        Debug.Log("the replaned time: " + GameManager.instance.Real_Path_Replan + " \n");
+                        GameManager.instance.gameLog += "the replaned time: " + GameManager.instance.Real_Path_Replan+ " \n";
                     }
                     else
                     {
                         pos = Methods.instance.InorderPosition(positions);
                      
-                        GameManager.instance.Total_RealPath_Blocks++;
+                        //GameManager.instance.Total_RealPath_Blocks++;
                         Debug.Log("Deposit real: " + pos);
                     }
                    
@@ -596,11 +598,9 @@ public class AIAgent : MonoBehaviour
                     //Vector3 pos;
                     pos = GetRandomEmptyGrid(AIactions, actions);
                     Debug.Log("Deposit Elsewhere cause no red token: " + pos);
-                    GameManager.instance.Total_FalsePath_Blocks++;
+                    //GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
-
-
                 }
 
             }
@@ -623,7 +623,7 @@ public class AIAgent : MonoBehaviour
         Actions actions = new Actions();
         Debug.Log("now is ai 2 :" + turn);
 
-        //Methods.instance.Task1Anchor(GameManager.instance.anchorPositions, out GameManager.instance.Task1_a, out GameManager.instance.Task1_b);
+        Methods.instance.Task1Anchor(GameManager.instance.anchorPositions, out GameManager.instance.Task1_a, out GameManager.instance.Task1_b);
 
         //Vector3[] trueAnchors;
         Vector3[] closestAnchorsRed = FindCheapestChain(new Vector3[2], true);
@@ -760,7 +760,6 @@ public class AIAgent : MonoBehaviour
 
         // in order deposit
         Vector3 pos;
-        //List<int> randomOrder = RandomOrder(actions.GetPickupColor().Sum());
         List<int> inOrder = InOrder(actions.GetPickupColor().Sum());
         foreach (int i in inOrder)
         {
@@ -791,7 +790,7 @@ public class AIAgent : MonoBehaviour
                     {
                         pos = GetRandomEmptyGrid(AIactions, actions);
                         Debug.Log("Deposit Elsewhere cause no path: " + pos);
-                        GameManager.instance.Total_FalsePath_Blocks++;
+                        //GameManager.instance.Total_FalsePath_Blocks++;
                         GameManager.instance.pathChange++;
                         positions = GameManager.instance.path_b;
                         GameManager.instance.path_current = GameManager.instance.path_b;
@@ -802,14 +801,14 @@ public class AIAgent : MonoBehaviour
                         pos = Methods.instance.Random_InoderPosition(positions,turn, GameManager.instance.depositRed);
                         //pos = positions.First();
                         //Methods.instance.RandomPosition(positions);
-                        GameManager.instance.Total_RealPath_Blocks++;
+                        //GameManager.instance.Total_RealPath_Blocks++;
                         Debug.Log("Deposit real: " + pos);
                     }
-                    if (GameManager.instance.firstBlock == false)
-                    {
-                        GameManager.instance.Unblocked_Reds++;
-                        Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
-                    }
+                    //if (GameManager.instance.firstBlock == false)
+                    //{
+                    //    GameManager.instance.Unblocked_Reds++;
+                    //    Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
+                    //}
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
 
@@ -820,7 +819,7 @@ public class AIAgent : MonoBehaviour
                     //Vector3 pos;
                     pos = GetRandomEmptyGrid(AIactions, actions);
                     Debug.Log("Deposit Elsewhere: " + pos);
-                    GameManager.instance.Total_FalsePath_Blocks++;
+                    //GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
 
@@ -842,7 +841,7 @@ public class AIAgent : MonoBehaviour
                     {
                         pos = GetRandomEmptyGrid(AIactions, actions);
                         Debug.Log("Deposit Elsewhere cause no path: " + pos);
-                        GameManager.instance.Total_FalsePath_Blocks++;
+                        //GameManager.instance.Total_FalsePath_Blocks++;
                         GameManager.instance.pathChange++;
                         turn = 0;
                     }
@@ -850,7 +849,7 @@ public class AIAgent : MonoBehaviour
                     {
                         pos = Methods.instance.Random_InoderPosition(positions,turn, GameManager.instance.depositRed);
 
-                        GameManager.instance.Total_RealPath_Blocks++;
+                        //GameManager.instance.Total_RealPath_Blocks++;
                         Debug.Log("Deposit real: " + pos);
                     }
 
@@ -864,7 +863,7 @@ public class AIAgent : MonoBehaviour
                     //Vector3 pos;
                     pos = GetRandomEmptyGrid(AIactions, actions);
                     Debug.Log("Deposit Elsewhere cause no red token: " + pos);
-                    GameManager.instance.Total_FalsePath_Blocks++;
+                    //GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
 
@@ -889,7 +888,7 @@ public class AIAgent : MonoBehaviour
         Actions actions = new Actions();
         Debug.Log("now is ai 3 :" + turn);
 
-        //Methods.instance.Task1Anchor(GameManager.instance.anchorPositions, out GameManager.instance.Task1_a, out GameManager.instance.Task1_b);
+        Methods.instance.Task1Anchor(GameManager.instance.anchorPositions, out GameManager.instance.Task1_a, out GameManager.instance.Task1_b);
 
         //Vector3[] trueAnchors;
         Vector3[] closestAnchorsRed = FindCheapestChain(new Vector3[2], true);
@@ -1057,7 +1056,7 @@ public class AIAgent : MonoBehaviour
                     {
                         //pos = GetRandomEmptyGrid(AIactions, actions);
                         //Debug.Log("Deposit Elsewhere cause no path: " + pos);
-                        GameManager.instance.Total_FalsePath_Blocks++;
+                        //GameManager.instance.Total_FalsePath_Blocks++;
                         GameManager.instance.pathChange++;
                         positions = GameManager.instance.path_b;
                         GameManager.instance.path_current = GameManager.instance.path_b;
@@ -1071,7 +1070,7 @@ public class AIAgent : MonoBehaviour
                         pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
                         //pos = positions.First();
                         //Methods.instance.RandomPosition(positions);
-                        GameManager.instance.Total_RealPath_Blocks++;
+                        //GameManager.instance.Total_RealPath_Blocks++;
                         Debug.Log("Deposit real: " + pos);
                     }
                     if (GameManager.instance.firstBlock == false)
@@ -1089,7 +1088,7 @@ public class AIAgent : MonoBehaviour
                     //Vector3 pos;
                     pos = GetRandomEmptyGrid(AIactions, actions);
                     Debug.Log("Deposit Elsewhere: " + pos);
-                    GameManager.instance.Total_FalsePath_Blocks++;
+                    //GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
 
@@ -1111,7 +1110,7 @@ public class AIAgent : MonoBehaviour
                     {
                         pos = GetRandomEmptyGrid(AIactions, actions);
                         Debug.Log("Deposit Elsewhere cause no path: " + pos);
-                        GameManager.instance.Total_FalsePath_Blocks++;
+                        //GameManager.instance.Total_FalsePath_Blocks++;
                         GameManager.instance.pathChange++;
                         turn = 0;
                     }
@@ -1119,7 +1118,7 @@ public class AIAgent : MonoBehaviour
                     {
                         pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
 
-                        GameManager.instance.Total_RealPath_Blocks++;
+                        //GameManager.instance.Total_RealPath_Blocks++;
                         Debug.Log("Deposit real: " + pos);
                     }
 
@@ -1133,7 +1132,7 @@ public class AIAgent : MonoBehaviour
                     //Vector3 pos;
                     pos = GetRandomEmptyGrid(AIactions, actions);
                     Debug.Log("Deposit Elsewhere cause no red token: " + pos);
-                    GameManager.instance.Total_FalsePath_Blocks++;
+                    //GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
 
@@ -1158,7 +1157,7 @@ public class AIAgent : MonoBehaviour
         Actions actions = new Actions();
         Debug.Log("now is ai 4 :" + turn);
 
-        //Methods.instance.Task1Anchor(GameManager.instance.anchorPositions, out GameManager.instance.Task1_a, out GameManager.instance.Task1_b);
+        Methods.instance.Task1Anchor(GameManager.instance.anchorPositions, out GameManager.instance.Task1_a, out GameManager.instance.Task1_b);
 
         //Vector3[] trueAnchors;
         Vector3[] closestAnchorsRed = FindCheapestChain(new Vector3[2], true);
@@ -1327,7 +1326,7 @@ public class AIAgent : MonoBehaviour
                     {
                         pos = GetRandomEmptyGrid(AIactions, actions);
                         Debug.Log("Deposit Elsewhere cause no path: " + pos);
-                        GameManager.instance.Total_FalsePath_Blocks++;
+                        //GameManager.instance.Total_FalsePath_Blocks++;
                         GameManager.instance.pathChange++;
                         positions = GameManager.instance.path_b;
                         GameManager.instance.path_current = GameManager.instance.path_b;
@@ -1341,14 +1340,14 @@ public class AIAgent : MonoBehaviour
                         pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
                         //pos = positions.First();
                         //Methods.instance.RandomPosition(positions);
-                        GameManager.instance.Total_RealPath_Blocks++;
+                        //GameManager.instance.Total_RealPath_Blocks++;
                         Debug.Log("Deposit real: " + pos);
                     }
-                    if (GameManager.instance.firstBlock == false)
-                    {
-                        GameManager.instance.Unblocked_Reds++;
-                        Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
-                    }
+                    //if (GameManager.instance.firstBlock == false)
+                    //{
+                    //    GameManager.instance.Unblocked_Reds++;
+                    //    Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
+                    //}
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
 
@@ -1357,9 +1356,9 @@ public class AIAgent : MonoBehaviour
                 else if (bag[i] != 0)
                 {
                     //Vector3 pos;
-                    pos = Methods.instance.InorderPosition(fakeposition);
+                    pos = Methods.instance.non_contiguous_nonRed(fakeposition);
                     Debug.Log("Deposit path b: " + pos);
-                    GameManager.instance.Total_FalsePath_Blocks++;
+                    //GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
 
@@ -1381,7 +1380,7 @@ public class AIAgent : MonoBehaviour
                     {
                         pos = GetRandomEmptyGrid(AIactions, actions);
                         Debug.Log("Deposit Elsewhere cause no path: " + pos);
-                        GameManager.instance.Total_FalsePath_Blocks++;
+                        //GameManager.instance.Total_FalsePath_Blocks++;
                         GameManager.instance.pathChange++;
                         turn = 0;
                     }
@@ -1389,7 +1388,7 @@ public class AIAgent : MonoBehaviour
                     {
                         pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
 
-                        GameManager.instance.Total_RealPath_Blocks++;
+                        //GameManager.instance.Total_RealPath_Blocks++;
                         Debug.Log("Deposit real: " + pos);
                     }
 
@@ -1402,8 +1401,8 @@ public class AIAgent : MonoBehaviour
                 {
                     //Vector3 pos;
                     pos = GetRandomEmptyGrid(AIactions, actions);
-                    Debug.Log("Deposit Elsewhere cause no red token: " + pos);
-                    GameManager.instance.Total_FalsePath_Blocks++;
+                    Debug.Log("Deposit Elsewhere cause no FAKE : " + pos);
+                    //GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
 
@@ -1595,7 +1594,7 @@ public class AIAgent : MonoBehaviour
                     {
                         //pos = GetRandomEmptyGrid(AIactions, actions);
                         //Debug.Log("Deposit Elsewhere cause no path: " + pos);
-                        GameManager.instance.Total_FalsePath_Blocks++;
+                        //GameManager.instance.Total_FalsePath_Blocks++;
                         GameManager.instance.pathChange++;
                         positions = GameManager.instance.path_b;
                         GameManager.instance.path_current = GameManager.instance.path_b;
@@ -1625,9 +1624,9 @@ public class AIAgent : MonoBehaviour
                 else if (bag[i] != 0)
                 {
                     //Vector3 pos;
-                    pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(GameManager.instance.anchor_a3, GameManager.instance.anchor_a4));
+                    pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4)));
                     Debug.Log("Deposit Elsewhere: " + pos);
-                    GameManager.instance.Total_FalsePath_Blocks++;
+                    //GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
 
@@ -1649,7 +1648,7 @@ public class AIAgent : MonoBehaviour
                     {
                         pos = GetRandomEmptyGrid(AIactions, actions);
                         Debug.Log("Deposit Elsewhere cause no path: " + pos);
-                        GameManager.instance.Total_FalsePath_Blocks++;
+                        //GameManager.instance.Total_FalsePath_Blocks++;
                         GameManager.instance.pathChange++;
                         turn = 0;
                     }
@@ -1657,7 +1656,7 @@ public class AIAgent : MonoBehaviour
                     {
                         pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
 
-                        GameManager.instance.Total_RealPath_Blocks++;
+                        //GameManager.instance.Total_RealPath_Blocks++;
                         Debug.Log("Deposit real: " + pos);
                     }
 
@@ -1669,9 +1668,9 @@ public class AIAgent : MonoBehaviour
                 else if (bag[i] != 0)
                 {
                     //Vector3 pos;
-                    pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(GameManager.instance.anchor_a3, GameManager.instance.anchor_a4));
+                    pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4)));
                     Debug.Log("Deposit Elsewhere cause no red token: " + pos);
-                    GameManager.instance.Total_FalsePath_Blocks++;
+                    //GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
 

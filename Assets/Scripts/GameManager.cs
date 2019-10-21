@@ -24,10 +24,12 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool firstBlock;
     [HideInInspector] public int Unblocked_Reds;
     [HideInInspector] public int Total_RealPath_Blocks;
+    [HideInInspector] public int Total_RealPath_Blocks_Narrative;
     [HideInInspector] public int Total_FalsePath_Blocks;
     [HideInInspector] public int Total_Blocks;
     [HideInInspector] public int Task1_a;
     [HideInInspector] public int Task1_b;
+    [HideInInspector] public int Real_Path_Replan;
 
 
     public GameObject gridTile;
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviour
     // Stores what happened in the game
     [HideInInspector] public string gameLog;
     [HideInInspector] public string redToken;
+
 
     // Red, White, Blue, Yellow Generators
     [HideInInspector] public List<GameObject> generators = new List<GameObject>();
@@ -93,16 +96,19 @@ public class GameManager : MonoBehaviour
     {
         gameLog = "";
         redToken = "";
+       
         gameOver = false;
         AICelebrate = false;
         firstBlock = false;
         Unblocked_Reds = 0;
         Total_RealPath_Blocks=0;
         Total_FalsePath_Blocks=0;
+        Total_RealPath_Blocks_Narrative = 0;
         Total_Blocks=0;
         Task1_a = 0;
         Task1_b = 0;
         pathChange = 0;
+        Real_Path_Replan = 0;
         SetPlayerTurn(false);
         boardScript = GetComponent<BoardGenerator>();
         boardScript.SetupScene();
@@ -128,23 +134,13 @@ public class GameManager : MonoBehaviour
         //ah.InitialiseAH();
         trueAnchorPos = new Vector3[2];
         gameLog += "--- Game Start ---\n";
-        gameLog += "--- Color: 0-RED , 1- Yellow, 2- Blue";
+        gameLog += "--- Color: 0-RED , 1- Yellow, 2- Blue---\n";
 
         
     }
 
 
-    //public void test()
-    //{
-        
-    //    GameObject tileBlock = boardScript.tilePos[11,11];
-    //    Debug.Log("tileBlock"+ tileBlock.transform.position);
-    //    Color color = new Color(43f, 54f, 58f);
-    //    color.a = 0.1f;
-    //    sr.color = color;
-    //    Debug.Log(sr.color);
-
-    //}
+    
 
 
 
@@ -195,9 +191,15 @@ public class GameManager : MonoBehaviour
         gameOver = true;
         AICelebrate = true;
         GetComponent<UIManager>().ShowAIWinText();
+        gameLog += "Deposit in total real path is " + GameManager.instance.Total_RealPath_Blocks + "\n";
+        gameLog+= "Deposit in total real narrative is " + GameManager.instance.Total_RealPath_Blocks_Narrative + "\n";
+        gameLog += "Deposit in total blocks is " + GameManager.instance.Total_Blocks + "\n";
+        gameLog += "Deposit in total false blocks is " + GameManager.instance.Total_FalsePath_Blocks + "\n";
+        //gameLog += "the ratio is:" + Methods.instance.Ratio(GameManager.instance.Total_RealPath_Blocks, GameManager.instance.Total_Blocks)+ "\n";
+
         //calculate
-        Methods.instance.Ratio(GameManager.instance.Total_RealPath_Blocks,GameManager.instance.Total_Blocks);
-        Debug.Log("the ratio is:"+ Methods.instance.Ratio(GameManager.instance.Total_RealPath_Blocks, GameManager.instance.Total_Blocks));
+        //Methods.instance.Ratio(GameManager.instance.Total_RealPath_Blocks,GameManager.instance.Total_Blocks);
+        //Debug.Log("the ratio is:"+ Methods.instance.Ratio(GameManager.instance.Total_RealPath_Blocks, GameManager.instance.Total_Blocks));
         Methods.instance.TurnAllWhiteCounterOver();
         SendToServer();
     }
@@ -207,7 +209,14 @@ public class GameManager : MonoBehaviour
     {
         gameLog += "Time Out!\n";
         gameLog += "--- Player Win ---\n";
+        gameLog += "Deposit red before the first block:" + GameManager.instance.Unblocked_Reds + "\n";
+        gameLog += "Deposit in total real path is " + GameManager.instance.Total_RealPath_Blocks + "\n";
+        gameLog += "Deposit in total real narrative is " + GameManager.instance.Total_RealPath_Blocks_Narrative + "\n";
+        gameLog += "Deposit in total blocks is " + GameManager.instance.Total_Blocks + "\n";
+        gameLog += "Deposit in total blocks is " + GameManager.instance.Total_FalsePath_Blocks + "\n";
+        //gameLog += "the ratio is:" + Methods.instance.Ratio(GameManager.instance.Total_RealPath_Blocks, GameManager.instance.Total_Blocks)+ "\n";
         gameLog += "AI Turn Count: " + aiScript.turnCount + "\n";
+        
         gameOver = true;
         GetComponent<UIManager>().ShowPlayerWinText();
         Methods.instance.TurnAllWhiteCounterOver();

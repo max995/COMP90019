@@ -88,7 +88,7 @@ public class GameParameters : MonoBehaviour
         */
         // Your code BEGINS HERE
 
-        SetColorProportion(100, 0, 0);
+        SetColorProportion(50, 50, 0);
         // Your code ENDS HERE
     }
 
