@@ -1,0 +1,974 @@
+24/10/2019 12:57:46 AM
+--- Game Start ---
+--- Color: 0-RED , 1- Yellow, 2- Blue---
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 1
+Shuttle 0 moves to (3, 6)
+Shuttle 0 deposits at (3, 6), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (13.0, 16.0, 0.0)
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (10, 17)
+Shuttle 0 deposits at (10, 17), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (10.0, 18.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :13.91402
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (15, 17)
+Shuttle 0 deposits at (15, 17), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (14.0, 17.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (15, 16)
+Shuttle 0 deposits at (15, 16), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (9.0, 17.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :12.64911
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (14, 16)
+Shuttle 0 deposits at (14, 16), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (15.0, 18.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :15.49516
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (14, 15)
+Shuttle 0 deposits at (14, 15), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (16.0, 17.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (16, 16)
+Shuttle 0 deposits at (16, 16), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (17.0, 16.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 1
+Shuttle 0 moves to (2, 5)
+Shuttle 0 deposits at (2, 5), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (16.0, 15.0, 0.0)
+The distance between real path and block is :0
+The distance between fake path and block is :12.96534
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 0
+Shuttle 0 moves to (18, 15)
+Shuttle 0 deposits at (18, 15), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (18.0, 16.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 1
+Shuttle 0 moves to (2, 7)
+Shuttle 0 deposits at (2, 7), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (18.0, 14.0, 0.0)
+The distance between real path and block is :0
+The distance between fake path and block is :3.88057
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (11, 4)
+Shuttle 0 deposits at (11, 4), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (12.0, 4.0, 0.0)
+The distance between real path and block is :11
+--- Player Win ---
+Deposit in total real path is 4
+Deposit in total real narrative is 9
+Deposit in total blocks is 11
+Deposit in total fake blocks is 0
+The AI replan times is :4
+AI Turn Count: 12
+Remaining Time For AI: 100.993 seconds
+24/10/2019 12:59:39 AM
+--- Game Start ---
+--- Color: 0-RED , 1- Yellow, 2- Blue---
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (17, 6)
+Shuttle 0 deposits at (17, 6), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (17.0, 5.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :0.7844645
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 1
+Shuttle 0 moves to (9, 4)
+Shuttle 0 deposits at (9, 4), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (16.0, 6.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 1
+Shuttle 0 moves to (8, 5)
+Shuttle 0 deposits at (8, 5), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (17.0, 7.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :1.176697
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (17, 8)
+Shuttle 0 deposits at (17, 8), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (16.0, 8.0, 0.0)
+The distance between real path and block is :0
+The distance between fake path and block is :2
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (17, 9)
+Shuttle 0 deposits at (17, 9), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (16.0, 9.0, 0.0)
+The distance between real path and block is :0.7071068
+The distance between fake path and block is :3
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 0
+Shuttle 0 moves to (17, 10)
+Shuttle 0 deposits at (17, 10), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (18.0, 10.0, 0.0)
+The distance between real path and block is :0.8944272
+The distance between fake path and block is :4
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 1
+Shuttle 0 moves to (8, 6)
+Shuttle 0 deposits at (8, 6), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (16.0, 10.0, 0.0)
+The distance between real path and block is :0.8944272
+The distance between fake path and block is :4
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (17, 11)
+Shuttle 0 deposits at (17, 11), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (18.0, 8.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 0
+Shuttle 0 moves to (19, 9)
+Shuttle 0 deposits at (19, 9), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (19.0, 8.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (1, 5)
+Shuttle 0 deposits at (1, 5), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (1.0, 4.0, 0.0)
+The distance between real path and block is :1
+--- Player Win ---
+Deposit in total real path is 3
+Deposit in total real narrative is 5
+Deposit in total blocks is 10
+Deposit in total fake blocks is 4
+The AI replan times is :3
+AI Turn Count: 11
+Remaining Time For AI: 100.7765 seconds
+24/10/2019 1:01:01 AM
+--- Game Start ---
+--- Color: 0-RED , 1- Yellow, 2- Blue---
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (8, 6)
+Shuttle 0 deposits at (8, 6), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (8.0, 7.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :2.728764
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (7, 6)
+Shuttle 0 deposits at (7, 6), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (7.0, 7.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :1.736486
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (9, 6)
+Shuttle 0 deposits at (9, 6), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (8.0, 5.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :2.480695
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 1
+Shuttle 0 moves to (5, 17)
+Shuttle 0 deposits at (5, 17), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (9.0, 5.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :3.472973
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (6, 6)
+Shuttle 0 deposits at (6, 6), index: 0
+--- AI Win ---
+AI Turn Count: 5
+Remaining Time For AI: 145.9857 seconds
+Deposit in total real path is 0
+Deposit in total real narrative is 2
+Deposit in total blocks is 5
+Deposit in total false blocks is 2
+The AI replan times is :0
+24/10/2019 1:04:41 AM
+--- Game Start ---
+--- Color: 0-RED , 1- Yellow, 2- Blue---
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 0
+Shuttle 0 moves to (0, 6)
+Shuttle 0 deposits at (0, 6), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (0.0, 5.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 0
+Shuttle 0 moves to (1, 9)
+Shuttle 0 deposits at (1, 9), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (2.0, 9.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 0
+Shuttle 0 moves to (2, 8)
+Shuttle 0 deposits at (2, 8), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (0.0, 7.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :3
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (1, 8)
+Shuttle 0 deposits at (1, 8), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (2.0, 7.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :3
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 1
+Shuttle 0 moves to (16, 10)
+Shuttle 0 deposits at (16, 10), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (3.0, 8.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 1
+Shuttle 0 moves to (17, 11)
+Shuttle 0 deposits at (17, 11), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (0.0, 8.0, 0.0)
+The distance between real path and block is :0
+The distance between fake path and block is :6.063391
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 1
+Shuttle 0 moves to (17, 9)
+Shuttle 0 deposits at (17, 9), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (1.0, 7.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 1
+Shuttle 0 moves to (17, 12)
+Shuttle 0 deposits at (17, 12), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (14.0, 16.0, 0.0)
+The distance between real path and block is :8
+The distance between fake path and block is :4
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (4, 7)
+Shuttle 0 deposits at (4, 7), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (5.0, 7.0, 0.0)
+The distance between real path and block is :0
+The distance between fake path and block is :3.818377
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 0
+Shuttle 0 moves to (3, 7)
+Shuttle 0 deposits at (3, 7), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (3.0, 6.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (4, 6)
+Shuttle 0 deposits at (4, 6), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (5.0, 6.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :4.808326
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 1
+Shuttle 0 moves to (18, 8)
+Shuttle 0 deposits at (18, 8), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (4.0, 5.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (6, 9)
+Shuttle 0 deposits at (6, 9), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (6.0, 8.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :1.856953
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (7, 9)
+Shuttle 0 deposits at (7, 9), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (7.0, 8.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :2.236068
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 0
+Shuttle 0 moves to (8, 9)
+Shuttle 0 deposits at (8, 9), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (8.0, 10.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :2.236068
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (9, 9)
+Shuttle 0 deposits at (9, 9), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (9.0, 8.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :4.024922
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 1
+Shuttle 0 moves to (3, 3)
+Shuttle 0 deposits at (3, 3), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (9.0, 10.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :3.130495
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (10, 9)
+Shuttle 0 deposits at (10, 9), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (10.0, 10.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :4.024922
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (5, 9)
+Shuttle 0 deposits at (5, 9), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (5.0, 10.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :0.4472136
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 1
+Shuttle 0 moves to (2, 4)
+Shuttle 0 deposits at (2, 4), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (5.0, 8.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :1.920553
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (11, 9)
+--- Player Win ---
+Deposit in total real path is 6
+Deposit in total real narrative is 13
+Deposit in total blocks is 20
+Deposit in total fake blocks is 7
+The AI replan times is :6
+AI Turn Count: 21
+Remaining Time For AI: -0.01565552 seconds
+24/10/2019 1:05:36 AM
+--- Game Start ---
+--- Color: 0-RED , 1- Yellow, 2- Blue---
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (9, 12)
+Shuttle 0 deposits at (9, 12), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (8.0, 12.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (6, 12)
+Shuttle 0 deposits at (6, 12), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (7.0, 12.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (6, 13)
+Shuttle 0 deposits at (6, 13), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (10.0, 12.0, 0.0)
+The distance between real path and block is :3.535534
+The distance between fake path and block is :7.060181
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (7, 13)
+Shuttle 0 deposits at (7, 13), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (6.0, 11.0, 0.0)
+The distance between real path and block is :1.341641
+The distance between fake path and block is :6.864065
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (5, 12)
+Shuttle 0 deposits at (5, 12), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (5.0, 13.0, 0.0)
+The distance between real path and block is :0.9486833
+The distance between fake path and block is :9.021342
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (8, 13)
+Shuttle 0 deposits at (8, 13), color: 0
+--- AI Win ---
+AI Turn Count: 6
+Remaining Time For AI: 145.635 seconds
+Deposit in total real path is 2
+Deposit in total real narrative is 4
+Deposit in total blocks is 6
+Deposit in total false blocks is 1
+The AI replan times is :2
+24/10/2019 1:07:01 AM
+--- Game Start ---
+--- Color: 0-RED , 1- Yellow, 2- Blue---
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (8, 1)
+Shuttle 0 deposits at (8, 1), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (8.0, 0.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :18
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (15, 1)
+Shuttle 0 deposits at (15, 1), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (15.0, 2.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :16
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 1
+Shuttle 0 moves to (12, 18)
+Shuttle 0 deposits at (12, 18), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (14.0, 1.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (13, 2)
+Shuttle 0 deposits at (13, 2), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (9.0, 1.0, 0.0)
+The distance between real path and block is :16
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 1
+Shuttle 0 moves to (5, 8)
+Shuttle 0 deposits at (5, 8), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (7.0, 1.0, 0.0)
+The distance between real path and block is :16
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 1
+Shuttle 0 moves to (16, 18)
+Shuttle 0 deposits at (16, 18), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (14.0, 2.0, 0.0)
+The distance between real path and block is :15
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (11, 17)
+Shuttle 0 deposits at (11, 17), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (15.0, 0.0, 0.0)
+The distance between real path and block is :17
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 1
+Shuttle 0 moves to (8, 4)
+Shuttle 0 deposits at (8, 4), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (16.0, 1.0, 0.0)
+The distance between real path and block is :16
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (12, 17)
+Shuttle 0 deposits at (12, 17), color: 0
+--- AI Win ---
+AI Turn Count: 9
+Remaining Time For AI: 115.7341 seconds
+Deposit in total real path is 1
+Deposit in total real narrative is 2
+Deposit in total blocks is 9
+Deposit in total false blocks is 1
+The AI replan times is :1
+24/10/2019 1:10:15 AM
+--- Game Start ---
+--- Color: 0-RED , 1- Yellow, 2- Blue---
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (15, 10)
+Shuttle 0 deposits at (15, 10), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (14.0, 10.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (15, 1)
+Shuttle 0 deposits at (15, 1), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (14.0, 1.0, 0.0)
+The distance between real path and block is :12
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (7, 13)
+Shuttle 0 deposits at (7, 13), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (15.0, 11.0, 0.0)
+The distance between real path and block is :2
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 1
+Shuttle 0 moves to (2, 3)
+Shuttle 0 deposits at (2, 3), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (15.0, 9.0, 0.0)
+The distance between real path and block is :4
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 1
+Shuttle 0 moves to (3, 13)
+Shuttle 0 deposits at (3, 13), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (16.0, 10.0, 0.0)
+The distance between real path and block is :3
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (8, 13)
+Shuttle 0 deposits at (8, 13), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (8.0, 12.0, 0.0)
+The distance between real path and block is :1
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (9, 13)
+Shuttle 0 deposits at (9, 13), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (6.0, 13.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (6, 12)
+Shuttle 0 deposits at (6, 12), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (7.0, 14.0, 0.0)
+The distance between real path and block is :0
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (7, 12)
+Shuttle 0 deposits at (7, 12), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (7.0, 11.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 1
+Shuttle 0 moves to (0, 3)
+Shuttle 0 deposits at (0, 3), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (15.0, 7.0, 0.0)
+The distance between real path and block is :5
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (6, 11)
+Shuttle 0 deposits at (6, 11), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (6.0, 10.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 1
+Shuttle 0 moves to (1, 6)
+Shuttle 0 deposits at (1, 6), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (5.0, 11.0, 0.0)
+The distance between real path and block is :0.7071068
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (10, 13)
+Shuttle 0 deposits at (10, 13), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (11.0, 13.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 1
+Shuttle 0 moves to (10, 16)
+Shuttle 0 deposits at (10, 16), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (10.0, 12.0, 0.0)
+The distance between real path and block is :0.9805807
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (9, 12)
+Shuttle 0 deposits at (9, 12), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (9.0, 11.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (10, 14)
+Shuttle 0 deposits at (10, 14), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (10.0, 15.0, 0.0)
+The distance between real path and block is :0.9284767
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (11, 14)
+Shuttle 0 deposits at (11, 14), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (8.0, 14.0, 0.0)
+The distance between real path and block is :0
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (12, 14)
+Shuttle 0 deposits at (12, 14), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (13.0, 14.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 1
+Shuttle 0 moves to (4, 2)
+Shuttle 0 deposits at (4, 2), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (12.0, 13.0, 0.0)
+The distance between real path and block is :0.961524
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (4, 11)
+Shuttle 0 deposits at (4, 11), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (4.0, 10.0, 0.0)
+The block is on the real path 
+--- Player Win ---
+Deposit in total real path is 8
+Deposit in total real narrative is 14
+Deposit in total blocks is 20
+Deposit in total fake blocks is 0
+The AI replan times is :8
+AI Turn Count: 21
+Remaining Time For AI: 31.84967 seconds
+24/10/2019 1:15:09 AM
+--- Game Start ---
+--- Color: 0-RED , 1- Yellow, 2- Blue---
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (11, 14)
+Shuttle 0 deposits at (11, 14), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (10.0, 14.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :2.496151
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (10, 15)
+Shuttle 0 deposits at (10, 15), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (10.0, 16.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :1.38675
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (9, 15)
+Shuttle 0 deposits at (9, 15), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (12.0, 14.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :4.160252
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 1
+Shuttle 0 moves to (4, 8)
+Shuttle 0 deposits at (4, 8), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (11.0, 15.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 1
+Shuttle 0 moves to (3, 9)
+Shuttle 0 deposits at (3, 9), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (11.0, 13.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (9, 13)
+Shuttle 0 deposits at (9, 13), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (9.0, 14.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (8, 13)
+Shuttle 0 deposits at (8, 13), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (7.0, 13.0, 0.0)
+The distance between real path and block is :0
+The distance between fake path and block is :0.7808688
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (10, 13)
+Shuttle 0 deposits at (10, 13), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (10.0, 12.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 0
+Shuttle 0 moves to (9, 12)
+Shuttle 0 deposits at (9, 12), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (9.0, 11.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 0
+Shuttle 0 moves to (8, 12)
+Shuttle 0 deposits at (8, 12), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (9.0, 16.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :0.3123475
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 0
+Shuttle 0 moves to (8, 11)
+Shuttle 0 deposits at (8, 11), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (7.0, 11.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :2.342606
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 1
+Shuttle 0 moves to (3, 10)
+Shuttle 0 deposits at (3, 10), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (8.0, 10.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (9, 17)
+Shuttle 0 deposits at (9, 17), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (10.0, 17.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 1
+Shuttle 0 moves to (2, 11)
+Shuttle 0 deposits at (2, 11), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (9.0, 18.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :1.874085
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (8, 18)
+Shuttle 0 deposits at (8, 18), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (8.0, 19.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 1
+Shuttle 0 moves to (14, 11)
+Shuttle 0 deposits at (14, 11), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (8.0, 17.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (5, 15)
+Shuttle 0 deposits at (5, 15), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (5.0, 14.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :8.541986
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (4, 15)
+Shuttle 0 deposits at (4, 15), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (3.0, 15.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (4, 14)
+Shuttle 0 deposits at (4, 14), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (3.0, 14.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (4, 13)
+Shuttle 0 deposits at (4, 13), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (4.0, 12.0, 0.0)
+The distance between real path and block is :0.7071068
+The distance between fake path and block is :8.727681
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 1
+Shuttle 0 moves to (13, 12)
+Shuttle 0 deposits at (13, 12), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (5.0, 13.0, 0.0)
+The distance between real path and block is :0
+The distance between fake path and block is :8.170595
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (3, 13)
+Shuttle 0 deposits at (3, 13), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (3.0, 12.0, 0.0)
+The distance between real path and block is :0.8320503
+The distance between fake path and block is :5.656855
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (2, 13)
+Shuttle 0 deposits at (2, 13), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (1.0, 13.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (2, 12)
+Shuttle 0 deposits at (2, 12), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (1.0, 12.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (7, 1)
+Shuttle 0 deposits at (7, 1), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (8.0, 1.0, 0.0)
+The distance between real path and block is :2
+--- Player Win ---
+Deposit in total real path is 13
+Deposit in total real narrative is 24
+Deposit in total blocks is 25
+Deposit in total fake blocks is 0
+The AI replan times is :13
+AI Turn Count: 26
+Remaining Time For AI: 13.39998 seconds
+24/10/2019 1:16:22 AM
+--- Game Start ---
+--- Color: 0-RED , 1- Yellow, 2- Blue---
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (14, 11)
+Shuttle 0 deposits at (14, 11), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (13.0, 11.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :11
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 1
+Shuttle 0 moves to (9, 0)
+Shuttle 0 deposits at (9, 0), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (14.0, 12.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (15, 12)
+Shuttle 0 deposits at (15, 12), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (15.0, 11.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (16, 11)
+Shuttle 0 deposits at (16, 11), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (17.0, 11.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :12.00113
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (16, 10)
+Shuttle 0 deposits at (16, 10), color: 0
+--- AI Win ---
+AI Turn Count: 5
+Remaining Time For AI: 139.2988 seconds
+Deposit in total real path is 2
+Deposit in total real narrative is 3
+Deposit in total blocks is 5
+Deposit in total false blocks is 1
+The AI replan times is :2
+24/10/2019 1:17:47 AM
+--- Game Start ---
+--- Color: 0-RED , 1- Yellow, 2- Blue---
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (11, 3)
+Shuttle 0 deposits at (11, 3), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (11.0, 2.0, 0.0)
+The distance between real path and block is :1
+The distance between fake path and block is :1.455214
+Shuttle 0 moves to (22.7, 3.5)
+Shuttle 0 collects in Generator 3 color: 1
+Shuttle 0 moves to (8, 12)
+Shuttle 0 deposits at (8, 12), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (12.0, 3.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (12, 4)
+Shuttle 0 deposits at (12, 4), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (11.0, 4.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (-3.7, 16)
+Shuttle 0 collects in Generator 0 color: 0
+Shuttle 0 moves to (11, 5)
+Shuttle 0 deposits at (11, 5), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (10.0, 3.0, 0.0)
+The distance between real path and block is :2
+The distance between fake path and block is :0.7276069
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (10, 5)
+Shuttle 0 deposits at (10, 5), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (9.0, 5.0, 0.0)
+The block is on the real path 
+Shuttle 0 moves to (22.7, 16)
+Shuttle 0 collects in Generator 2 color: 0
+Shuttle 0 moves to (12, 5)
+Shuttle 0 deposits at (12, 5), index: 0
+Shuttle 0 moves to (-3.5, 10)
+Player blocks (12.0, 6.0, 0.0)
+The distance between real path and block is :0.8944272
+The distance between fake path and block is :3.395499
+Shuttle 0 moves to (-3.7, 3.5)
+Shuttle 0 collects in Generator 1 color: 0
+Shuttle 0 moves to (10, 6)
+Shuttle 0 deposits at (10, 6), color: 0
+--- AI Win ---
+AI Turn Count: 7
+Remaining Time For AI: 121.5182 seconds
+Deposit in total real path is 3
+Deposit in total real narrative is 5
+Deposit in total blocks is 7
+Deposit in total false blocks is 1
+The AI replan times is :3
+
