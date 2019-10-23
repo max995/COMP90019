@@ -92,7 +92,7 @@ public class AIManager : MonoBehaviour
         AIactions.Clear();
 
         //ais=shuttles
-        if (GameParameters.instance.aiType==1)
+        if (GameParameters.instance.aiType==0)
         {
             for (int i = 0; i < AIs.Count; i++)
             {
@@ -148,7 +148,7 @@ public class AIManager : MonoBehaviour
 
             }
         }
-        if (GameParameters.instance.aiType == 0)
+        if (GameParameters.instance.aiType == 5)
         {
             for (int i = 0; i < AIs.Count; i++)
             {
@@ -157,6 +157,34 @@ public class AIManager : MonoBehaviour
                 AIMoving[i] = true;
                 //Debug.Log(">>>>>>>"+)
                 AIactions.Add(AIs[i].GetComponent<AIAgent>().MakeDecisionsFive(AIactions, turnCount));
+
+                AIactions[AIactions.Count - 1].MoveTo(new Vector3(-3.5f, GameParameters.instance.gridSize / 2f + i * 1.5f, 0f));
+
+            }
+        }
+        if (GameParameters.instance.aiType == 6)
+        {
+            for (int i = 0; i < AIs.Count; i++)
+            {
+                Debug.Log("Shuttle " + i + "Decisions: -------------------");
+                //Debug.Log("ai??" + AIs.Count);
+                AIMoving[i] = true;
+                //Debug.Log(">>>>>>>"+)
+                AIactions.Add(AIs[i].GetComponent<AIAgent>().MakeDecisionsSix(AIactions, turnCount));
+
+                AIactions[AIactions.Count - 1].MoveTo(new Vector3(-3.5f, GameParameters.instance.gridSize / 2f + i * 1.5f, 0f));
+
+            }
+        }
+        if (GameParameters.instance.aiType == 7)
+        {
+            for (int i = 0; i < AIs.Count; i++)
+            {
+                Debug.Log("Shuttle " + i + "Decisions: -------------------");
+                //Debug.Log("ai??" + AIs.Count);
+                AIMoving[i] = true;
+                //Debug.Log(">>>>>>>"+)
+                AIactions.Add(AIs[i].GetComponent<AIAgent>().MakeDecisionSeven(AIactions, turnCount));
 
                 AIactions[AIactions.Count - 1].MoveTo(new Vector3(-3.5f, GameParameters.instance.gridSize / 2f + i * 1.5f, 0f));
 

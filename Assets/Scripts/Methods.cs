@@ -830,6 +830,27 @@ public class Methods : MonoBehaviour
         return emptyPos;
     }
 
+    public int CalculateOverlap(Vector3 a1, Vector3 a2, Vector3 a3, Vector3 a4)
+    {
+        int overlap = 0;
+        
+        List<Vector3> tiles1=TilesNarrativeRegion(a1, a2);
+        List<Vector3> tiles2 = TilesNarrativeRegion(a3, a4);
+        
+        foreach (Vector3 tile1 in tiles1)
+        {
+            if (tiles2.Contains(tile1))
+            {
+                overlap++;
+            }
+        }
+
+        return overlap;
+
+    }
+
+
+
     //task 1 set up
     public void Task1Anchor(List<Vector3> anchor_list, out int cost_a, out int cost_b)
     {
@@ -864,7 +885,6 @@ public class Methods : MonoBehaviour
             }
         }
         GameManager.instance.anchor_a1 = a1;
-        Debug.Log("the anchor position is"+a1);
         //Debug.Log("after tanrsfer to the anchor is"+TransAnchorPositionInGrid(a1));
         GameManager.instance.anchor_a2 = a2;
         GameManager.instance.anchor_a3 = a3;

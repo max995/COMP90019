@@ -195,6 +195,8 @@ public class GameManager : MonoBehaviour
         gameLog+= "Deposit in total real narrative is " + GameManager.instance.Total_RealPath_Blocks_Narrative + "\n";
         gameLog += "Deposit in total blocks is " + GameManager.instance.Total_Blocks + "\n";
         gameLog += "Deposit in total false blocks is " + GameManager.instance.Total_FalsePath_Blocks + "\n";
+        gameLog += "The AI replan times is :" + GameManager.instance.Real_Path_Replan + "\n";
+
         //gameLog += "the ratio is:" + Methods.instance.Ratio(GameManager.instance.Total_RealPath_Blocks, GameManager.instance.Total_Blocks)+ "\n";
 
         //calculate
@@ -207,16 +209,17 @@ public class GameManager : MonoBehaviour
     // Show Player Win and write the result to gameLog
     public void GameOverPlayerWin()
     {
-        gameLog += "Time Out!\n";
+        //gameLog += "Time Out!\n";
         gameLog += "--- Player Win ---\n";
-        gameLog += "Deposit red before the first block:" + GameManager.instance.Unblocked_Reds + "\n";
+        //gameLog += "Deposit red before the first block:" + GameManager.instance.Unblocked_Reds + "\n";
         gameLog += "Deposit in total real path is " + GameManager.instance.Total_RealPath_Blocks + "\n";
         gameLog += "Deposit in total real narrative is " + GameManager.instance.Total_RealPath_Blocks_Narrative + "\n";
         gameLog += "Deposit in total blocks is " + GameManager.instance.Total_Blocks + "\n";
-        gameLog += "Deposit in total blocks is " + GameManager.instance.Total_FalsePath_Blocks + "\n";
+        gameLog += "Deposit in total fake blocks is " + GameManager.instance.Total_FalsePath_Blocks + "\n";
+        gameLog += "The AI replan times is :"+GameManager.instance.Real_Path_Replan + "\n";
         //gameLog += "the ratio is:" + Methods.instance.Ratio(GameManager.instance.Total_RealPath_Blocks, GameManager.instance.Total_Blocks)+ "\n";
         gameLog += "AI Turn Count: " + aiScript.turnCount + "\n";
-        
+        gameLog += "Remaining Time For AI: " + (GetComponent<UIManager>().AITimeLimit - (Time.time - GetComponent<UIManager>().startTime)) + " seconds\n";
         gameOver = true;
         GetComponent<UIManager>().ShowPlayerWinText();
         Methods.instance.TurnAllWhiteCounterOver();

@@ -108,7 +108,7 @@ public class HumanOne : MonoBehaviour
         }
         if (humanHint==3)
         {
-            pos_human = DensestRed(reds);
+            pos_human = DensestRed(GameManager.instance.depositRed);
             Debug.Log("I am densest");
         }
         if (Methods.instance.IsEmptyGrid(pos_human) != true)
@@ -187,63 +187,47 @@ public class HumanOne : MonoBehaviour
         }
     }
 
-    private Vector3 DensestRed(String red_token)
+    private Vector3 DensestRed(List<Vector3> list_red)
     {
-        string[] red_tokens = red_token.Split('#');
-        string[] posTemp;
-        string[] posTemp1;
-        int[] adjCounter = new int[red_tokens.Length - 1];
-        int x;
-        int y;
-        int x1;
-        int y1;
-        Vector3 pos;
-        if (red_tokens.Length>=3)
+        if (list_red.Count >= 3)
         {
-            Debug.Log("redtokens is"+(red_tokens.Length-1));
-            for (int l = 0; l < red_tokens.Length - 2; l++)//-1 is space
+            int[] adjCounter = new int[list_red.Count - 1];
+            for (int l = 0; l < list_red.Count - 1; l++)
             {
-                
-                posTemp = red_tokens[l].Split('-');
-                x = StringToInt(posTemp[0]);
-                y = StringToInt(posTemp[1]);
-                //Debug.Log("now red token"+l+x+y);
-                for (int j=l+1; j< red_tokens.Length - 1;j++)
+                for (int j = l + 1; j < list_red.Count - 1; j++)
                 {
-                    
-                    posTemp1 = red_tokens[j].Split('-');
-                    x1 = StringToInt(posTemp1[0]);
-                    y1 = StringToInt(posTemp1[1]);
-                    //Debug.Log(" compare with red token" + j+x1+y1);
-                    //Debug.Log("distance=" + Vector3.Distance(new Vector3(x, y, 0f), new Vector3(x1, y1, 0f)));
-                    if (Vector3.Distance(new Vector3(x,y,0f),new Vector3(x1,y1,0f))<=GameParameters.instance.minAnchorDis)
+
+                    if (Vector3.Distance(list_red[l], list_red[j]) <= GameParameters.instance.minAnchorDis)
                     {
-                        //Debug.Log("distance="+ Vector3.Distance(new Vector3(x, y, 0f), new Vector3(x1, y1, 0f)));
-                        //Debug.Log(GameParameters.instance.minAnchorDis);
+
                         adjCounter[l]++;
                         adjCounter[j]++;
-                        //Debug.Log("adj"+adjCounter[l]);
+
                     }
                 }
             }
             int maxAdj = adjCounter.Max();
             int p = Array.IndexOf(adjCounter, maxAdj);
-            string[] denestRed = red_tokens[p].Split('-');
-            x = StringToInt(denestRed[0]);
-            y = StringToInt(denestRed[1]);
-            pos = Methods.instance.FindAdjForTile(x, y);
-            Debug.Log("dendest position is"+pos.x+pos.y+" and conuter is "+ maxAdj);
-         
-            return pos;
+            pos = Methods.instance.FindAdjForTile((int)list_red[p].x, (int)list_red[p].y);
+            if (pos != Vector3.zero)
+            {
+                return pos;
+            }
+            else
+            {
+                return LastestRed(list_red);
+            }
+
         }
         else
         {
-            // Debug.Log("not enough reds");
-            return Methods.instance.RandomPosition(bg.gridPositions); ;
+            return LastestRed(list_red);
         }
     }
 
-   
+
+
+  
 
 
 
@@ -275,10 +259,11 @@ public class HumanOne : MonoBehaviour
             //Debug.Log("the current start" + GameManager.instance.path_current[-1]);
             if (Methods.instance.IsPathBloked(GameManager.instance.path_current, blockTile.transform.position))
             {
-                //GameManager.instance.firstBlock = true;
+                
                 GameManager.instance.gameLog += "The block is on the real path \n";
                 GameManager.instance.Total_RealPath_Blocks++;
                 GameManager.instance.Total_RealPath_Blocks_Narrative++;
+                GameManager.instance.Real_Path_Replan++;
             }
             else
             {
@@ -298,6 +283,15 @@ public class HumanOne : MonoBehaviour
                             GameManager.instance.path_b[0],
                             GameManager.instance.path_b[GameManager.instance.path_b.Count - 1]) + "\n";
 
+                        if (Methods.instance.Contains(blockTile.transform.position, new Vector3[] { GameManager.instance.anchor_a1, GameManager.instance.anchor_a2 }))
+                        {
+                            GameManager.instance.Total_RealPath_Blocks_Narrative++;
+                        }
+                        else
+                        {
+                            GameManager.instance.Total_FalsePath_Blocks++;
+                        }
+
                     }
                     else
                     {
@@ -309,15 +303,16 @@ public class HumanOne : MonoBehaviour
                             Methods.instance.PointAndLine(blockTile.transform.position,
                             GameManager.instance.path_b[0],
                             GameManager.instance.path_b[GameManager.instance.path_b.Count - 1]) + "\n";
+                        if (Methods.instance.Contains(blockTile.transform.position, new Vector3[] { GameManager.instance.anchor_a1, GameManager.instance.anchor_a2 }))
+                        {
+                            GameManager.instance.Total_RealPath_Blocks_Narrative++;
+                        }
+                        else
+                        {
+                            GameManager.instance.Total_FalsePath_Blocks++;
+                        }
                     }
-                    if (Methods.instance.Contains(blockTile.transform.position, new Vector3[] { GameManager.instance.anchor_a1, GameManager.instance.anchor_a2 }))
-                    {
-                        GameManager.instance.Total_RealPath_Blocks_Narrative++;
-                    }
-                    else
-                    {
-                        GameManager.instance.Total_FalsePath_Blocks++;
-                    }
+                    
                 }
                 else
                 {
@@ -327,22 +322,25 @@ public class HumanOne : MonoBehaviour
                             Methods.instance.PointAndLine(blockTile.transform.position,
                             GameManager.instance.path_current[0],
                             GameManager.instance.path_current[GameManager.instance.path_current.Count - 1]) + "\n";
+                        if (Methods.instance.Contains(blockTile.transform.position, new Vector3[] { GameManager.instance.anchor_a3, GameManager.instance.anchor_a4 }))
+                        {
+                            GameManager.instance.Total_RealPath_Blocks_Narrative++;
+                        }
+                        
                     }
                     else
                     {
                         GameManager.instance.gameLog += "The distance between real path and block is :" +
                             Methods.instance.PointAndBrokenLine(blockTile.transform.position, GameManager.instance.path_current)
                             + "\n";
+                        if (Methods.instance.Contains(blockTile.transform.position, new Vector3[] { GameManager.instance.anchor_a3, GameManager.instance.anchor_a4 }))
+                        {
+                            GameManager.instance.Total_RealPath_Blocks_Narrative++;
+                        }
+                       
 
                     }
-                    if (Methods.instance.Contains(blockTile.transform.position, new Vector3[] { GameManager.instance.anchor_a3, GameManager.instance.anchor_a4 }))
-                    {
-                        GameManager.instance.Total_RealPath_Blocks_Narrative++;
-                    }
-                    else
-                    {
-                        GameManager.instance.Total_FalsePath_Blocks++;
-                    }
+                    
 
                 }
             }
