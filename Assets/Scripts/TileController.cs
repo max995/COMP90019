@@ -11,7 +11,7 @@ public class TileController : MonoBehaviour
     
 
     public void AutoGrey(GameObject bt)
-    //private void OnMouseDown()
+    
     {
 
 
@@ -23,11 +23,9 @@ public class TileController : MonoBehaviour
         Debug.Log(bt.transform.position + "clicked!");
         GameManager.instance.gameLog += "Player blocks " + bt.transform.position + "\n";
         blockCounter++;
-        //GameManager.instance.SetPlayerTurn(false);
-        //StartCoroutine(GameManager.instance.TurnSwitch());
+        
         Methods.instance.BlockTile(bt.transform.position);
-        //GameObject blockTile = bg.tilePos[(int)pos.x, (int)pos.y];
-        //blockTile.GetComponent<Transform>().position = pos;
+        
         Debug.Log(bt.transform.position);
 
         if (blockCounter > GameParameters.instance.blocksPerTurn)

@@ -72,11 +72,19 @@ public class GameParameters : MonoBehaviour
         defaultAnchorPos.Add(new Vector3(8.5f, 8.5f, 0f));
         */
         // Your code BEGINS HERE
+        //defaultAnchorPos.Add(new Vector3(7.5f, 7.5f, 0f));
+        //defaultAnchorPos.Add(new Vector3(0.5f, 7.5f, 0f));
         //defaultAnchorPos.Add(new Vector3(0.5f, 0.5f, 0f));
-        //defaultAnchorPos.Add(new Vector3(10.5f, 0.5f, 0f));
-        //defaultAnchorPos.Add(new Vector3(4.5f, 4.5f, 0f));
-        //defaultAnchorPos.Add(new Vector3(8.5f, 8.5f, 0f));
-        //overlap is 8
+        //defaultAnchorPos.Add(new Vector3(7.5f, 13.5f, 0f));
+
+        //overlap is 10
+
+        //OVERLAP IS 10
+        //defaultAnchorPos.Add(new Vector3(7.5f, 12.5f, 0f));
+        //defaultAnchorPos.Add(new Vector3(0.5f, 7.5f, 0f));
+        //defaultAnchorPos.Add(new Vector3(12.5f, 7.5f,0f));
+        //defaultAnchorPos.Add(new Vector3(0.5F, 4.5F, 0f));
+
 
         // Your code ENDS HERE
     }

@@ -38,39 +38,7 @@ public class HumanOne : MonoBehaviour
     }
 
 
-    //public Vector3 LastestRed(string red_token)
-    //{
-    //    Vector3 pos = new Vector3();
-    //    string[] red_tokens = red_token.Split('#');
-    //    // Debug.Log(red_token);
-    //    if (red_tokens.Length>1) {
-            
-    //        string lastRed = red_tokens[red_tokens.Length - 2];
-    //        Debug.Log(red_tokens[red_tokens.Length - 2]);
-    //        string[] posTemp = lastRed.Split('-');
-    //        //Debug.Log(posTemp);
-    //        int x = StringToInt(posTemp[0]);
-    //        //Debug.Log(x);
-    //        int y = StringToInt(posTemp[1]);
-    //        //Debug.Log(y);
-    //        pos = Methods.instance.FindAdjForTile(x, y);
-    //        if (pos!=Vector3.zero)
-    //        {
-    //            return pos;
-    //        }
-    //        else
-    //        {
-    //            return Methods.instance.RandomPosition(bg.gridPositions);
-    //        }
-            
-    //    }
-    //    else
-
-    //    {
-    //        Debug.Log("I am the random but in ");
-    //        return Methods.instance.RandomPosition(bg.gridPositions);
-    //    }
-    //}
+    
 
     private int StringToInt(string s)
     {
@@ -86,10 +54,10 @@ public class HumanOne : MonoBehaviour
         }
     }
     
-    private Vector3 HumanDecision(int humanHint,string reds)
+    private Vector3 HumanDecision(int humanHint)
     {
         Vector3 pos_human = new Vector3();
-        if (humanHint == 1)
+        if (humanHint == -1)
         {
             pos_human= Methods.instance.RandomPosition(bg.gridPositions);
         }
@@ -100,13 +68,13 @@ public class HumanOne : MonoBehaviour
             //make red log clear each turn?
            // GameManager.instance.redToken = "";
         }
-        if (humanHint == 2)
+        if (humanHint == 1)
         {
             pos_human = RedNearAnchor(GameManager.instance.depositRed);
             //keep it in the path
             Debug.Log("I am the red near anchor"+pos_human);
         }
-        if (humanHint==3)
+        if (humanHint==2)
         {
             pos_human = DensestRed(GameManager.instance.depositRed);
             Debug.Log("I am densest");
@@ -209,19 +177,19 @@ public class HumanOne : MonoBehaviour
             int maxAdj = adjCounter.Max();
             int p = Array.IndexOf(adjCounter, maxAdj);
             pos = Methods.instance.FindAdjForTile((int)list_red[p].x, (int)list_red[p].y);
-            if (pos != Vector3.zero)
+            if (pos != Vector3.zero && Methods.instance.IsEmptyGrid(pos))
             {
                 return pos;
             }
             else
             {
-                return LastestRed(list_red);
+                return Methods.instance.RandomPosition(bg.gridPositions);
             }
 
         }
         else
         {
-            return LastestRed(list_red);
+            return Methods.instance.RandomPosition(bg.gridPositions);
         }
     }
 
@@ -239,14 +207,12 @@ public class HumanOne : MonoBehaviour
         if (!GameManager.instance.gameOver && GameManager.instance.playerTurn && GameManager.instance.pathChange!=2)
         {
             Debug.Log("is true?" + GameManager.instance.playerTurn);
-            //Debug.Log(GameManager.instance.redToken);
-            string[] red_tokens = GameManager.instance.redToken.Split('#');
-            //Debug.Log("red is :"+(red_tokens.Length - 1));
+            
             uI = GetComponent<UIManager>();
             StartCoroutine(uI.ShowPlayerTurn());
             bg = GetComponent<BoardGenerator>();
             tl = GetComponent<TileController>();
-            pos=HumanDecision(GameParameters.instance.humanType,GameManager.instance.redToken);
+            pos=HumanDecision(GameParameters.instance.humanType);
             GameObject blockTile = bg.tilePos[(int)pos.x, (int)pos.y];
             blockTile.GetComponent<Transform>().position = pos;
             while (Methods.instance.IsEmptyGrid(blockTile.transform.position))

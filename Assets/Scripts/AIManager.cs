@@ -44,7 +44,7 @@ public class AIManager : MonoBehaviour
         turnCount = 0;
         AIs.Clear();
         AIMoving.Clear();
-        //ah = GetComponent<AutoHuma>();
+       
         for (int i = 0; i < GameParameters.instance.shuttleNum; i++)
         {
             AIs.Add(Methods.instance.LayoutObject(GameManager.instance.AI, 0f, 0f));
@@ -106,7 +106,7 @@ public class AIManager : MonoBehaviour
 
             }
         }
-        if (GameParameters.instance.aiType == 2)
+        if (GameParameters.instance.aiType == 1)
         {
             for (int i = 0; i < AIs.Count; i++)
             {
@@ -120,7 +120,7 @@ public class AIManager : MonoBehaviour
 
             }
         }
-        if (GameParameters.instance.aiType == 3)
+        if (GameParameters.instance.aiType == 2)
         {
             for (int i = 0; i < AIs.Count; i++)
             {
@@ -134,7 +134,7 @@ public class AIManager : MonoBehaviour
 
             }
         }
-        if (GameParameters.instance.aiType == 4)
+        if (GameParameters.instance.aiType == 3)
         {
             for (int i = 0; i < AIs.Count; i++)
             {
@@ -148,7 +148,7 @@ public class AIManager : MonoBehaviour
 
             }
         }
-        if (GameParameters.instance.aiType == 5)
+        if (GameParameters.instance.aiType == 4)
         {
             for (int i = 0; i < AIs.Count; i++)
             {
@@ -162,7 +162,7 @@ public class AIManager : MonoBehaviour
 
             }
         }
-        if (GameParameters.instance.aiType == 6)
+        if (GameParameters.instance.aiType == 5)
         {
             for (int i = 0; i < AIs.Count; i++)
             {
@@ -190,7 +190,7 @@ public class AIManager : MonoBehaviour
 
             }
         }
-        if (GameParameters.instance.aiType == 1)
+        if (GameParameters.instance.aiType == 6)
         {
             for (int i = 0; i < AIs.Count; i++)
             {
@@ -206,12 +206,7 @@ public class AIManager : MonoBehaviour
         }
         for (int i = 0; i < AIs.Count; i++)
         {
-            //???
-            //if (i == 0 && GameParameters.instance.startDelay > 0)
-            //{
-            //    Debug.Log("try to stop for" + GameParameters.instance.startDelay);
-            //    Loading(GameParameters.instance.startDelay);
-            //}
+           
             
             StartCoroutine(ExecuteActions(AIs[i], AIactions[i], i));
            
@@ -219,10 +214,10 @@ public class AIManager : MonoBehaviour
         turnCount++;
     }
 
-
+    //shuttle stop time setting
     IEnumerator Loading(float start_delay)
     {
-        //?????
+        
         Debug.Log("stop for" + start_delay);
         yield return new WaitForSeconds(start_delay);
     }
@@ -319,7 +314,7 @@ public class AIManager : MonoBehaviour
             if (color == 0)
             {
                 GameManager.instance.depositRed.Add(new Vector3(pos.x, pos.y, 0f));
-                GameManager.instance.redToken += pos.x + "-" + pos.y + "#";
+                //GameManager.instance.redToken += pos.x + "-" + pos.y + "#";
                 //Debug.Log("deposits the red");
             }
             if (Mathf.Approximately(delay, 0f))
@@ -344,7 +339,7 @@ public class AIManager : MonoBehaviour
         {
             if (AI.GetComponent<AIBehavior>().bagCounterColor[index] == 0)
             {
-                GameManager.instance.redToken += pos.x + "-" + pos.y + "#";
+                //GameManager.instance.redToken += pos.x + "-" + pos.y + "#";
                 GameManager.instance.depositRed.Add(new Vector3(pos.x, pos.y, 0f));
                 //Debug.Log("deposits the red");
             }

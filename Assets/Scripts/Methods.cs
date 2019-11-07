@@ -67,7 +67,7 @@ public class Methods : MonoBehaviour
     }
 
     // pos = Methods.instance.Random_InoderPosition(positions, turn, GameManager.instance.depositRed);
-    public Vector3 non_contiguous(List<Vector3> list, int turn_times, List<Vector3> list2)
+    public Vector3 non_contiguous(List<Vector3> list, int turn_times,int min, List<Vector3> list2)
     {
         int randomIndex = 0;
         //int index = 1;
@@ -86,7 +86,7 @@ public class Methods : MonoBehaviour
                 index1 = index;
                 index++;
                 Vector3 pos = list[index1];
-                if (list2.Contains(list[list.IndexOf(pos)-1])==false && list2.Contains(list[list.IndexOf(pos) +1])==false && index1<(list.Count/2))
+                if (list2.Contains(list[list.IndexOf(pos)-1])==false && list2.Contains(list[list.IndexOf(pos) +1])==false && index1<(min/2))
                 {
                     randomIndex = list.IndexOf(pos);
                     
@@ -229,6 +229,7 @@ public class Methods : MonoBehaviour
             }
             
         }
+        Debug.Log(narrative_region.Count);
             
             return narrative_region;
     }
@@ -895,6 +896,30 @@ public class Methods : MonoBehaviour
         Debug.Log("a2" + a2);
         Debug.Log("a3" + a3);
         Debug.Log("a4" + a4);
+    }
+
+
+
+    public void Task2Set()
+  
+    {
+        //GameManager.instance.anchor_a1 = new Vector3(0.5f, 7.5f, 0f);
+        //GameManager.instance.anchor_a2 = new Vector3(7.5f, 7.5f, 0f);
+        //GameManager.instance.anchor_a3 = new Vector3(0.5f, 0.5f, 0f);
+
+        //GameManager.instance.anchor_a4 = new Vector3(7.5f, 13.5f, 0f);
+        GameManager.instance.anchor_a1 = new Vector3(0.5f, 7.5f, 0f);
+        GameManager.instance.anchor_a2 = new Vector3(12.5f, 7.5f, 0f);
+        GameManager.instance.anchor_a3 = new Vector3(0.5F, 4.5F, 0f);
+        GameManager.instance.anchor_a4 = new Vector3(7.5f, 12.5f, 0f);
+        
+        GameManager.instance.path_a = FindChainPosition(GameManager.instance.anchor_a1, GameManager.instance.anchor_a2, true);
+        GameManager.instance.path_b = FindChainPosition(GameManager.instance.anchor_a3, GameManager.instance.anchor_a4, true);
+
+        GameManager.instance.Task1_a= FindChainCost(GameManager.instance.anchor_a1, GameManager.instance.anchor_a2, true); 
+
+        GameManager.instance.Task1_b = FindChainCost(GameManager.instance.anchor_a3, GameManager.instance.anchor_a4, true);
+
     }
 
     public bool IsPathAvailable(List<Vector3> path_positions, List<Vector3> block_pos,int changeTimes)

@@ -275,64 +275,131 @@ public class AIAgent : MonoBehaviour
             //imete as coin
             tryNum = Random.Range(0, 3);
             List<Vector3> positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2), true));
-            //even
-            Debug.Log("the coin is " + tryNum);
-                if (bag[i] == 0 && tryNum%2==1)
+            GameManager.instance.path_current = positions;
+
+
+            if (GameManager.instance.pathChange == 0)
+            {
+                if (bag[i] == 0 && tryNum % 2 == 1)
                 {
                     //List<Vector3> positions = GameManager.instance.path_a;
                     positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
+                    //positions = GameManager.instance.path_current;
+
+
                     //Vector3 pos;
-                    //path a no plan
-                    if (positions.Count == 0)
+                    //if no path a(out of the narrative region),change to path b
+
+                    //pos = Methods.instance.InorderPosition(positions);
+                    Debug.Log(" the posistion is " + positions.Count);
+                    //!!!!! current nothing
+
+
+
+                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, minCost1, GameManager.instance.depositRed), firstAnchors) == false)
                     {
-                          positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4), true));
-                    //GameManager.instance.path_current = GameManager.instance.path_b;
-                            //pos = Methods.instance.InorderPosition(positions);
-                    pos = Methods.instance.RandomPosition(positions);
-                    Debug.Log("Deposit change path : "+pos);
-                            GameManager.instance.pathChange++;
-                            GameManager.instance.gameLog += "the replaned time"+ turn+1 +"\n";
+                        //pos = GetRandomEmptyGrid(AIactions, actions);
+                        //Debug.Log("Deposit Elsewhere cause no path: " + pos);
+                        //GameManager.instance.Total_FalsePath_Blocks++;
+                        GameManager.instance.pathChange++;
+                        positions = GameManager.instance.path_b;
+                        GameManager.instance.path_current = GameManager.instance.path_b;
+                        
+                        pos = GetRandomEmptyGrid(AIactions, actions);
+                        //pos = Methods.instance.non_contiguous(positions, turn,minCost2, GameManager.instance.depositRed);
+                        Debug.Log("Deposit path b cause no path a: " + pos);
+                        //GameManager.instance.Real_Path_Replan = turn + 1;
+                        //GameManager.instance.gameLog += "the replaned time" + GameManager.instance.Real_Path_Replan + "\n";
+
+
                     }
                     else
                     {
-                    //pos = Methods.instance.InorderPosition(positions);
+                        pos = Methods.instance.non_contiguous(positions, turn, minCost1, GameManager.instance.depositRed);
 
-                    //pos = positions.First();
-                    pos = Methods.instance.RandomPosition(positions);
-                    
                         Debug.Log("Deposit real: " + pos);
                     }
-
-                    //Debug.Log("Deposit At First Path: " + pos);
-
-                    if (GameManager.instance.firstBlock == false)
-                    {
-                        GameManager.instance.Unblocked_Reds++;
-                        Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
-                    }
+                    //if (GameManager.instance.firstBlock == false)
+                    //{
+                    //    GameManager.instance.Unblocked_Reds++;
+                    //    Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
+                    //}
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
+
                 }
+                else if (bag[i] == 0 && tryNum % 2 == 0)
+                {
+                    pos = GetRandomEmptyGrid(AIactions, actions);
+                    Debug.Log("Deposit red Elsewhere: " + pos);
+                    actions.MoveTo(pos);
+                    actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
+                }
+
                 else if (bag[i] != 0)
                 {
                     //Vector3 pos;
                     pos = GetRandomEmptyGrid(AIactions, actions);
                     Debug.Log("Deposit Elsewhere: " + pos);
+                    //GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
 
 
                 }
-            //odd
-            if (bag[i] == 0 && tryNum % 2 == 0)
-                {
-                pos = GetRandomEmptyGrid(AIactions, actions);
-                Debug.Log("Deposit red Elsewhere: " + pos);
-                actions.MoveTo(pos);
-                actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
-            }
-           
 
+            }
+            else if (GameManager.instance.pathChange == 1)
+            {
+                positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4), true));
+                GameManager.instance.path_current = positions;
+                if (bag[i] == 0&&tryNum % 2 == 1)
+                {
+                    //List<Vector3> positions = GameManager.instance.path_a;
+                    positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
+                    //Vector3 pos;
+                    //if no path a(out of the narrative region), stop change
+                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, minCost2, GameManager.instance.depositRed), SecondAnchors) == false)
+                    {
+                        pos = GetRandomEmptyGrid(AIactions, actions);
+                        Debug.Log("Deposit Elsewhere cause no path: " + pos);
+                        //GameManager.instance.Total_FalsePath_Blocks++;
+                        GameManager.instance.pathChange++;
+                        //turn = 0;
+                    }
+                    else
+                    {
+                        pos = Methods.instance.non_contiguous(positions, turn, minCost2, GameManager.instance.depositRed);
+
+                        //GameManager.instance.Total_RealPath_Blocks++;
+                        Debug.Log("Deposit real: " + pos);
+                    }
+
+                    actions.MoveTo(pos);
+                    actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
+
+                }
+                else if (bag[i] == 0 && tryNum % 2 == 0)
+                {
+                    pos = GetRandomEmptyGrid(AIactions, actions);
+                    Debug.Log("Deposit red Elsewhere: " + pos);
+                    actions.MoveTo(pos);
+                    actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
+                }
+
+                else if (bag[i] != 0)
+                {
+                    //Vector3 pos;
+                    pos = GetRandomEmptyGrid(AIactions, actions);
+                    Debug.Log("Deposit Elsewhere cause no red token: " + pos);
+                    //GameManager.instance.Total_FalsePath_Blocks++;
+                    actions.MoveTo(pos);
+                    actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
+
+
+                }
+
+            }
 
             bag[i] = -1;
 
@@ -786,9 +853,7 @@ public class AIAgent : MonoBehaviour
                     else
                     {
                         pos = Methods.instance.Random_InoderPosition(positions,turn, GameManager.instance.depositRed);
-                        //pos = positions.First();
-                        //Methods.instance.RandomPosition(positions);
-                        //GameManager.instance.Total_RealPath_Blocks++;
+                        
                         Debug.Log("Deposit real: " + pos);
                     }
                     //if (GameManager.instance.firstBlock == false)
@@ -894,7 +959,7 @@ public class AIAgent : MonoBehaviour
         //List<Vector3> pathB= Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(GameManager.instance.anchor_a3, GameManager.instance.anchor_a4, true));
         List<Vector3> pathB = GameManager.instance.path_b;
         Debug.Log(" the path a is " + pathA.Count);
-        Debug.Log(" the path a is " + pathB.Count);
+        Debug.Log(" the path B is " + pathB.Count);
         //List<Vector3> pathB = GameManager.instance.path_b;
         Debug.Log("minCost1: " + minCost1 + "  " + "minCost2 :" + minCost2 + "  ");
         //"useless: " + uselessRedCounters.Count);
@@ -940,7 +1005,7 @@ public class AIAgent : MonoBehaviour
             //+uselessRedCounters.Count >= minCost)
             {
                 //pathA = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(closestAnchorsRed[0], closestAnchorsRed[1], true));
-                GameManager.instance.path_current = pathB;
+                //GameManager.instance.path_current = pathB;
                 // Collect all red pickups from generators
                 int i = 0;
                 while (i < redPickups.Count)
@@ -1023,7 +1088,7 @@ public class AIAgent : MonoBehaviour
             Debug.Log("index: " + i + "   " + "color: " + bag[i]);
             //tryNum = Random.Range(0, 3);
             List<Vector3> positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2), true));
-
+            GameManager.instance.path_current = positions;
             //change according to the pathChange para
             if (GameManager.instance.pathChange == 0)
             {
@@ -1043,7 +1108,7 @@ public class AIAgent : MonoBehaviour
 
 
 
-                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed), firstAnchors) == false)
+                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn,minCost1, GameManager.instance.depositRed), firstAnchors) == false)
                     {
                         //pos = GetRandomEmptyGrid(AIactions, actions);
                         //Debug.Log("Deposit Elsewhere cause no path: " + pos);
@@ -1052,7 +1117,8 @@ public class AIAgent : MonoBehaviour
                         positions = GameManager.instance.path_b;
                         GameManager.instance.path_current = GameManager.instance.path_b;
                         //??????
-                        pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
+                        pos = GetRandomEmptyGrid(AIactions, actions);
+                        //pos = Methods.instance.non_contiguous(positions, turn,minCost2, GameManager.instance.depositRed);
                         Debug.Log("Deposit path b cause no path a: " + pos);
                         //GameManager.instance.Real_Path_Replan = turn + 1;
                         //GameManager.instance.gameLog += "the replaned time" + GameManager.instance.Real_Path_Replan + "\n";
@@ -1061,17 +1127,15 @@ public class AIAgent : MonoBehaviour
                     }
                     else
                     {
-                        pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
-                        //pos = positions.First();
-                        //Methods.instance.RandomPosition(positions);
-                        //GameManager.instance.Total_RealPath_Blocks++;
+                        pos = Methods.instance.non_contiguous(positions, turn,minCost1, GameManager.instance.depositRed);
+                       
                         Debug.Log("Deposit real: " + pos);
                     }
-                    if (GameManager.instance.firstBlock == false)
-                    {
-                        GameManager.instance.Unblocked_Reds++;
-                        Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
-                    }
+                    //if (GameManager.instance.firstBlock == false)
+                    //{
+                    //    GameManager.instance.Unblocked_Reds++;
+                    //    Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
+                    //}
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
 
@@ -1093,24 +1157,24 @@ public class AIAgent : MonoBehaviour
             else if (GameManager.instance.pathChange == 1)
             {
                 positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4), true));
-
+                GameManager.instance.path_current = positions;
                 if (bag[i] == 0)
                 {
                     //List<Vector3> positions = GameManager.instance.path_a;
                     positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
                     //Vector3 pos;
                     //if no path a(out of the narrative region), stop change
-                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed), secondAnchors) == false)
+                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn,minCost2, GameManager.instance.depositRed), secondAnchors) == false)
                     {
                         pos = GetRandomEmptyGrid(AIactions, actions);
                         Debug.Log("Deposit Elsewhere cause no path: " + pos);
                         //GameManager.instance.Total_FalsePath_Blocks++;
                         GameManager.instance.pathChange++;
-                        turn = 0;
+                        //turn = 0;
                     }
                     else
                     {
-                        pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
+                        pos = Methods.instance.non_contiguous(positions, turn,minCost2, GameManager.instance.depositRed);
 
                         //GameManager.instance.Total_RealPath_Blocks++;
                         Debug.Log("Deposit real: " + pos);
@@ -1144,7 +1208,7 @@ public class AIAgent : MonoBehaviour
     }
 
 
-    //??????? no test
+   
     public Actions MakeDecisionsFour(List<Actions> AIactions, int turn)
     {
 
@@ -1304,9 +1368,9 @@ public class AIAgent : MonoBehaviour
                     //List<Vector3> positions = GameManager.instance.path_a;
                     positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
                     fakeposition = RemovePositionsFromList(fakeposition,actions.GetDepositPos(AIactions));
+                    GameManager.instance.path_b = fakeposition;
                     //positions = GameManager.instance.path_current;
-
-
+                    GameManager.instance.path_current = positions;
                     //Vector3 pos;
                     //if no path a(out of the narrative region),change to path b
 
@@ -1316,7 +1380,7 @@ public class AIAgent : MonoBehaviour
 
 
 
-                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed), firstAnchors) == false)
+                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn,minCost1, GameManager.instance.depositRed), firstAnchors) == false)
                     {
                         pos = GetRandomEmptyGrid(AIactions, actions);
                         Debug.Log("Deposit Elsewhere cause no path: " + pos);
@@ -1331,7 +1395,7 @@ public class AIAgent : MonoBehaviour
                     }
                     else
                     {
-                        pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
+                        pos = Methods.instance.non_contiguous(positions, turn,minCost1, GameManager.instance.depositRed);
                         //pos = positions.First();
                         //Methods.instance.RandomPosition(positions);
                         //GameManager.instance.Total_RealPath_Blocks++;
@@ -1368,9 +1432,10 @@ public class AIAgent : MonoBehaviour
                 {
                     //List<Vector3> positions = GameManager.instance.path_a;
                     positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
+                    GameManager.instance.path_current = positions;
                     //Vector3 pos;
                     //if no path a(out of the narrative region), stop change
-                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed), secondAnchors) == false)
+                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn,minCost2, GameManager.instance.depositRed), secondAnchors) == false)
                     {
                         pos = GetRandomEmptyGrid(AIactions, actions);
                         Debug.Log("Deposit Elsewhere cause no path: " + pos);
@@ -1380,7 +1445,7 @@ public class AIAgent : MonoBehaviour
                     }
                     else
                     {
-                        pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
+                        pos = Methods.instance.non_contiguous(positions, turn,minCost2, GameManager.instance.depositRed);
 
                         //GameManager.instance.Total_RealPath_Blocks++;
                         Debug.Log("Deposit real: " + pos);
@@ -1435,7 +1500,7 @@ public class AIAgent : MonoBehaviour
         //List<Vector3> pathB= Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(GameManager.instance.anchor_a3, GameManager.instance.anchor_a4, true));
         List<Vector3> pathB = GameManager.instance.path_b;
         Debug.Log(" the path a is " + pathA.Count);
-        Debug.Log(" the path a is " + pathB.Count);
+        Debug.Log(" the path b is " + pathB.Count);
         //List<Vector3> pathB = GameManager.instance.path_b;
         Debug.Log("minCost1: " + minCost1 + "  " + "minCost2 :" + minCost2 + "  ");
         //"useless: " + uselessRedCounters.Count);
@@ -1447,7 +1512,7 @@ public class AIAgent : MonoBehaviour
             {
                 //pathA = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(closestAnchorsRed[0], closestAnchorsRed[1], true));
                 // Collect all red pickups from generators
-                GameManager.instance.path_current = pathA;
+                //GameManager.instance.path_current = pathA;
 
                 int i = 0;
                 while (i < redPickups.Count)
@@ -1481,7 +1546,7 @@ public class AIAgent : MonoBehaviour
             //+uselessRedCounters.Count >= minCost)
             {
                 //pathA = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(closestAnchorsRed[0], closestAnchorsRed[1], true));
-                GameManager.instance.path_current = pathB;
+                //GameManager.instance.path_current = pathB;
                 // Collect all red pickups from generators
                 int i = 0;
                 while (i < redPickups.Count)
@@ -1572,7 +1637,7 @@ public class AIAgent : MonoBehaviour
                 {
                     //List<Vector3> positions = GameManager.instance.path_a;
                     positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
-                    //positions = GameManager.instance.path_current;
+                     GameManager.instance.path_current=positions;
 
 
                     //Vector3 pos;
@@ -1584,32 +1649,30 @@ public class AIAgent : MonoBehaviour
 
 
 
-                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed), firstAnchors) == false)
+                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, minCost1,GameManager.instance.depositRed), firstAnchors) == false)
                     {
-                        //pos = GetRandomEmptyGrid(AIactions, actions);
-                        //Debug.Log("Deposit Elsewhere cause no path: " + pos);
+                        pos = GetRandomEmptyGrid(AIactions, actions);
+                        Debug.Log("Deposit Elsewhere cause no a path: " + pos);
                         //GameManager.instance.Total_FalsePath_Blocks++;
                         GameManager.instance.pathChange++;
                         positions = GameManager.instance.path_b;
                         GameManager.instance.path_current = GameManager.instance.path_b;
                         //??????
-                        pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
-                        Debug.Log("Deposit path b cause no path a: " + pos);
+                        //pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
+                        //Debug.Log("Deposit path b cause no path a: " + pos);
 
                     }
                     else
                     {
-                        pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
-                        //pos = positions.First();
-                        //Methods.instance.RandomPosition(positions);
-                        GameManager.instance.Total_RealPath_Blocks++;
+                        pos = Methods.instance.non_contiguous(positions, turn,minCost1, GameManager.instance.depositRed);
+                        
                         Debug.Log("Deposit real: " + pos);
                     }
-                    if (GameManager.instance.firstBlock == false)
-                    {
-                        GameManager.instance.Unblocked_Reds++;
-                        Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
-                    }
+                    //if (GameManager.instance.firstBlock == false)
+                    //{
+                    //    GameManager.instance.Unblocked_Reds++;
+                    //    Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
+                    //}
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
 
@@ -1618,7 +1681,21 @@ public class AIAgent : MonoBehaviour
                 else if (bag[i] != 0)
                 {
                     //Vector3 pos;
-                    pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4)));
+                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, minCost2, GameManager.instance.depositRed), secondAnchors) == false)
+                    {
+                        pos = GetRandomEmptyGrid(AIactions, actions);
+                        Debug.Log("Deposit Elsewhere cause no path: " + pos);
+                        //GameManager.instance.Total_FalsePath_Blocks++;
+                        GameManager.instance.pathChange++;
+                        turn = 0;
+                    }
+                    else
+                    {
+                        pos = Methods.instance.non_contiguous(positions, turn, minCost2, GameManager.instance.depositRed);
+
+                        //GameManager.instance.Total_RealPath_Blocks++;
+                        Debug.Log("Deposit real: " + pos);
+                    }
                     Debug.Log("Deposit Elsewhere: " + pos);
                     //GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
@@ -1631,14 +1708,15 @@ public class AIAgent : MonoBehaviour
             else if (GameManager.instance.pathChange == 1)
             {
                 positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4), true));
-
+                GameManager.instance.path_current = positions;
                 if (bag[i] == 0)
                 {
                     //List<Vector3> positions = GameManager.instance.path_a;
                     positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
+                    GameManager.instance.path_current = positions;
                     //Vector3 pos;
                     //if no path a(out of the narrative region), stop change
-                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed), secondAnchors) == false)
+                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn,minCost2, GameManager.instance.depositRed), secondAnchors) == false)
                     {
                         pos = GetRandomEmptyGrid(AIactions, actions);
                         Debug.Log("Deposit Elsewhere cause no path: " + pos);
@@ -1648,7 +1726,7 @@ public class AIAgent : MonoBehaviour
                     }
                     else
                     {
-                        pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
+                        pos = Methods.instance.non_contiguous(positions, turn,minCost2, GameManager.instance.depositRed);
 
                         //GameManager.instance.Total_RealPath_Blocks++;
                         Debug.Log("Deposit real: " + pos);
@@ -1661,8 +1739,9 @@ public class AIAgent : MonoBehaviour
 
                 else if (bag[i] != 0)
                 {
+                    pos = GetRandomEmptyGrid(AIactions, actions);
                     //Vector3 pos;
-                    pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4)));
+                    //pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4)));
                     Debug.Log("Deposit Elsewhere cause no red token: " + pos);
                     //GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
@@ -1687,7 +1766,8 @@ public class AIAgent : MonoBehaviour
 
         Actions actions = new Actions();
         Debug.Log("now is ai 6 :" + turn);
-        Methods.instance.Task1Anchor(GameManager.instance.anchorPositions, out GameManager.instance.Task1_a, out GameManager.instance.Task1_b);
+        Methods.instance.Task2Set();
+        
 
         Debug.Log("the overlap is: " + Methods.instance.CalculateOverlap(GameManager.instance.anchor_a1, GameManager.instance.anchor_a2, GameManager.instance.anchor_a3, GameManager.instance.anchor_a4));
 
@@ -1752,7 +1832,7 @@ public class AIAgent : MonoBehaviour
             //+uselessRedCounters.Count >= minCost)
             {
                 //pathA = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(closestAnchorsRed[0], closestAnchorsRed[1], true));
-                GameManager.instance.path_current = pathB;
+                //GameManager.instance.path_current = pathB;
                 // Collect all red pickups from generators
                 int i = 0;
                 while (i < redPickups.Count)
@@ -1844,6 +1924,7 @@ public class AIAgent : MonoBehaviour
                     //List<Vector3> positions = GameManager.instance.path_a;
                     positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
                     //positions = GameManager.instance.path_current;
+                    GameManager.instance.path_current = positions;
 
 
                     //Vector3 pos;
@@ -1855,32 +1936,30 @@ public class AIAgent : MonoBehaviour
 
 
 
-                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed), firstAnchors) == false)
+                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn,minCost1, GameManager.instance.depositRed), firstAnchors) == false ||positions.Count==0)
                     {
-                        //pos = GetRandomEmptyGrid(AIactions, actions);
-                        //Debug.Log("Deposit Elsewhere cause no path: " + pos);
-                        //GameManager.instance.Total_FalsePath_Blocks++;
+                        
                         GameManager.instance.pathChange++;
                         positions = GameManager.instance.path_b;
                         GameManager.instance.path_current = GameManager.instance.path_b;
                         //??????
-                        pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
+                        pos = GetRandomEmptyGrid(AIactions, actions);
+                        //pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
                         Debug.Log("Deposit path b cause no path a: " + pos);
 
                     }
                     else
                     {
-                        pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
-                        //pos = positions.First();
-                        //Methods.instance.RandomPosition(positions);
+                        pos = Methods.instance.non_contiguous(positions, turn,minCost1, GameManager.instance.depositRed);
+                        
                         GameManager.instance.Total_RealPath_Blocks++;
                         Debug.Log("Deposit real: " + pos);
                     }
-                    if (GameManager.instance.firstBlock == false)
-                    {
-                        GameManager.instance.Unblocked_Reds++;
-                        Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
-                    }
+                    //if (GameManager.instance.firstBlock == false)
+                    //{
+                    //    GameManager.instance.Unblocked_Reds++;
+                    //    Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
+                    //}
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
 
@@ -1888,8 +1967,32 @@ public class AIAgent : MonoBehaviour
 
                 else if (bag[i] != 0)
                 {
-                    //Vector3 pos;
-                    pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2)));
+
+                    pos = Vector3.zero;
+
+                    List<Vector3> a1_a2_narrative = Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2));
+                    List<Vector3> tiles_for_nonRed=new List<Vector3>();
+                    tiles_for_nonRed.Clear();
+                    //pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2)));
+                    foreach (Vector3 narrative_tile in a1_a2_narrative)
+                    {
+                        if (Methods.instance.IsEmptyGrid(narrative_tile) )
+                        {
+                            tiles_for_nonRed.Add(narrative_tile);
+                        }
+
+                    }
+                    if (tiles_for_nonRed.Count == 0)
+                    {
+                        pos = GetRandomEmptyGrid(AIactions, actions);
+                    }
+                    else
+                    {
+                        pos = Methods.instance.RandomPosition(tiles_for_nonRed);
+                    }
+                    //pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2)));
+
+
                     Debug.Log("Deposit Elsewhere: " + pos);
                     //GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
@@ -1902,14 +2005,14 @@ public class AIAgent : MonoBehaviour
             else if (GameManager.instance.pathChange == 1)
             {
                 positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4), true));
-
+                GameManager.instance.path_current = positions;
                 if (bag[i] == 0)
                 {
                     //List<Vector3> positions = GameManager.instance.path_a;
                     positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
                     //Vector3 pos;
                     //if no path a(out of the narrative region), stop change
-                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed), secondAnchors) == false)
+                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn,minCost2, GameManager.instance.depositRed), secondAnchors) == false ||positions.Count==0)
                     {
                         pos = GetRandomEmptyGrid(AIactions, actions);
                         Debug.Log("Deposit Elsewhere cause no path: " + pos);
@@ -1919,7 +2022,7 @@ public class AIAgent : MonoBehaviour
                     }
                     else
                     {
-                        pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
+                        pos = Methods.instance.non_contiguous(positions, turn,minCost2, GameManager.instance.depositRed);
 
                         //GameManager.instance.Total_RealPath_Blocks++;
                         Debug.Log("Deposit real: " + pos);
@@ -1932,9 +2035,33 @@ public class AIAgent : MonoBehaviour
 
                 else if (bag[i] != 0)
                 {
-                    //Vector3 pos;
-                    pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2)));
-                    Debug.Log("Deposit Elsewhere cause no red token: " + pos);
+
+                    pos = Vector3.zero;
+
+                    List<Vector3> a1_a2_narrative = Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2));
+                    List<Vector3> tiles_for_nonRed = new List<Vector3>();
+                    tiles_for_nonRed.Clear();
+                    //pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2)));
+                    foreach (Vector3 narrative_tile in a1_a2_narrative)
+                    {
+                        if (Methods.instance.IsEmptyGrid(narrative_tile))
+                        {
+                            tiles_for_nonRed.Add(narrative_tile);
+                        }
+
+                    }
+                    if (tiles_for_nonRed.Count == 0)
+                    {
+                        pos = GetRandomEmptyGrid(AIactions, actions);
+                    }
+                    else
+                    {
+                        pos = Methods.instance.RandomPosition(tiles_for_nonRed);
+                    }
+                    //pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2)));
+
+
+                    Debug.Log("Deposit Elsewhere: " + pos);
                     //GameManager.instance.Total_FalsePath_Blocks++;
                     actions.MoveTo(pos);
                     actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
@@ -1952,16 +2079,15 @@ public class AIAgent : MonoBehaviour
         return actions;
     }
 
-
+    //????
     public Actions MakeDecisionSeven(List<Actions> AIactions, int turn)
 
     {
         Actions actions = new Actions();
         Debug.Log("now is turn :" + turn);
 
-        //Vector3[] trueAnchors;
-        Vector3[] closestAnchorsRed = FindCheapestChain(new Vector3[2], true);
-
+       Vector3[] closestAnchorsRed = FindCheapestChain(new Vector3[2], true);
+        
         // Check if can win the game this turn
         //List<Vector3> uselessRedCounters = GetUselessRedCounters(closestAnchorsRed);
         List<Vector3> redPickups = GetAllRedPickups();
@@ -2082,8 +2208,7 @@ public class AIAgent : MonoBehaviour
         // Randomly deposit
         Vector3 pos;
         List<int> randomOrder = RandomOrder(actions.GetPickupColor().Sum());
-        // List<int> inOrder = InOrder(actions.GetPickupColor().Sum());
-        //foreach (int i in inOrder)
+       
         foreach (int i in randomOrder)
         {
             Debug.Log("index: " + i + "   " + "color: " + bag[i]);
@@ -2092,227 +2217,208 @@ public class AIAgent : MonoBehaviour
             List<Vector3> positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2), true));
             //even
             Debug.Log("the coin is " + tryNum);
+           
 
-            if (tryNum % 2 == 1)
+
+            if (GameManager.instance.pathChange == 0)
             {
-                if (GameManager.instance.pathChange == 0)
+                if (bag[i] == 0 && tryNum % 2 == 1)
                 {
-                    if (bag[i] == 0)
+                    //List<Vector3> positions = GameManager.instance.path_a;
+                    positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
+                    //positions = GameManager.instance.path_current;
+                    GameManager.instance.path_current = positions;
+
+                    //Vector3 pos;
+                    //if no path a(out of the narrative region),change to path b
+
+                    //pos = Methods.instance.InorderPosition(positions);
+                    Debug.Log(" the posistion is " + positions.Count);
+                    //!!!!! current nothing
+
+
+
+                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, minCost1, GameManager.instance.depositRed), firstAnchors) == false)
                     {
-                        //List<Vector3> positions = GameManager.instance.path_a;
-                        positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
-                        //positions = GameManager.instance.path_current;
-
-
-                        //Vector3 pos;
-                        //if no path a(out of the narrative region),change to path b
-
-                        //pos = Methods.instance.InorderPosition(positions);
-                        Debug.Log(" the posistion is " + positions.Count);
-                        //!!!!! current nothing
-
-
-
-                        if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed), firstAnchors) == false)
-                        {
-                            //pos = GetRandomEmptyGrid(AIactions, actions);
-                            //Debug.Log("Deposit Elsewhere cause no path: " + pos);
-                            //GameManager.instance.Total_FalsePath_Blocks++;
-                            GameManager.instance.pathChange++;
-                            positions = GameManager.instance.path_b;
-                            GameManager.instance.path_current = GameManager.instance.path_b;
-                            //??????
-                            pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
-                            Debug.Log("Deposit path b cause no path a: " + pos);
-
-                        }
-                        else
-                        {
-                            pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
-                            //pos = positions.First();
-                            //Methods.instance.RandomPosition(positions);
-                            GameManager.instance.Total_RealPath_Blocks++;
-                            Debug.Log("Deposit real: " + pos);
-                        }
-                        if (GameManager.instance.firstBlock == false)
-                        {
-                            GameManager.instance.Unblocked_Reds++;
-                            Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
-                        }
-                        actions.MoveTo(pos);
-                        actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
-
-                    }
-
-                    else if (bag[i] != 0)
-                    {
-                        //Vector3 pos;
-                        pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2)));
-                        Debug.Log("Deposit Elsewhere: " + pos);
+                        //pos = GetRandomEmptyGrid(AIactions, actions);
+                        //Debug.Log("Deposit Elsewhere cause no path: " + pos);
                         //GameManager.instance.Total_FalsePath_Blocks++;
-                        actions.MoveTo(pos);
-                        actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
+                        GameManager.instance.pathChange++;
+                        positions = GameManager.instance.path_b;
+                        GameManager.instance.path_current = GameManager.instance.path_b;
+                        //??????
+                        pos = GetRandomEmptyGrid(AIactions, actions);
+                        //pos = Methods.instance.non_contiguous(positions, turn,minCost2, GameManager.instance.depositRed);
+                        Debug.Log("Deposit path b cause no path a: " + pos);
+                        //GameManager.instance.Real_Path_Replan = turn + 1;
+                        //GameManager.instance.gameLog += "the replaned time" + GameManager.instance.Real_Path_Replan + "\n";
 
 
                     }
+                    else
+                    {
+                        pos = Methods.instance.non_contiguous(positions, turn, minCost1, GameManager.instance.depositRed);
+
+                        Debug.Log("Deposit real: " + pos);
+                    }
+                    
+                    actions.MoveTo(pos);
+                    actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
 
                 }
-                else if (GameManager.instance.pathChange == 1)
+                else if (bag[i] == 0 && tryNum % 2 == 0)
                 {
-                    positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4), true));
-
-                    if (bag[i] == 0)
+                    List<Vector3> a1_a2_narrative = Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2));
+                    List<Vector3> a3_a4_narrative= Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4));
+                    List<Vector3> tiles_for_Red = new List<Vector3>();
+                    tiles_for_Red.Clear();
+                    //pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2)));
+                    foreach (Vector3 narrative_tile in a1_a2_narrative)
                     {
-                        //List<Vector3> positions = GameManager.instance.path_a;
-                        positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
-                        //Vector3 pos;
-                        //if no path a(out of the narrative region), stop change
-                        if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed), SecondAnchors) == false)
+                        if (Methods.instance.IsEmptyGrid(narrative_tile) && a3_a4_narrative.Contains(narrative_tile))
                         {
-                            pos = GetRandomEmptyGrid(AIactions, actions);
-                            Debug.Log("Deposit Elsewhere cause no path: " + pos);
-                            //GameManager.instance.Total_FalsePath_Blocks++;
-                            GameManager.instance.pathChange++;
-                            turn = 0;
-                        }
-                        else
-                        {
-                            pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
-
-                            //GameManager.instance.Total_RealPath_Blocks++;
-                            Debug.Log("Deposit real: " + pos);
+                            tiles_for_Red.Add(narrative_tile);
                         }
 
-                        actions.MoveTo(pos);
-                        actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
-
                     }
-
-                    else if (bag[i] != 0)
+                    if (tiles_for_Red.Count == 0)
                     {
-                        //Vector3 pos;
-                        pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2)));
-                        Debug.Log("Deposit Elsewhere cause no red token: " + pos);
-                        //GameManager.instance.Total_FalsePath_Blocks++;
-                        actions.MoveTo(pos);
-                        actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
+                        pos = GetRandomEmptyGrid(AIactions, actions);
+                    }
+                    else
+                    {
+                        pos = Methods.instance.RandomPosition(tiles_for_Red);
+                    }
+                    //pos = GetRandomEmptyGrid(AIactions, actions);
+                    Debug.Log("Deposit red Elsewhere: " + pos);
+                    actions.MoveTo(pos);
+                    actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
+                }
 
+                else if (bag[i] != 0)
+                {
+                    //Vector3 pos;
+                    List<Vector3> a1_a2_narrative = Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2));
+                    List<Vector3> tiles_for_nonRed = new List<Vector3>();
+                    tiles_for_nonRed.Clear();
+                    //pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2)));
+                    foreach (Vector3 narrative_tile in a1_a2_narrative)
+                    {
+                        if (Methods.instance.IsEmptyGrid(narrative_tile))
+                        {
+                            tiles_for_nonRed.Add(narrative_tile);
+                        }
 
                     }
+                    if (tiles_for_nonRed.Count == 0)
+                    {
+                        pos = GetRandomEmptyGrid(AIactions, actions);
+                    }
+                    else
+                    {
+                        pos = Methods.instance.RandomPosition(tiles_for_nonRed);
+                    }
+                    //pos = GetRandomEmptyGrid(AIactions, actions);
+                    Debug.Log("Deposit Elsewhere: " + pos);
+                    //GameManager.instance.Total_FalsePath_Blocks++;
+                    actions.MoveTo(pos);
+                    actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
+
 
                 }
+
             }
-            else if(tryNum % 2 == 0)
+            else if (GameManager.instance.pathChange == 1)
             {
-                if (GameManager.instance.pathChange == 0)
+                positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4), true));
+                GameManager.instance.path_current = positions;
+                if (bag[i] == 0 && tryNum % 2 == 1)
                 {
-                    if (bag[i] == 0)
+                    //List<Vector3> positions = GameManager.instance.path_a;
+                    positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
+                    //Vector3 pos;
+                    //if no path a(out of the narrative region), stop change
+                    if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, minCost2, GameManager.instance.depositRed), SecondAnchors) == false)
                     {
-                        //List<Vector3> positions = GameManager.instance.path_a;
-                        positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
-                        //positions = GameManager.instance.path_current;
-
-
-                        //Vector3 pos;
-                        //if no path a(out of the narrative region),change to path b
-
-                        //pos = Methods.instance.InorderPosition(positions);
-                        Debug.Log(" the posistion is " + positions.Count);
-                        //!!!!! current nothing
-
-
-
-                        if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed), firstAnchors) == false)
-                        {
-                            //pos = GetRandomEmptyGrid(AIactions, actions);
-                            //Debug.Log("Deposit Elsewhere cause no path: " + pos);
-                            //GameManager.instance.Total_FalsePath_Blocks++;
-                            GameManager.instance.pathChange++;
-                            positions = GameManager.instance.path_b;
-                            GameManager.instance.path_current = GameManager.instance.path_b;
-                            //??????
-                            pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
-                            Debug.Log("Deposit path b cause no path a: " + pos);
-
-                        }
-                        else
-                        {
-                            pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
-                            //pos = positions.First();
-                            //Methods.instance.RandomPosition(positions);
-                            GameManager.instance.Total_RealPath_Blocks++;
-                            Debug.Log("Deposit real: " + pos);
-                        }
-                        if (GameManager.instance.firstBlock == false)
-                        {
-                            GameManager.instance.Unblocked_Reds++;
-                            Debug.Log("Deposit red before the first block:" + GameManager.instance.Unblocked_Reds);
-                        }
-                        actions.MoveTo(pos);
-                        actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
-
-                    }
-
-                    else if (bag[i] != 0)
-                    {
-                        //Vector3 pos;
-                        pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2)));
-                        Debug.Log("Deposit Elsewhere: " + pos);
+                        pos = GetRandomEmptyGrid(AIactions, actions);
+                        Debug.Log("Deposit Elsewhere cause no path: " + pos);
                         //GameManager.instance.Total_FalsePath_Blocks++;
-                        actions.MoveTo(pos);
-                        actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
-
-
+                        GameManager.instance.pathChange++;
+                        //turn = 0;
                     }
+                    else
+                    {
+                        pos = Methods.instance.non_contiguous(positions, turn, minCost2, GameManager.instance.depositRed);
+
+                        //GameManager.instance.Total_RealPath_Blocks++;
+                        Debug.Log("Deposit real: " + pos);
+                    }
+
+                    actions.MoveTo(pos);
+                    actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
 
                 }
-                else if (GameManager.instance.pathChange == 1)
+                else if (bag[i] == 0 && tryNum % 2 == 0)
                 {
-                    positions = Methods.instance.RemoveDepositedAndAnchor(Methods.instance.FindPathInGrid(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4), true));
-
-                    if (bag[i] == 0)
+                    List<Vector3> a1_a2_narrative = Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2));
+                    List<Vector3> a3_a4_narrative = Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a3), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a4));
+                    List<Vector3> tiles_for_Red = new List<Vector3>();
+                    tiles_for_Red.Clear();
+                    //pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2)));
+                    foreach (Vector3 narrative_tile in a1_a2_narrative)
                     {
-                        //List<Vector3> positions = GameManager.instance.path_a;
-                        positions = RemovePositionsFromList(positions, actions.GetDepositPos(AIactions));
-                        //Vector3 pos;
-                        //if no path a(out of the narrative region), stop change
-                        if (Methods.instance.Contains(Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed), SecondAnchors) == false)
+                        if (Methods.instance.IsEmptyGrid(narrative_tile) && a3_a4_narrative.Contains(narrative_tile))
                         {
-                            pos = GetRandomEmptyGrid(AIactions, actions);
-                            Debug.Log("Deposit Elsewhere cause no path: " + pos);
-                            //GameManager.instance.Total_FalsePath_Blocks++;
-                            GameManager.instance.pathChange++;
-                            turn = 0;
-                        }
-                        else
-                        {
-                            pos = Methods.instance.non_contiguous(positions, turn, GameManager.instance.depositRed);
-
-                            //GameManager.instance.Total_RealPath_Blocks++;
-                            Debug.Log("Deposit real: " + pos);
+                            tiles_for_Red.Add(narrative_tile);
                         }
 
-                        actions.MoveTo(pos);
-                        actions.DepositIndexAt(pos, i, Random.Range(0.1f, 1f));
-
                     }
-
-                    else if (bag[i] != 0)
+                    if (tiles_for_Red.Count == 0)
                     {
-                        //Vector3 pos;
-                        pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2)));
-                        Debug.Log("Deposit Elsewhere cause no red token: " + pos);
-                        //GameManager.instance.Total_FalsePath_Blocks++;
-                        actions.MoveTo(pos);
-                        actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
+                        pos = GetRandomEmptyGrid(AIactions, actions);
+                    }
+                    else
+                    {
+                        pos = Methods.instance.RandomPosition(tiles_for_Red);
+                    }
+                    Debug.Log("Deposit red Elsewhere: " + pos);
+                    actions.MoveTo(pos);
+                    actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
+                }
 
+                else if (bag[i] != 0)
+                {
+                    //Vector3 pos;
+                    List<Vector3> a1_a2_narrative = Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2));
+                    List<Vector3> tiles_for_nonRed = new List<Vector3>();
+                    tiles_for_nonRed.Clear();
+                    //pos = Methods.instance.RandomPosition(Methods.instance.TilesNarrativeRegion(Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a1), Methods.instance.TransAnchorPositionInGrid(GameManager.instance.anchor_a2)));
+                    foreach (Vector3 narrative_tile in a1_a2_narrative)
+                    {
+                        if (Methods.instance.IsEmptyGrid(narrative_tile))
+                        {
+                            tiles_for_nonRed.Add(narrative_tile);
+                        }
 
                     }
+                    if (tiles_for_nonRed.Count == 0)
+                    {
+                        pos = GetRandomEmptyGrid(AIactions, actions);
+                    }
+                    else
+                    {
+                        pos = Methods.instance.RandomPosition(tiles_for_nonRed);
+                    }
+                    //pos = GetRandomEmptyGrid(AIactions, actions);
+                    Debug.Log("Deposit Elsewhere: " + pos);
+                    //GameManager.instance.Total_FalsePath_Blocks++;
+                    actions.MoveTo(pos);
+                    actions.DepositIndexAt(pos, i, Random.Range(0.1f, 2f));
+
 
                 }
+
             }
-    
-
 
 
             bag[i] = -1;

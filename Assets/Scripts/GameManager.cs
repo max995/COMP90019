@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
 
     // Stores what happened in the game
     [HideInInspector] public string gameLog;
-    [HideInInspector] public string redToken;
+    //[HideInInspector] public string redToken;
 
 
     // Red, White, Blue, Yellow Generators
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
     private void Initialize()
     {
         gameLog = "";
-        redToken = "";
+        //redToken = "";
        
         gameOver = false;
         AICelebrate = false;
@@ -123,8 +123,8 @@ public class GameManager : MonoBehaviour
         aiScript.InitialiseAIs();
         InitialiseDeposited();
         //intillise before using
-        Methods.instance.Task1Anchor(GameManager.instance.anchorPositions, out GameManager.instance.Task1_a, out GameManager.instance.Task1_b);
-        
+        //Methods.instance.Task1Anchor(GameManager.instance.anchorPositions, out GameManager.instance.Task1_a, out GameManager.instance.Task1_b);
+        Methods.instance.Task2Set();
         //Methods.instance.Task1Anchor(anchorPositions, out Task1_a, out Task1_b);
         //Debug.Log("a cost is:" + Task1_a);
         //Debug.Log("b cost is:" + Task1_b);
